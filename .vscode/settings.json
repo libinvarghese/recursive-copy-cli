@@ -1,0 +1,49 @@
+{
+  "typescript.updateImportsOnFileMove.enabled": "always",
+
+  "types-autoinstaller.saveAsDevDependency": true,
+
+  "editor.rulers": [120],
+
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "mochaExplorer.cwd": "./",
+  "mochaExplorer.logpanel": true,
+  "mochaExplorer.files": "src/**/*.spec.ts",
+
+  "docthis.includeMemberOfOnClassMembers": false,
+  "docthis.includeMemberOfOnInterfaceMembers": false,
+  "docthis.includeTypes": false,
+  "docthis.inferTypesFromNames": true,
+
+  "cSpell.language": "en-GB",
+  "cSpell.words": [
+    "FOOBARBAZ",
+    "Parens",
+    "Unrecognized",
+    "builtins",
+    "dont",
+    "maximatch",
+    "nargs",
+    "pascalcase",
+    "requireg",
+    "shebang",
+    "toupper",
+    "uglifyify",
+    "vars"
+  ]
+}

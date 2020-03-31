@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "jvitor83.types-autoinstaller",
+    "streetsidesoftware.code-spell-checker",
+    "joelday.docthis",
+    "quicktype.quicktype",
+    "eg2.vscode-npm-script",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "hbenl.vscode-mocha-test-adapter"
+  ]
+}

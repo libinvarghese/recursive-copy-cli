@@ -1,0 +1,90 @@
+{
+  "name": "recursive-copy-cli",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "http://documentcloud.github.com/underscore/",
+  "main": "./dist/cli.js",
+  "bin": {
+    "rc": "./dist/cli.js"
+  },
+  "scripts": {
+    "start": "ts-node src/cli.ts",
+    "check:format": "prettier -c './**/*.{js,ts,json,css,scss,html}'",
+    "format:fix": "prettier --write './**/*.{js,ts,json,css,scss,html}'",
+    "lint:json": "eslint --no-eslintrc -c .eslintrc.json.js --ext .json --format=unix .",
+    "lint:src": "eslint --ext .js,.ts --format=unix .",
+    "lint": "run-p lint:*",
+    "clean": "rimraf dist",
+    "build": "tsc -p tsconfig.${NODE_ENV:=development}.json",
+    "rebuild": "run-s clean build",
+    "precommit:parallel": "run-p lint check:format coverage",
+    "precommit": "run-s checkNotStaged precommit:parallel",
+    "checkNotStaged": "ts-node -P scripts/tsconfig.json scripts/check-not-staged.ts",
+    "test": "mocha src/**/*.spec.ts",
+    "coverage": "nyc npm run test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  },
+  "engine": {
+    "node": ">=10.19.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@types/chai": "^4.2.11",
+    "@types/chai-arrays": "^1.0.3",
+    "@types/eslint": "^6.8.0",
+    "@types/eslint-plugin-prettier": "^2.2.0",
+    "@types/highland": "^2.12.9",
+    "@types/lodash": "^4.14.149",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.7.6",
+    "@types/prettier": "^1.19.0",
+    "@types/rimraf": "^2.0.3",
+    "@types/source-map-support": "^0.5.1",
+    "@types/through2": "^2.0.34",
+    "@types/typescript": "^2.0.0",
+    "@types/yargs": "^15.0.4",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "chai": "^4.2.0",
+    "chai-arrays": "^2.0.0",
+    "chai-semver": "^1.0.2",
+    "eol": "^0.9.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-json": "^2.1.0",
+    "eslint-plugin-mocha": "^6.3.0",
+    "eslint-plugin-no-secrets": "^0.3.4",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-optimize-regex": "^1.1.7",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-you-dont-need-lodash-underscore": "^6.9.0",
+    "husky": "^4.2.3",
+    "mocha": "^7.1.1",
+    "npm-run-all": "^4.1.5",
+    "nyc": "^15.0.1",
+    "pascalcase": "^1.0.0",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "simple-git": "^1.132.0",
+    "source-map-support": "^0.5.16",
+    "through2": "^3.0.1",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.8.2"
+  },
+  "dependencies": {
+    "highland": "^2.13.5",
+    "lodash": "^4.17.15",
+    "recursive-copy": "^2.0.10",
+    "requireg": "^0.2.2",
+    "yargs": "^15.3.1"
+  }
+}
