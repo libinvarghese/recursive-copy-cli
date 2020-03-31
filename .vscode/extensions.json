@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "jvitor83.types-autoinstaller",
+    "streetsidesoftware.code-spell-checker",
+    "joelday.docthis",
+    "mariusalchimavicius.json-to-ts",
+    "eg2.vscode-npm-script",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint"
+  ]
+}
