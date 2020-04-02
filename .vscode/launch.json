@@ -7,10 +7,28 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "args": ["${relativeFile}"],
+      "name": "[Node] Launch Current File",
+      "args": [
+        "${relativeFile}",
+        "src",
+        "dest",
+        "--rename-module",
+        "foobarfoo"
+      ],
       "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
       "sourceMaps": true,
+      "cwd": "${workspaceRoot}",
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "[Mocha] Current File",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "args": [
+          "${file}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
       "cwd": "${workspaceRoot}",
     }
   ]

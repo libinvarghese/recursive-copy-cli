@@ -21,6 +21,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
+  "mochaExplorer.cwd": "./",
+  "mochaExplorer.logpanel": true,
+
   "docthis.includeMemberOfOnClassMembers": false,
   "docthis.includeMemberOfOnInterfaceMembers": false,
   "docthis.includeTypes": false,
@@ -34,6 +37,7 @@
     "dont",
     "maximatch",
     "pascalcase",
+    "requireg",
     "shebang",
     "uglifyify"
   ]

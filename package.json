@@ -8,7 +8,7 @@
     "rc": "./dist/cli.js"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/cli.ts",
     "check:format": "prettier -c './**/*.{js,ts,json,css,scss,html}'",
     "format:fix": "prettier --write './**/*.{js,ts,json,css,scss,html}'",
     "lint:json": "eslint --no-eslintrc -c .eslintrc.json.js --ext .json --format=unix .",
@@ -19,7 +19,7 @@
     "rebuild": "run-s clean build",
     "precommit": "run-p lint check:format checkNotStaged",
     "checkNotStaged": "ts-node -P scripts/tsconfig.json scripts/check-not-staged.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "husky": {
     "hooks": {
@@ -33,7 +33,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/chai": "^4.2.11",
     "@types/eslint-plugin-prettier": "^2.2.0",
+    "@types/mocha": "^7.0.2",
     "@types/node": "^13.7.6",
     "@types/prettier": "^1.19.0",
     "@types/rimraf": "^2.0.3",
@@ -41,10 +43,13 @@
     "@types/yargs": "^15.0.4",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
+    "chai": "^4.2.0",
+    "chai-semver": "^1.0.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-json": "^2.1.0",
+    "eslint-plugin-mocha": "^6.3.0",
     "eslint-plugin-no-secrets": "^0.3.4",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-optimize-regex": "^1.1.7",
@@ -52,7 +57,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.9.0",
     "husky": "^4.2.3",
+    "mocha": "^7.1.1",
     "npm-run-all": "^4.1.5",
+    "pascalcase": "^1.0.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
     "simple-git": "^1.132.0",
@@ -61,6 +68,7 @@
   },
   "dependencies": {
     "recursive-copy": "^2.0.10",
+    "requireg": "^0.2.2",
     "yargs": "^15.3.1"
   }
 }

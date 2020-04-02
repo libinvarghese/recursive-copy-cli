@@ -16,7 +16,8 @@ module.exports = {
     'plugin:node/recommended',
     'plugin:promise/recommended',
     'plugin:you-dont-need-lodash-underscore/compatible',
-    'plugin:json/recommended'
+    'plugin:json/recommended',
+    'plugin:mocha/recommended'
   ],
   globals: {
     Atomics: 'readonly',
@@ -26,7 +27,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
-    project: ['./tsconfig.json', './scripts/tsconfig.json']
+    project: ['./tsconfig.json', './scripts/tsconfig.json', './tsconfig.test.json']
   },
   plugins: [
     // '@typescript-eslint',
@@ -38,7 +39,8 @@ module.exports = {
   rules: {
     semi: ['error', 'always'],
     'prefer-object-spread': 'error',
-    'no-console': 'error',
+    'no-console': 'warn',
+    '@typescript-eslint/no-unused-vars': 'error',
     'node/no-unsupported-features/es-syntax': [
       'error',
       {
@@ -54,19 +56,41 @@ module.exports = {
       }
     ],
     'node/no-missing-import': 'off',
-    "node/shebang": ["error", {
-      "convertPath": {
-          "src/**/*.ts": ["^src/(.+?)\\.ts$", "dist/$1.js"]
+    'node/shebang': [
+      'error',
+      {
+        convertPath: {
+          'src/**/*.ts': ['^src/(.+?)\\.ts$', 'dist/$1.js']
+        }
       }
-    }],
+    ],
     'optimize-regex/optimize-regex': 'error',
-    'no-secrets/no-secrets': 'error'
+    'no-secrets/no-secrets': 'error',
+    // For some reason this is not working
+    'mocha/max-top-level-suites': ['error', { limit: 1 }],
+    'mocha/no-hooks-for-single-case': 'off',
+    'mocha/no-mocha-arrows': 'off',
+    'mocha/no-return-and-callback': 'warn',
+    'mocha/no-sibling-hooks': 'warn',
+    'mocha/no-top-level-hooks': 'error',
+    'mocha/prefer-arrow-callback': 'error'
   },
   overrides: [
     {
       files: ['scripts/**/*'],
       rules: {
         'no-console': 'off'
+      }
+    },
+    {
+      files: ['src/**/*.spec.ts'],
+      rules: {
+        'node/no-unpublished-import': [
+          'error',
+          {
+            allowModules: ['chai']
+          }
+        ]
       }
     }
   ]
