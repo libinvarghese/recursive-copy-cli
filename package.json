@@ -19,7 +19,7 @@
     "rebuild": "run-s clean build",
     "precommit": "run-p lint check:format checkNotStaged",
     "checkNotStaged": "ts-node -P scripts/tsconfig.json scripts/check-not-staged.ts",
-    "test": "mocha"
+    "test": "mocha src/**/*.spec.ts"
   },
   "husky": {
     "hooks": {
@@ -35,6 +35,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/eslint-plugin-prettier": "^2.2.0",
+    "@types/lodash": "^4.14.149",
     "@types/mocha": "^7.0.2",
     "@types/node": "^13.7.6",
     "@types/prettier": "^1.19.0",
@@ -67,6 +68,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "lodash": "^4.17.15",
     "recursive-copy": "^2.0.10",
     "requireg": "^0.2.2",
     "yargs": "^15.3.1"

@@ -31,14 +31,18 @@
 
   "cSpell.language": "en-GB",
   "cSpell.words": [
+    "FOOBARBAZ",
     "Parens",
     "Unrecognized",
     "builtins",
     "dont",
     "maximatch",
+    "nargs",
     "pascalcase",
     "requireg",
     "shebang",
-    "uglifyify"
+    "toupper",
+    "uglifyify",
+    "vars"
   ]
 }

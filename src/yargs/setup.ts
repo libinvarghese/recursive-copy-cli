@@ -15,7 +15,14 @@ declare module 'yargs' {
      */
     strictCommands(): Argv<T>;
     strictCommands(enabled: boolean): Argv<T>;
+
+    middleware(
+      callbacks: MiddlewareFunctionEx<T> | ReadonlyArray<MiddlewareFunctionEx<T>>,
+      applyBeforeValidation?: boolean
+    ): Argv<T>;
   }
+
+  type MiddlewareFunctionEx<T = {}> = (args: Arguments<T>, yargs: Argv<T>) => void;
 }
 
 yargs
@@ -97,32 +104,15 @@ yargs
   .option('rename-module', {
     alias: 'r',
     description: 'renames source paths using the module',
-    type: 'string',
+    type: 'array',
+    conflicts: ['rename-pattern'],
     requiresArg: true
   })
   .option('rename-pattern', {
     alias: 'p',
-    description: 'renames patterns in source paths.',
-    type: 'string',
-    implies: 'rename-substitute',
-    conflicts: 'rename-module',
-    requiresArg: true
-  })
-  .option('rename-regexp', {
-    alias: 'x',
-    description: 'renames regex patterns in source paths.',
-    type: 'string',
-    implies: 'rename-substitute',
-    conflicts: ['rename-module', 'rename-pattern'],
-    requiresArg: true
-  })
-  .option('rename-substitute', {
-    alias: 's',
-    description:
-      'Substitutes patterns defined in --rename-pattern with the substitutes. Similar to String.prototype.replace substitute string',
-    type: 'string',
-    implies: 'rename-pattern',
-    conflicts: 'rename-module',
+    description: 'renames patterns in source paths. eg: :: -',
+    type: 'array',
+    nargs: 2,
     requiresArg: true
   })
   .strict();
@@ -134,7 +124,16 @@ yargs.middleware([
       throw new Error('Error: Invalid concurrency option');
     }
   },
-  (argv): void => renameParamsToFunction((argv as unknown) as RecursiveCopyCliModel)
+  (argv, yargs): void => {
+    try {
+      renameParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
+    } catch (error) {
+      // When using modules, renameParamsToFunction can throw MODULE_NOT_FOUND exception
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (yargs as any).getUsageInstance().fail(error.message);
+    }
+  }
 ]);
 
 yargs.wrap(yargs.terminalWidth());

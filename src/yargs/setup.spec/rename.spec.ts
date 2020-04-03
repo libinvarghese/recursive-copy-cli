@@ -3,6 +3,7 @@ import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
 import { RecursiveCopyCliModel } from '../../cli-model';
+import { usageRegexp } from './constants';
 
 describe('rename option', () => {
   let args: {
@@ -31,16 +32,10 @@ describe('rename option', () => {
   });
 
   context('with module', () => {
-    it('module', done => {
+    it('should create a function when rename module is provided', done => {
       yargs.parse(
         `${cmdArgs} --rename-module pascalcase`,
-        (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect(error).to.not.exist;
-          expect(output).to.empty;
-          expect(argv).to.include(args);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          expect(argv.renameModule).to.be.equal('pascalcase');
-
+        (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
           expect(argv.rename).to.be.a('function');
 
           const renameFn = argv.rename as (filePath: string) => string;
@@ -50,9 +45,61 @@ describe('rename option', () => {
         }
       );
     });
+
+    it('should create a function when multiple rename modules are provided', done => {
+      yargs.parse(
+        `${cmdArgs} --rename-module pascalcase ./src/yargs/setup.spec/toupper.module.mock.ts`,
+        (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
+          expect(argv.rename).to.be.a('function');
+
+          const renameFn = argv.rename as (filePath: string) => string;
+          expect(renameFn('foo bar baz')).to.be.equal('FOOBARBAZ');
+
+          done();
+        }
+      );
+    });
+
+    it('should fail when rename module is invalid', done => {
+      yargs.parse(
+        `${cmdArgs} --rename-module nonExistantModule`,
+        (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
+          expect(error).to.exist;
+          expect(output).to.match(usageRegexp);
+
+          done();
+        }
+      );
+    });
   });
 
-  it('pattern & substitute');
+  context('with pattern', () => {
+    it('should create a function when rename pattern string is provided', done => {
+      yargs.parse(`${cmdArgs} --rename-pattern a A`, (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
+        expect(argv.rename).to.be.a('function');
+
+        const renameFn = argv.rename as (filePath: string) => string;
+        expect(renameFn('abca')).to.be.equal('Abca');
+
+        done();
+      });
+    });
+
+    it('should create a function when rename pattern regex is provided', done => {
+      yargs.parse(
+        `${cmdArgs} --rename-pattern /a/g A`,
+        (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
+          expect(argv.rename).to.be.a('function');
+
+          const renameFn = argv.rename as (filePath: string) => string;
+          expect(renameFn('abca')).to.be.equal('AbcA');
+
+          done();
+        }
+      );
+    });
+  });
+
   it('regex & substitute');
   it('pattern');
   it('pattern & regex');

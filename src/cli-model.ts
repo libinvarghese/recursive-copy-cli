@@ -5,14 +5,11 @@ export interface RecursiveCopyCliModel {
   expand?: boolean;
   dot?: boolean;
   junk?: boolean;
-  filterRegEx?: string[];
   filterGlob?: string[];
   filterModule?: string;
   filter?: string[] | ((filePath: string) => boolean);
-  renameModule?: string;
-  renamePattern?: string;
-  renameRegexp?: string;
-  renameSubstitute?: string;
+  renameModule?: string[];
+  renamePattern?: string[];
   rename?: (filePath: string) => string;
   transformModule?: string;
   transform?: (filePath: string) => string;

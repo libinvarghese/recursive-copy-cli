@@ -1,7 +1,8 @@
 module.exports = {
   require: 'ts-node/register',
   extension: ['ts'],
-  spec: 'src/**/*.spec.ts',
+  // timeout: 10000,
+  // spec: 'src/**/*.spec.ts',
   'check-leaks': true,
   'watch-files': ['./src/**/*.ts', './src/**/*.spec.ts'],
   reporters: ['spec', 'progress']
