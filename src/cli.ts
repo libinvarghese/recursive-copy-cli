@@ -8,18 +8,30 @@ const copy = require('recursive-copy');
 
 const argv: RecursiveCopyCliModel = (yargs.argv as unknown) as RecursiveCopyCliModel;
 
-copy(argv.src, argv.dest, {
-  // overwrite: argv.overwrite,
-  // expand: argv.expand,
-  // dot: argv.dot,
-  // junk: argv.junk,
-  // filter: argv.filter,
-  rename: argv.rename
-  // transform,
-  // results: argv.results,
-  // concurrency: argv.concurrency,
-  // debug: argv.debug
-})
+const cliOptionsKeysToCopy = [
+  'overwrite',
+  'expand',
+  'dot',
+  'junk',
+  'filter',
+  'rename',
+  'transform',
+  'results',
+  'debug'
+];
+
+// Copy the options from argv to pass to copy
+const options: { [key: string]: unknown } = cliOptionsKeysToCopy.reduce((prev, key) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const value = (argv as any)[key];
+  if (value) {
+    prev[key] = value;
+  }
+
+  return prev;
+}, {} as { [key: string]: unknown });
+
+copy(argv.src, argv.dest, options)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   .on(copy.events.COPY_FILE_COMPLETE, (copyOperation: any) =>
     // eslint-disable-next-line no-console

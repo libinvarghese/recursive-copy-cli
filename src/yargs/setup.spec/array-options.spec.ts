@@ -82,7 +82,7 @@ describe('array options', () => {
       });
 
       it('should fail when no argument is passed with ${key}', done => {
-        yargs.parse(`${cmdArgs} --${key}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+        yargs.parse(`${cmdArgs} --${key}`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
           expect(error).to.exist;
           expect(output).to.match(usageRegexp);
 
@@ -97,7 +97,7 @@ describe('array options', () => {
             const moreArgs = [...cliArrayOptions[key].value, cliArrayOptions[key].value[0]];
             yargs.parse(
               `${cmdArgs} --${key} ${moreArgs.join(' ')}`,
-              (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+              (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
                 expect(error).to.exist;
                 expect(output).to.match(usageRegexp);
 
@@ -111,7 +111,7 @@ describe('array options', () => {
             moreArgs.pop();
             yargs.parse(
               `${cmdArgs} --${key} ${moreArgs.join(' ')}`,
-              (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+              (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
                 expect(error).to.exist;
                 expect(output).to.match(usageRegexp);
 

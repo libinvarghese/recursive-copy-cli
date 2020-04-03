@@ -22,7 +22,7 @@ describe('src and dest is mandatory', () => {
   });
 
   it('should fail when no arguments are passed', done => {
-    yargs.parse('', (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+    yargs.parse('', (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
       expect(error.message).to.contain('got 0');
       expect(output).to.match(usageRegexp);
 
@@ -31,7 +31,7 @@ describe('src and dest is mandatory', () => {
   });
 
   it('should fail when only 1 argument is passed', done => {
-    yargs.parse('srcPath', (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+    yargs.parse('srcPath', (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
       expect(error.message).to.contain('got 1');
       expect(output).to.match(usageRegexp);
 
@@ -40,7 +40,7 @@ describe('src and dest is mandatory', () => {
   });
 
   it('should fail when options are passed', done => {
-    yargs.parse('--debug', (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+    yargs.parse('--debug', (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
       expect(error.message).to.contain('got 0');
       expect(output).to.match(usageRegexp);
 

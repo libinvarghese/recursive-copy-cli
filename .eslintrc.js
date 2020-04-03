@@ -40,7 +40,7 @@ module.exports = {
     semi: ['error', 'always'],
     'prefer-object-spread': 'error',
     'no-console': 'warn',
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
     'node/no-unsupported-features/es-syntax': [
       'error',
       {
