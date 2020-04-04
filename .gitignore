@@ -13,6 +13,8 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 $RECYCLE.BIN/
 *.orig
+*.diff
+*.patch
 
 *.log
 log.txt
