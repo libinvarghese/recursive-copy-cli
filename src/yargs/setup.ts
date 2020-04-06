@@ -1,4 +1,4 @@
-import yargs from 'yargs';
+import yargs, { MiddlewareFunctionEx, Arguments, Argv } from 'yargs';
 import { renameParamsToFunction } from './rename-params-to-fn';
 import { RecursiveCopyCliModel } from '../cli-model';
 import { transformParamsToFunction } from './transform-to-fn';
@@ -24,6 +24,10 @@ declare module 'yargs' {
 
   type MiddlewareFunctionEx<T = {}> = (args: Arguments<T>, yargs: Argv<T>) => void;
 }
+
+yargs.parserConfiguration({
+  'parse-numbers': false
+});
 
 yargs
   .usage('$0 <src> <dest>', '', yargs =>
@@ -117,33 +121,31 @@ yargs
   })
   .strict();
 
+// Handle exceptions thrown by middleware
+function gracefulMiddleware(middleware: MiddlewareFunctionEx): MiddlewareFunctionEx {
+  return (argv: Arguments, yargs: Argv): void => {
+    try {
+      middleware(argv, yargs);
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (yargs as any).getUsageInstance().fail(error.message);
+    }
+  };
+}
+
 yargs.middleware([
-  (argv): void => {
+  gracefulMiddleware((argv): void => {
     // Concurrency can be NaN if the user did not enter a number
     if (argv.concurrency !== undefined && isNaN(argv.concurrency as number)) {
       throw new Error('Error: Invalid concurrency option');
     }
-  },
-  (argv, yargs): void => {
-    try {
-      renameParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
-    } catch (error) {
-      // When using modules, renameParamsToFunction can throw MODULE_NOT_FOUND exception
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (yargs as any).getUsageInstance().fail(error.message);
-    }
-  },
-  (argv, yargs): void => {
-    try {
-      transformParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
-    } catch (error) {
-      // When using modules, renameParamsToFunction can throw MODULE_NOT_FOUND exception
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (yargs as any).getUsageInstance().fail(error.message);
-    }
-  }
+  }),
+  gracefulMiddleware((argv): void => {
+    renameParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
+  }),
+  gracefulMiddleware((argv): void => {
+    transformParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
+  })
 ]);
 
 yargs.wrap(yargs.terminalWidth());

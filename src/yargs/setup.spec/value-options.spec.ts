@@ -8,11 +8,12 @@ import { usageRegexp } from './constants';
 // eslint-disable-next-line mocha/no-setup-in-describe
 describe('value options', () => {
   const cliOtherOptions: {
-    [key: string]: { alias: string; value: string | number; mapKey?: string };
+    [key: string]: { alias: string; value: string | number; invalidValue?: unknown };
   } = {
     concurrency: {
       alias: 'c',
-      value: 10
+      value: 10,
+      invalidValue: 'a'
     }
   };
 
@@ -38,9 +39,6 @@ describe('value options', () => {
           expect(output).to.empty;
           expect(argv).to.include(args);
           expect(argv).to.not.have.property(key);
-          if (cliOtherOptions[key].mapKey) {
-            expect(argv).to.not.have.property(cliOtherOptions[key].mapKey as string);
-          }
 
           done();
         });
@@ -84,6 +82,21 @@ describe('value options', () => {
           done();
         });
       });
+
+      // eslint-disable-next-line mocha/no-setup-in-describe
+      if (cliOtherOptions[key].invalidValue) {
+        it(`should fail when invalid argument is passed with ${key}`, done => {
+          yargs.parse(
+            `${cmdArgs} --${key} ${cliOtherOptions[key].invalidValue}`,
+            (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
+              expect(error).to.exist;
+              expect(output).to.match(usageRegexp);
+
+              done();
+            }
+          );
+        });
+      }
     });
   });
 });
