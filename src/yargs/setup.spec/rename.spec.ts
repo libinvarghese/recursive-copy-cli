@@ -48,7 +48,7 @@ describe('rename option', () => {
 
     it('should create a function when multiple rename modules are provided', done => {
       yargs.parse(
-        `${cmdArgs} --rename-module pascalcase ./src/yargs/setup.spec/toupper.module.mock.ts`,
+        `${cmdArgs} --rename-module pascalcase ./src/yargs/setup.spec/toupper.rename.module.mock.ts`,
         (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
           expect(argv.rename).to.be.a('function');
 

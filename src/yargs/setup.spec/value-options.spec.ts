@@ -13,11 +13,6 @@ describe('value options', () => {
     concurrency: {
       alias: 'c',
       value: 10
-    },
-    'rename-module': {
-      alias: 'r',
-      value: 'pascalcase',
-      mapKey: 'rename'
     }
   };
 

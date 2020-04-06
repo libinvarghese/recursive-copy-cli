@@ -1,3 +1,6 @@
+import { Stats } from 'fs';
+import { Transform } from 'stream';
+
 export interface RecursiveCopyCliModel {
   src: string;
   dest: string;
@@ -7,13 +10,17 @@ export interface RecursiveCopyCliModel {
   junk?: boolean;
   filterGlob?: string[];
   filterModule?: string;
-  filter?: string[] | ((filePath: string) => boolean);
+  filter?: (string | RegExp | FilterFn)[];
   renameModule?: string[];
   renamePattern?: string[];
-  rename?: (filePath: string) => string;
-  transformModule?: string;
-  transform?: (filePath: string) => string;
+  rename?: RenameFn;
+  transformModule?: string[];
+  transform?: TransformFn;
   results?: boolean;
   concurrency?: number;
   debug?: boolean;
 }
+
+export type FilterFn = (filePath: string) => boolean;
+export type RenameFn = (filePath: string) => string;
+export type TransformFn = (src: string, dest: string, stats: Stats) => Transform;

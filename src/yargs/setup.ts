@@ -2,6 +2,7 @@ import yargs from 'yargs';
 import { renameParamsToFunction } from './rename-params-to-fn';
 // import { transformParamsToFunction } from './transform-params-to-function';
 import { RecursiveCopyCliModel } from '../cli-model';
+import { transformParamsToFunction } from './transform-to-fn';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageJSON = require('../../package.json');
@@ -80,7 +81,7 @@ yargs
   .option('transform-module', {
     alias: 't',
     description: 'Function that returns a transform stream used to modify file contents',
-    type: 'string',
+    type: 'array',
     requiresArg: true
   })
   .option('results', {
@@ -127,6 +128,16 @@ yargs.middleware([
   (argv, yargs): void => {
     try {
       renameParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
+    } catch (error) {
+      // When using modules, renameParamsToFunction can throw MODULE_NOT_FOUND exception
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (yargs as any).getUsageInstance().fail(error.message);
+    }
+  },
+  (argv, yargs): void => {
+    try {
+      transformParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
     } catch (error) {
       // When using modules, renameParamsToFunction can throw MODULE_NOT_FOUND exception
 

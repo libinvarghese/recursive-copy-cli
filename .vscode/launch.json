@@ -12,9 +12,9 @@
       "args": [
         "src",
         "dest",
-        "--rename-pattern",
-        "a",
-        "A"
+        "-t",
+        "./src/yargs/setup.spec/toupper.transform.module.mock.ts",
+        "./src/yargs/setup.spec/eol.transform.module.mock.ts"
       ],
       "skipFiles": [
         "<node_internals>/**"

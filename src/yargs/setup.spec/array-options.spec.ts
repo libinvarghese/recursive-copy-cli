@@ -18,8 +18,16 @@ describe('array options', () => {
     },
     'rename-module': {
       alias: 'r',
-      value: ['pascalcase', './src/yargs/setup.spec/toupper.module.mock.ts'],
+      value: ['pascalcase', './src/yargs/setup.spec/toupper.rename.module.mock.ts'],
       mapKey: 'rename'
+    },
+    'transform-module': {
+      alias: 't',
+      value: [
+        './src/yargs/setup.spec/toupper.transform.module.mock.ts',
+        './src/yargs/setup.spec/eol.transform.module.mock.ts'
+      ],
+      mapKey: 'transform'
     }
   };
 
