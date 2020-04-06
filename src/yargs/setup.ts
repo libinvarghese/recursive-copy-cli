@@ -79,9 +79,16 @@ yargs
     type: 'boolean'
   })
   .option('filter-glob', {
-    alias: 'f',
+    alias: 'g',
     description: 'Filter regular expression / glob that determines which files to copy (uses maximatch)',
-    type: 'array'
+    type: 'array',
+    requiresArg: true
+  })
+  .option('filter-module', {
+    alias: 'f',
+    description: 'Filter modules that determines which files to copy (uses maximatch)',
+    type: 'array',
+    requiresArg: true
   })
   .option('transform-module', {
     alias: 't',

@@ -9,7 +9,7 @@ import { camelCase } from 'lodash';
 // eslint-disable-next-line mocha/no-setup-in-describe
 describe('array options', () => {
   const cliArrayOptions: {
-    [key: string]: { alias: string; value: string[]; args?: 2; mapKey: string };
+    [key: string]: { alias: string; value: string[]; args?: 2; mapKey?: string };
   } = {
     'rename-pattern': {
       alias: 'p',
@@ -29,6 +29,20 @@ describe('array options', () => {
         './src/yargs/setup.spec/eol.transform.module.mock.ts'
       ],
       mapKey: 'transform'
+    },
+    'filter-glob': {
+      alias: 'g',
+      value: [
+        './src/yargs/setup.spec/toupper.transform.module.mock.ts',
+        './src/yargs/setup.spec/eol.transform.module.mock.ts'
+      ]
+    },
+    'filter-module': {
+      alias: 'f',
+      value: [
+        './src/yargs/setup.spec/toupper.transform.module.mock.ts',
+        './src/yargs/setup.spec/eol.transform.module.mock.ts'
+      ]
     }
   };
 
@@ -54,7 +68,9 @@ describe('array options', () => {
           expect(output).to.empty;
           expect(argv).to.include(args);
           expect(argv).to.not.have.property(key);
-          expect(argv).to.not.have.property(cliArrayOptions[key].mapKey);
+          if (cliArrayOptions[key].mapKey) {
+            expect(argv).to.not.have.property(cliArrayOptions[key].mapKey as string);
+          }
 
           done();
         });
@@ -69,7 +85,9 @@ describe('array options', () => {
             expect(argv).to.include(args);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(cliArrayOptions[key].value);
-            expect(argv).to.have.property(cliArrayOptions[key].mapKey);
+            if (cliArrayOptions[key].mapKey) {
+              expect(argv).to.have.property(cliArrayOptions[key].mapKey as string);
+            }
 
             done();
           }
@@ -85,7 +103,9 @@ describe('array options', () => {
             expect(argv).to.include(args);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(cliArrayOptions[key].value);
-            expect(argv).to.have.property(cliArrayOptions[key].mapKey);
+            if (cliArrayOptions[key].mapKey) {
+              expect(argv).to.have.property(cliArrayOptions[key].mapKey as string);
+            }
 
             done();
           }
