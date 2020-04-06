@@ -98,15 +98,19 @@ describe('rename option', () => {
         }
       );
     });
-  });
 
-  it('regex & substitute');
-  it('pattern');
-  it('pattern & regex');
-  it('pattern & module');
-  it('substitute');
-  it('substitute & module');
-  it('regex & module');
-  it('pattern & regex & module');
-  it('pattern & regex & string');
+    it('should create a function when rename pattern regex with group capture is provided', done => {
+      yargs.parse(
+        `${cmdArgs} --rename-pattern /(.*)-(.*)\\.(.*)/g $2-$1.$3`,
+        (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
+          expect(argv.rename).to.be.a('function');
+
+          const renameFn = argv.rename as (filePath: string) => string;
+          expect(renameFn('author-title.mp3')).to.be.equal('title-author.mp3');
+
+          done();
+        }
+      );
+    });
+  });
 });
