@@ -10,6 +10,8 @@ export function transformParamsToFunction(argv: RecursiveCopyCliModel): void {
   if (argv.transformModule) {
     const transformFnList = argv.transformModule.map(module => (requireTryAll(module) as unknown) as TransformFn);
     transform = (src: string, dest: string, stats: Stats): Transform => {
+      // pipeline declaration in highland is missing
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (highland as any).pipeline(
         ...transformFnList.map(transformFn => {
           return transformFn(src, dest, stats);
