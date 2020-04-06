@@ -26,7 +26,8 @@ declare module 'yargs' {
 }
 
 yargs.parserConfiguration({
-  'parse-numbers': false
+  'parse-numbers': false,
+  'strip-aliased': true
 });
 
 yargs
