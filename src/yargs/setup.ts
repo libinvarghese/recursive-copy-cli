@@ -27,7 +27,8 @@ declare module 'yargs' {
 
 yargs.parserConfiguration({
   'parse-numbers': false,
-  'strip-aliased': true
+  'strip-aliased': true,
+  'strip-dashed': true
 });
 
 yargs

@@ -4,6 +4,7 @@ import yargs from '../setup';
 
 import { RecursiveCopyCliModel } from '../../cli-model';
 import { usageRegexp } from './constants';
+import { camelCase } from 'lodash';
 
 // eslint-disable-next-line mocha/no-setup-in-describe
 describe('array options', () => {
@@ -67,7 +68,7 @@ describe('array options', () => {
             expect(output).to.empty;
             expect(argv).to.include(args);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            expect((argv as any)[key]).to.be.deep.equal(cliArrayOptions[key].value);
+            expect((argv as any)[camelCase(key)]).to.be.deep.equal(cliArrayOptions[key].value);
 
             done();
           }
@@ -82,7 +83,7 @@ describe('array options', () => {
             expect(output).to.empty;
             expect(argv).to.include(args);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            expect((argv as any)[key]).to.be.deep.equal(cliArrayOptions[key].value);
+            expect((argv as any)[camelCase(key)]).to.be.deep.equal(cliArrayOptions[key].value);
 
             done();
           }

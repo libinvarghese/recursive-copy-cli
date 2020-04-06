@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import yargs from '../setup';
 
 import { RecursiveCopyCliModel } from '../../cli-model';
+import { camelCase } from 'lodash';
 
 describe('boolean options', () => {
   const cliBooleanOptions: {
@@ -49,7 +50,7 @@ describe('boolean options', () => {
           expect(output).to.empty;
           expect(argv).to.include(args);
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          expect((argv as any)[key]).to.be.true;
+          expect((argv as any)[camelCase(key)]).to.be.true;
 
           done();
         });
@@ -63,7 +64,7 @@ describe('boolean options', () => {
             expect(output).to.empty;
             expect(argv).to.include(args);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            expect((argv as any)[key]).to.be.true;
+            expect((argv as any)[camelCase(key)]).to.be.true;
 
             done();
           }
