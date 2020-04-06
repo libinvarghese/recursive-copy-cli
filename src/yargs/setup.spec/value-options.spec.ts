@@ -76,7 +76,7 @@ describe('value options', () => {
         );
       });
 
-      it('should fail when no argument is passed with ${key}', done => {
+      it(`should fail when no argument is passed with ${key}`, done => {
         yargs.parse(`${cmdArgs} --${key}`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
           expect(error).to.exist;
           expect(output).to.match(usageRegexp);
