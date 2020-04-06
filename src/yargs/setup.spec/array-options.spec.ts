@@ -69,6 +69,7 @@ describe('array options', () => {
             expect(argv).to.include(args);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(cliArrayOptions[key].value);
+            expect(argv).to.have.property(cliArrayOptions[key].mapKey);
 
             done();
           }
@@ -84,6 +85,7 @@ describe('array options', () => {
             expect(argv).to.include(args);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(cliArrayOptions[key].value);
+            expect(argv).to.have.property(cliArrayOptions[key].mapKey);
 
             done();
           }
@@ -102,7 +104,7 @@ describe('array options', () => {
       // eslint-disable-next-line mocha/no-setup-in-describe
       if (cliArrayOptions[key].args) {
         context('when argument count is defined', () => {
-          it('should fail when more than required argument is passed with ${key}', done => {
+          it(`should fail when more than required argument is passed with ${key}`, done => {
             const moreArgs = [...cliArrayOptions[key].value, cliArrayOptions[key].value[0]];
             yargs.parse(
               `${cmdArgs} --${key} ${moreArgs.join(' ')}`,
