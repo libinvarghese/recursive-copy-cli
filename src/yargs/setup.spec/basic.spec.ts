@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires, node/no-unpublished-require
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const chaiSemver = require('chai-semver');
 chai.use(chaiSemver);
 

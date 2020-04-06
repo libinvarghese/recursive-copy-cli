@@ -1,4 +1,3 @@
-// eslint-disable-next-line node/no-unpublished-import
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';

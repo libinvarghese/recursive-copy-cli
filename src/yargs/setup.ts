@@ -1,6 +1,5 @@
 import yargs from 'yargs';
 import { renameParamsToFunction } from './rename-params-to-fn';
-// import { transformParamsToFunction } from './transform-params-to-function';
 import { RecursiveCopyCliModel } from '../cli-model';
 import { transformParamsToFunction } from './transform-to-fn';
 

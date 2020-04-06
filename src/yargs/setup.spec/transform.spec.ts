@@ -24,7 +24,6 @@ describe('transform option', () => {
       expect(error).to.not.exist;
       expect(output).to.empty;
       expect(argv).to.include(args);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(argv).to.not.have.property('transform');
 
       done();

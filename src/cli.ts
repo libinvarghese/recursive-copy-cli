@@ -38,11 +38,11 @@ copy(argv.src, argv.dest, options)
     console.info(`${copyOperation.src} -> ${copyOperation.dest}`)
   )
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  .on(copy.events.ERROR, (error: any, copyOperation: any) =>
+  .on(copy.events.ERROR, (error: unknown, copyOperation: any) =>
     // eslint-disable-next-line no-console
     console.error(`Unable to copy ${copyOperation.src} -> ${copyOperation.src}. ERR: ${error}`)
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any,no-console
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-console
   .then((results: any) => console.info(results.length + ' file(s) copied'))
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any,no-console
-  .catch((error: any) => console.error('Copy failed! ERR: ' + error));
+  // eslint-disable-next-line no-console
+  .catch((error: unknown) => console.error('Copy failed! ERR: ' + error));

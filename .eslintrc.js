@@ -90,6 +90,12 @@ module.exports = {
           {
             allowModules: ['chai']
           }
+        ],
+        'node/no-unpublished-require': [
+          'error',
+          {
+            allowModules: ['chai-semver']
+          }
         ]
       }
     }
