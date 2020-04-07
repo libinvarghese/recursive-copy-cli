@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-import { RecursiveCopyCliModel } from '../../cli-model';
+import { RecursiveCopyCliModel, RenameFn } from '../../cli-model';
 import { usageRegexp } from './constants';
 
 describe('rename option', () => {
@@ -37,7 +37,7 @@ describe('rename option', () => {
         (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
           expect(argv.rename).to.be.a('function');
 
-          const renameFn = argv.rename as (filePath: string) => string;
+          const renameFn = argv.rename as RenameFn;
           expect(renameFn('foo bar baz')).to.be.equal('FooBarBaz');
 
           done();
@@ -51,7 +51,7 @@ describe('rename option', () => {
         (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
           expect(argv.rename).to.be.a('function');
 
-          const renameFn = argv.rename as (filePath: string) => string;
+          const renameFn = argv.rename as RenameFn;
           expect(renameFn('foo bar baz')).to.be.equal('FOOBARBAZ');
 
           done();
@@ -77,7 +77,7 @@ describe('rename option', () => {
       yargs.parse(`${cmdArgs} --rename-pattern a A`, (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
         expect(argv.rename).to.be.a('function');
 
-        const renameFn = argv.rename as (filePath: string) => string;
+        const renameFn = argv.rename as RenameFn;
         expect(renameFn('abca')).to.be.equal('Abca');
 
         done();
@@ -90,7 +90,7 @@ describe('rename option', () => {
         (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
           expect(argv.rename).to.be.a('function');
 
-          const renameFn = argv.rename as (filePath: string) => string;
+          const renameFn = argv.rename as RenameFn;
           expect(renameFn('abca')).to.be.equal('AbcA');
 
           done();
@@ -104,7 +104,7 @@ describe('rename option', () => {
         (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
           expect(argv.rename).to.be.a('function');
 
-          const renameFn = argv.rename as (filePath: string) => string;
+          const renameFn = argv.rename as RenameFn;
           expect(renameFn('author-title.mp3')).to.be.equal('title-author.mp3');
 
           done();

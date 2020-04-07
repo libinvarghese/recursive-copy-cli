@@ -1,12 +1,12 @@
-import { RecursiveCopyCliModel } from '../cli-model';
+import { RecursiveCopyCliModel, RenameFn } from '../cli-model';
 import { requireTryAll } from './requireTryAll';
 import flow from 'lodash/fp/flow';
 
 export function renameParamsToFunction(argv: RecursiveCopyCliModel): void {
-  let rename: ((filePath: string) => string) | undefined = undefined;
+  let rename: RenameFn | undefined = undefined;
 
   if (argv.renameModule) {
-    const renameFnList = argv.renameModule.map(module => requireTryAll(module) as (filePath: string) => string);
+    const renameFnList = argv.renameModule.map(module => requireTryAll(module) as RenameFn);
     rename = (src: string): string => flow(renameFnList)(src);
   } else if (argv.renamePattern) {
     const [regexpStr, substitute] = argv.renamePattern;
