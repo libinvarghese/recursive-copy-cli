@@ -1,25 +1,4 @@
-import chai, { expect } from 'chai';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const chaiSemver = require('chai-semver');
-chai.use(chaiSemver);
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Chai {
-    interface Assertion {
-      semver(): Assertion;
-      satisfySemver(expected: string): Assertion;
-    }
-
-    // interface Assert {
-    //   semver(val: unknown, msg?: string): void;
-    //   satisfySemver(val: unknown, expected: string, msg?: string): void;
-    // }
-  }
-}
-
-// declare function chaiSemver: Chai.ChaiPlugin;
+import { expect } from 'chai';
 
 // eslint-disable-next-line import/default
 import yargs from '../setup';

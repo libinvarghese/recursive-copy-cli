@@ -83,7 +83,7 @@ module.exports = {
       }
     },
     {
-      files: ['src/**/*.spec.ts'],
+      files: ['src/**/*.spec.ts', 'src/**/*.spec/*'],
       rules: {
         'node/no-unpublished-import': [
           'error',

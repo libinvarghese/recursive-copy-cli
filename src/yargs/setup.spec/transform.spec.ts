@@ -21,9 +21,7 @@ describe('transform option', () => {
 
   it('should be undefined when not specified', done => {
     yargs.parse(`${cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-      expect(error).to.not.exist;
-      expect(output).to.empty;
-      expect(argv).to.include(args);
+      expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
       expect(argv).to.not.have.property('transform');
 
       done();
@@ -33,7 +31,8 @@ describe('transform option', () => {
   it('should create a function when transform module is provided', done => {
     yargs.parse(
       `${cmdArgs} --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts`,
-      (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
+      (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+        expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
         expect(argv.transform).to.be.a('function');
 
         done();
@@ -44,7 +43,8 @@ describe('transform option', () => {
   it('should create a function when multiple transform modules are provided', done => {
     yargs.parse(
       `${cmdArgs} --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts ./src/yargs/setup.spec/eol.transform.module.mock.ts`,
-      (_error: Error, argv: RecursiveCopyCliModel, _output: unknown) => {
+      (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+        expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
         expect(argv.transform).to.be.a('function');
 
         done();

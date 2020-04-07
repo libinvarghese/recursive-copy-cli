@@ -36,9 +36,7 @@ describe('value options', () => {
 
       it('should be undefined when not specified', done => {
         yargs.parse(`${cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect(error).to.not.exist;
-          expect(output).to.empty;
-          expect(argv).to.include(args);
+          expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
           expect(argv).to.not.have.property(key);
 
           done();
@@ -49,9 +47,7 @@ describe('value options', () => {
         yargs.parse(
           `${cmdArgs} --${key} ${cliOtherOptions[key].value}`,
           (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-            expect(error).to.not.exist;
-            expect(output).to.empty;
-            expect(argv).to.include(args);
+            expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.equal(cliOtherOptions[key].value);
 
@@ -64,9 +60,7 @@ describe('value options', () => {
         yargs.parse(
           `${cmdArgs} --${cliOtherOptions[key].alias} ${cliOtherOptions[key].value}`,
           (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-            expect(error).to.not.exist;
-            expect(output).to.empty;
-            expect(argv).to.include(args);
+            expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.equal(cliOtherOptions[key].value);
 

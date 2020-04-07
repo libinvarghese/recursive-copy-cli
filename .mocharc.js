@@ -1,5 +1,6 @@
+const path = require('path');
 module.exports = {
-  require: 'ts-node/register',
+  require: ['ts-node/register', path.resolve('./src/lib.spec/chai')],
   extension: ['ts'],
   timeout: 5000,
   // spec: 'src/**/*.spec.ts',

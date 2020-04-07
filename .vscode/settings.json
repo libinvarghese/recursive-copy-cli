@@ -23,6 +23,7 @@
 
   "mochaExplorer.cwd": "./",
   "mochaExplorer.logpanel": true,
+  "mochaExplorer.files": "src/**/*.spec.ts",
 
   "docthis.includeMemberOfOnClassMembers": false,
   "docthis.includeMemberOfOnInterfaceMembers": false,
