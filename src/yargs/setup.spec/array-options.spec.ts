@@ -30,19 +30,9 @@ describe('array options', () => {
       ],
       mapKey: 'transform'
     },
-    'filter-glob': {
-      alias: 'g',
-      value: [
-        './src/yargs/setup.spec/toupper.transform.module.mock.ts',
-        './src/yargs/setup.spec/eol.transform.module.mock.ts'
-      ]
-    },
-    'filter-module': {
+    filter: {
       alias: 'f',
-      value: [
-        './src/yargs/setup.spec/toupper.transform.module.mock.ts',
-        './src/yargs/setup.spec/eol.transform.module.mock.ts'
-      ]
+      value: ['*.ts', '*.js']
     }
   };
 

@@ -14,7 +14,11 @@ export function renameParamsToFunction(argv: RecursiveCopyCliModel): void {
     let regexp: RegExp;
     if (regParts) {
       // the parsed pattern had delimiters and modifiers. handle them.
-      regexp = new RegExp(regParts[1], regParts[2]);
+
+      // if flags is "", use undefined as you cant pass "" to new RegExp
+      const flags = regParts[2] || undefined;
+
+      regexp = new RegExp(regParts[1], flags);
     } else {
       // we got pattern string without delimiters
       regexp = new RegExp(regexpStr);

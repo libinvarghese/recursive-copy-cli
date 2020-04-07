@@ -88,7 +88,7 @@ module.exports = {
         'node/no-unpublished-import': [
           'error',
           {
-            allowModules: ['chai']
+            allowModules: ['chai', 'chai-arrays']
           }
         ],
         'node/no-unpublished-require': [

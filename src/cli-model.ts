@@ -8,9 +8,7 @@ export interface RecursiveCopyCliModel {
   expand?: boolean;
   dot?: boolean;
   junk?: boolean;
-  filterGlob?: string[];
-  filterModule?: string;
-  filter?: (string | RegExp | FilterFn)[];
+  filter?: (string | RegExp)[];
   renameModule?: string[];
   renamePattern?: string[];
   rename?: RenameFn;
@@ -21,6 +19,5 @@ export interface RecursiveCopyCliModel {
   debug?: boolean;
 }
 
-export type FilterFn = (filePath: string) => boolean;
 export type RenameFn = (filePath: string) => string;
 export type TransformFn = (src: string, dest: string, stats: Stats) => Transform;

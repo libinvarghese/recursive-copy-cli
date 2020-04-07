@@ -12,9 +12,8 @@
       "args": [
         "src",
         "dest",
-        "-t",
-        "./src/yargs/setup.spec/toupper.transform.module.mock.ts",
-        "./src/yargs/setup.spec/eol.transform.module.mock.ts"
+        "-f",
+        "/*.ts/"
       ],
       "skipFiles": [
         "<node_internals>/**"

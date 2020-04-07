@@ -2,6 +2,7 @@ import yargs, { MiddlewareFunctionEx, Arguments, Argv } from 'yargs';
 import { renameParamsToFunction } from './rename-params-to-fn';
 import { RecursiveCopyCliModel } from '../cli-model';
 import { transformParamsToFunction } from './transform-to-fn';
+import { filterMiddleware } from './filter-middleware';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageJSON = require('../../package.json');
@@ -78,15 +79,9 @@ yargs
     description: 'Whether to copy OS junk files (e.g. .DS_Store, Thumbs.db) [Default: false]',
     type: 'boolean'
   })
-  .option('filter-glob', {
-    alias: 'g',
-    description: 'Filter regular expression / glob that determines which files to copy (uses maximatch)',
-    type: 'array',
-    requiresArg: true
-  })
-  .option('filter-module', {
+  .option('filter', {
     alias: 'f',
-    description: 'Filter modules that determines which files to copy (uses maximatch)',
+    description: 'Filter regular expression / glob that determines which files to copy (uses maximatch)',
     type: 'array',
     requiresArg: true
   })
@@ -154,6 +149,9 @@ yargs.middleware([
   }),
   gracefulMiddleware((argv): void => {
     transformParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
+  }),
+  gracefulMiddleware((argv): void => {
+    filterMiddleware((argv as unknown) as RecursiveCopyCliModel);
   })
 ]);
 
