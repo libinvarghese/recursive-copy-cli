@@ -44,11 +44,14 @@ yargs
         type: 'string'
       })
       .demandCommand(0, 0, '', 'Too many arguments: got $0 unknown arguments')
-      .example(`$0 srcPath destPath -m pascalcase`, 'Renames files using the pascalcase module')
-      .example(`$0 srcPath destPath -p '::' -s '-'`, 'Renames someFile::name.ext to someFile-name.ext')
-      .example(`$0 srcPath destPath -x '/(\\w*)::(\\w*)/g' -s '$2-$1'`, 'Renames author::title.ext to title-author.ext')
-      .example(`$0 srcPath destPath -f '*.json' '*.[js|ts]'`, 'Only Copies json, js, & ts files')
-      .example(`$0 srcPath destPath -f "*.js" -t babelify uglifyify`, 'Minify JS files')
+      .example(`$0 srcPath destPath -r pascalcase`, 'Renames files using the pascalcase module')
+      .example(`$0 srcPath destPath -p '::' '-'`, 'Renames someFile::name.ext to someFile-name.ext')
+      .example(
+        `$0 srcPath destPath -p '/(.*)-(.*)\\.(.*)/g' '$2-$1.$3'`,
+        'Renames author::title.ext to title-author.ext'
+      )
+      .example(`$0 srcPath destPath -f '*.json' '/\\*.js$/'`, 'Only Copies json & js files')
+      .example(`$0 srcPath destPath -f "*.js" -t some-transform-module`, 'modify the contents of js files')
       .epilogue(`Use --no-<option> to toggle boolean options. eg: --no-results or --no-o
 
 When specifying a module, you could specify a global module, local module or provide the path to file.

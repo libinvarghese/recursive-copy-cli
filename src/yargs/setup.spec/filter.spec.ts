@@ -27,6 +27,7 @@ describe('filter option', () => {
   });
 
   it('should create an array filter globs when strings are provided', done => {
+    // > recursive-copy srcPath destPath --filter "*.js" "*.json"
     yargs.parse(`${cmdArgs} --filter "*.js" "*.json"`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
       expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
       expect(argv.filter).to.be.array();
@@ -37,6 +38,7 @@ describe('filter option', () => {
   });
 
   it('should create an array of filter globs when regexp are provided', done => {
+    // > recursive-copy srcPath destPath --filter "/\\.ts$/"
     yargs.parse(`${cmdArgs} --filter "/\\.ts$/"`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
       expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
       expect(argv.filter).to.be.array();
@@ -48,6 +50,7 @@ describe('filter option', () => {
 
   it('should create an array of filter globs when both regexp & string are provided', done => {
     yargs.parse(
+      // > recursive-copy srcPath destPath --filter "/\\.ts$/" "*.js"
       `${cmdArgs} --filter "/\\.ts$/" "*.js"`,
       (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
         expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
@@ -60,6 +63,7 @@ describe('filter option', () => {
   });
 
   it('should fail when invalid regexp are provided', done => {
+    // > recursive-copy srcPath destPath --filter "/*.ts/" # ERROR
     yargs.parse(`${cmdArgs} --filter "/*.ts/"`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
       expect({ error, output }).to.be.errorOnArgsParsing();
 

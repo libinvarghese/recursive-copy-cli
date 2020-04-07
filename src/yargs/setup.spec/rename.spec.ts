@@ -28,6 +28,7 @@ describe('rename option', () => {
 
   context('with module', () => {
     it('should create a function when rename module is provided', done => {
+      // > recursive-copy srcPath destPath --rename-module pascalcase
       yargs.parse(
         `${cmdArgs} --rename-module pascalcase`,
         (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
@@ -43,6 +44,7 @@ describe('rename option', () => {
     });
 
     it('should create a function when multiple rename modules are provided', done => {
+      // > recursive-copy srcPath destPath --rename-module pascalcase ./src/yargs/setup.spec/toupper.rename.module.mock.ts
       yargs.parse(
         `${cmdArgs} --rename-module pascalcase ./src/yargs/setup.spec/toupper.rename.module.mock.ts`,
         (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
@@ -71,6 +73,7 @@ describe('rename option', () => {
 
   context('with pattern', () => {
     it('should create a function when rename pattern string is provided', done => {
+      // > recursive-copy srcPath destPath --rename-pattern a A
       yargs.parse(`${cmdArgs} --rename-pattern a A`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
         expect({ error, argv, output, args }).to.be.argsSuccessfullyParsed();
         expect(argv.rename).to.be.a('function');
@@ -83,6 +86,7 @@ describe('rename option', () => {
     });
 
     it('should create a function when rename pattern regex is provided', done => {
+      // > recursive-copy srcPath destPath /a/g A
       yargs.parse(
         `${cmdArgs} --rename-pattern /a/g A`,
         (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
@@ -98,6 +102,7 @@ describe('rename option', () => {
     });
 
     it('should create a function when rename pattern regex with group capture is provided', done => {
+      // > recursive-copy srcPath destPath --rename-pattern /(.*)-(.*)\\.(.*)/g $2-$1.$3  # author-title.mp3 to title-author.mp3
       yargs.parse(
         `${cmdArgs} --rename-pattern /(.*)-(.*)\\.(.*)/g $2-$1.$3`,
         (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {

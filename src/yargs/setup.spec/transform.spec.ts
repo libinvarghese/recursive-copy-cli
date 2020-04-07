@@ -27,6 +27,7 @@ describe('transform option', () => {
   });
 
   it('should create a function when transform module is provided', done => {
+    // > recursive-copy srcPath destPath --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts
     yargs.parse(
       `${cmdArgs} --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts`,
       (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
@@ -39,6 +40,8 @@ describe('transform option', () => {
   });
 
   it('should create a function when multiple transform modules are provided', done => {
+    // > recursive-copy srcPath destPath --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts \
+    //     ./src/yargs/setup.spec/eol.transform.module.mock.ts
     yargs.parse(
       `${cmdArgs} --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts ./src/yargs/setup.spec/eol.transform.module.mock.ts`,
       (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
