@@ -3,6 +3,7 @@ import chaiArrays from 'chai-arrays';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
 import { RecursiveCopyCliModel } from '../../cli-model';
+import { usageRegexp } from './constants';
 
 chai.use(chaiArrays);
 
@@ -62,5 +63,14 @@ describe('filter option', () => {
         done();
       }
     );
+  });
+
+  it('should fail when invalid regexp are provided', done => {
+    yargs.parse(`${cmdArgs} --filter "/*.ts/"`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
+      expect(error).to.exist;
+      expect(output).to.match(usageRegexp);
+
+      done();
+    });
   });
 });

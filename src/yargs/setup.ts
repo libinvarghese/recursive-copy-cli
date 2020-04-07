@@ -2,7 +2,7 @@ import yargs, { MiddlewareFunctionEx, Arguments, Argv } from 'yargs';
 import { renameParamsToFunction } from './rename-params-to-fn';
 import { RecursiveCopyCliModel } from '../cli-model';
 import { transformParamsToFunction } from './transform-to-fn';
-import { filterMiddleware } from './filter-middleware';
+import { filterCoerce } from './filter-coerce';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageJSON = require('../../package.json');
@@ -83,7 +83,8 @@ yargs
     alias: 'f',
     description: 'Filter regular expression / glob that determines which files to copy (uses maximatch)',
     type: 'array',
-    requiresArg: true
+    requiresArg: true,
+    coerce: filterCoerce
   })
   .option('transform-module', {
     alias: 't',
@@ -149,9 +150,6 @@ yargs.middleware([
   }),
   gracefulMiddleware((argv): void => {
     transformParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
-  }),
-  gracefulMiddleware((argv): void => {
-    filterMiddleware((argv as unknown) as RecursiveCopyCliModel);
   })
 ]);
 
