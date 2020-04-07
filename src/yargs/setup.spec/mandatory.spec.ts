@@ -1,9 +1,8 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-
 import { RecursiveCopyCliModel } from '../../cli-model';
-import { usageRegexp } from './constants';
+import { usageRegexp } from '../../lib.spec/constants';
 
 describe('src and dest is mandatory', () => {
   it('should parse src and dest when passed as arguments', done => {

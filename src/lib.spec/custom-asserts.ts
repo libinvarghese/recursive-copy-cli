@@ -1,4 +1,5 @@
 import { RecursiveCopyCliModel } from '../cli-model';
+import { usageRegexp } from './constants';
 
 export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, _utils: Chai.ChaiUtils) => {
   const Assertion = chai.Assertion;
@@ -22,6 +23,19 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, _utils: Cha
     new Assertion(output).to.empty;
     new Assertion(argv).to.include(args);
   });
+
+  Assertion.addMethod('errorOnArgsParsing', function() {
+    const {
+      error,
+      output
+    }: {
+      error: Error;
+      output: unknown;
+    } = this._obj;
+
+    new Assertion(error).to.exist;
+    new Assertion(output).to.match(usageRegexp);
+  });
 };
 
 declare global {
@@ -29,6 +43,7 @@ declare global {
   namespace Chai {
     interface Assertion {
       argsSuccessfullyParsed(): Assertion;
+      errorOnArgsParsing(): Assertion;
     }
   }
 }

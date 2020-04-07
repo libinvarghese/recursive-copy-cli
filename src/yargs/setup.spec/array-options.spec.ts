@@ -1,10 +1,8 @@
 import { expect } from 'chai';
+import { camelCase } from 'lodash';
+import { RecursiveCopyCliModel } from '../../cli-model';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-
-import { RecursiveCopyCliModel } from '../../cli-model';
-import { usageRegexp } from './constants';
-import { camelCase } from 'lodash';
 
 // eslint-disable-next-line mocha/no-setup-in-describe
 describe('array options', () => {
@@ -98,8 +96,7 @@ describe('array options', () => {
 
       it(`should fail when no argument is passed with ${key}`, done => {
         yargs.parse(`${cmdArgs} --${key}`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
-          expect(error).to.exist;
-          expect(output).to.match(usageRegexp);
+          expect({ error, output }).to.be.errorOnArgsParsing();
 
           done();
         });
@@ -113,8 +110,7 @@ describe('array options', () => {
             yargs.parse(
               `${cmdArgs} --${key} ${moreArgs.join(' ')}`,
               (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
-                expect(error).to.exist;
-                expect(output).to.match(usageRegexp);
+                expect({ error, output }).to.be.errorOnArgsParsing();
 
                 done();
               }
@@ -127,8 +123,7 @@ describe('array options', () => {
             yargs.parse(
               `${cmdArgs} --${key} ${moreArgs.join(' ')}`,
               (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
-                expect(error).to.exist;
-                expect(output).to.match(usageRegexp);
+                expect({ error, output }).to.be.errorOnArgsParsing();
 
                 done();
               }

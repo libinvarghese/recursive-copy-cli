@@ -1,9 +1,7 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-
 import { RecursiveCopyCliModel } from '../../cli-model';
-import { usageRegexp } from './constants';
 
 describe('exclusive options', () => {
   const cliExclusiveOptions: {
@@ -40,8 +38,7 @@ describe('exclusive options', () => {
 
       it('should fail when exclusive options are used', done => {
         yargs.parse(`${cmdArgs} ${optStr}`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
-          expect(error).to.exist;
-          expect(output).to.match(usageRegexp);
+          expect({ error, output }).to.be.errorOnArgsParsing();
 
           done();
         });

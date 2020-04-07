@@ -2,7 +2,6 @@ import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
 import { RecursiveCopyCliModel } from '../../cli-model';
-import { usageRegexp } from './constants';
 
 describe('filter option', () => {
   let args: {
@@ -62,8 +61,7 @@ describe('filter option', () => {
 
   it('should fail when invalid regexp are provided', done => {
     yargs.parse(`${cmdArgs} --filter "/*.ts/"`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
-      expect(error).to.exist;
-      expect(output).to.match(usageRegexp);
+      expect({ error, output }).to.be.errorOnArgsParsing();
 
       done();
     });

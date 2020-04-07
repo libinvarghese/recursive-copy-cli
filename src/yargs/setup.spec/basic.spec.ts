@@ -1,8 +1,7 @@
 import { expect } from 'chai';
-
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-import { usageRegexp } from './constants';
+import { usageRegexp } from '../../lib.spec/constants';
 
 describe('cli basics', () => {
   it('should have options to show help', done => {

@@ -1,9 +1,7 @@
 import { expect } from 'chai';
-
 // eslint-disable-next-line import/default
 import yargs from '../setup';
 import { RecursiveCopyCliModel, RenameFn } from '../../cli-model';
-import { usageRegexp } from './constants';
 
 describe('rename option', () => {
   let args: {
@@ -63,8 +61,7 @@ describe('rename option', () => {
       yargs.parse(
         `${cmdArgs} --rename-module nonExistantModule`,
         (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
-          expect(error).to.exist;
-          expect(output).to.match(usageRegexp);
+          expect({ error, output }).to.be.errorOnArgsParsing();
 
           done();
         }
