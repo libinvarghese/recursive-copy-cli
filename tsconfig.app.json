@@ -1,4 +1,8 @@
 {
   "extends": "./tsconfig",
-  "exclude": ["src/**/*.spec.ts", "src/**/*.spec/*"]
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./dist"
+  },
+  "exclude": ["server/**/*.spec.ts", "server/**/*.spec/*"]
 }

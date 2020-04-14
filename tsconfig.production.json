@@ -1,8 +1,6 @@
 {
   "extends": "./tsconfig.app",
   "compilerOptions": {
-    "noEmit": false,
-    "outDir": "./dist",
     "sourceMap": false
   }
 }
