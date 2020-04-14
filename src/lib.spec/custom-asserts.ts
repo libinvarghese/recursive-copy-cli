@@ -1,4 +1,4 @@
-import { RecursiveCopyCliModel } from '../cli-model';
+import { RecursiveCopyCliModel } from '../cli.model';
 import { usageRegexp } from './constants';
 
 export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, _utils: Chai.ChaiUtils) => {

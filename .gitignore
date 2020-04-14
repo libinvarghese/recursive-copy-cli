@@ -20,6 +20,8 @@ $RECYCLE.BIN/
 log.txt
 npm-debug.log*
 /dist
+/.nyc_output
+/coverage
 *.tgz
 *.zip
 

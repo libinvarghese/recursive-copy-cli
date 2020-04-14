@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // eslint-disable-next-line import/default
 import yargs from './yargs/setup';
-import { RecursiveCopyCliModel } from './cli-model';
+import { RecursiveCopyCliModel } from './cli.model';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const copy = require('recursive-copy');

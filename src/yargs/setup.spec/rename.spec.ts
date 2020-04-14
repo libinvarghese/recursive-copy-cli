@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-import { RecursiveCopyCliModel, RenameFn } from '../../cli-model';
+import { RecursiveCopyCliModel, RenameFn } from '../../cli.model';
 
 describe('rename option', () => {
   let args: {

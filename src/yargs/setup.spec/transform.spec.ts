@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-import { RecursiveCopyCliModel } from '../../cli-model';
+import { RecursiveCopyCliModel } from '../../cli.model';
 
 describe('transform option', () => {
   let args: {

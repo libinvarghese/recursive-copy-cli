@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { camelCase } from 'lodash';
-import { RecursiveCopyCliModel } from '../../cli-model';
+import { RecursiveCopyCliModel } from '../../cli.model';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
 

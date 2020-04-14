@@ -1,4 +1,4 @@
-import { RecursiveCopyCliModel, RenameFn } from '../cli-model';
+import { RecursiveCopyCliModel, RenameFn } from '../cli.model';
 import { requireTryAll } from './requireTryAll';
 import flow from 'lodash/fp/flow';
 
