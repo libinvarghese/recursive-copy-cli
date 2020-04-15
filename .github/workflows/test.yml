@@ -1,20 +1,37 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: On Push Build CI
+name: Test CI
 
 on:
   push:
     branches:
       - master
-    paths:
-      - 'tsconfig*'
-      - 'src/**.ts'
-      - "!src/**.spec.ts"
-      - "!src/**.spec/**.ts"
+      - develop
+      - feature/**
+      - bugfix/**
+      - release/**
+      - hotfix/**
+      - support/**
+    tags:
+      - v*
+    paths-ignore:
+      - '**.md'
+      - 'scripts/**'
+      - '.vscode/**'
+      # - '.github/**'
+  pull-request:
+    branches:
+      - master
+      - develop
+    paths-ignore:
+      - '**.md'
+      - 'scripts/**'
+      - '.vscode/**'
+      # - '.github/**'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,12 +43,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Get npm cache directory
+      id: npm-cache
+      run: |
+        echo "::set-output name=dir::$(npm config get cache)"
     - name: Cache Node.js modules
       uses: actions/cache@v1
       env:
         cache-name: cache-node-modules
       with:
-        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ${{ steps.npm-cache.outputs.dir }}
         key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.OS }}-${{ env.cache-name }}-
@@ -47,7 +68,6 @@ jobs:
     - name: Install Dependencies
       if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
       run: npm ci
-    - run: npm run build
+    - run: npm run test
       env:
         CI: true
-        NODE_ENV: production

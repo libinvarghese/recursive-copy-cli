@@ -1,27 +1,48 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: On Push Coverage CI
+name: Build CI
 
 on:
   push:
     branches:
       - master
-    paths-ignore:
-      - '**.md'
-      - 'scripts/**'
-      - '.vscode/**'
-      # - '.github/**'
+      - develop
+      - feature/**
+      - bugfix/**
+      - release/**
+      - hotfix/**
+      - support/**
+    tags:
+      - v*
+    paths:
+      - 'tsconfig*'
+      - 'src/**.ts'
+      - "!src/**.spec.ts"
+      - "!src/**.spec/**.ts"
+  pull-request:
+    branches:
+      - master
+      - develop
+    paths:
+      - 'tsconfig*'
+      - 'src/**.ts'
+      - "!src/**.spec.ts"
+      - "!src/**.spec/**.ts"
 
 jobs:
-  coverage:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 12.x
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
-        node-version: 12.x
+        node-version: ${{ matrix.node-version }}
     - name: Cache Node.js modules
       uses: actions/cache@v1
       env:
@@ -43,10 +64,7 @@ jobs:
     - name: Install Dependencies
       if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
       run: npm ci
-    - run: npm run coverage
+    - run: npm run build
       env:
         CI: true
-    - name: Upload to Codecov
-      uses: codecov/codecov-action@v1.0.6
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        NODE_ENV: production
