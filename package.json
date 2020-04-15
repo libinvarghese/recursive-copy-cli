@@ -38,6 +38,7 @@
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
     "@types/chai-arrays": "^1.0.3",
+    "@types/eslint": "^6.8.0",
     "@types/eslint-plugin-prettier": "^2.2.0",
     "@types/highland": "^2.12.9",
     "@types/lodash": "^4.14.149",
