@@ -32,11 +32,21 @@ jobs:
         restore-keys: |
           ${{ runner.OS }}-${{ env.cache-name }}-
           ${{ runner.OS }}-
-    - run: npm ci
+    - name: Cache Project node_modules
+      uses: actions/cache@v1
+      id: cache-project-node-modules
+      env:
+        cache-name: cache-project-node-modules
+      with:
+        path: node_modules
+        key: ${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles('**/package-lock.json') }}
+    - name: Install Dependencies
+      if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
+      run: npm ci
     - run: npm run coverage
       env:
         CI: true
-    - name: Codecov
+    - name: Upload to Codecov
       uses: codecov/codecov-action@v1.0.6
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
