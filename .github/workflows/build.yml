@@ -16,6 +16,7 @@ on:
     tags:
       - v*
     paths:
+      - 'package*.json'
       - 'tsconfig*'
       - 'src/**.ts'
       - "!src/**.spec.ts"
