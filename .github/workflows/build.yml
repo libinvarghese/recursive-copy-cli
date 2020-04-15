@@ -20,7 +20,7 @@ on:
       - 'src/**.ts'
       - "!src/**.spec.ts"
       - "!src/**.spec/**.ts"
-  pull-request:
+  pull_request:
     branches:
       - master
       - develop

@@ -20,7 +20,7 @@ on:
       - 'scripts/**'
       - '.vscode/**'
       # - '.github/**'
-  pull-request:
+  pull_request:
     branches:
       - master
       - develop

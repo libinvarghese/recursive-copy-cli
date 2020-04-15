@@ -17,7 +17,7 @@ on:
       - v*
     paths-ignore:
       - '**.md'
-  pull-request:
+  pull_request:
     branches:
       - master
       - develop
