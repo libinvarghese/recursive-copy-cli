@@ -52,7 +52,7 @@ yargs
       )
       .example(`$0 srcPath destPath -f '*.json' '/\\*.js$/'`, 'Only Copies json & js files')
       .example(`$0 srcPath destPath -f "*.js" -t some-transform-module`, 'modify the contents of js files')
-      .epilogue(`Use --no-<option> to toggle boolean options. eg: --no-results or --no-o
+      .epilogue(`Use --no-<option> to toggle boolean options. eg: --no-overwrite or --no-w
 
 When specifying a module, you could specify a global module, local module or provide the path to file.
 eg: ./someFolder/pascalcase/index.js
@@ -94,11 +94,6 @@ yargs
     description: 'Function that returns a transform stream used to modify file contents',
     type: 'array',
     requiresArg: true
-  })
-  .option('results', {
-    alias: 'o',
-    description: 'Whether to return an array of copy results [Default: true]',
-    type: 'boolean'
   })
   .option('concurrency', {
     alias: 'c',

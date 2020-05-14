@@ -3,5 +3,5 @@
   "compilerOptions": {
     "noEmit": true
   },
-  "include": ["**/*.spec.ts"]
+  "include": ["**/*.spec.ts", "**/*.spec.e2e.ts"]
 }

@@ -4,7 +4,7 @@ import yargs from '../setup';
 import { RecursiveCopyCliModel } from '../../cli.model';
 
 describe('exclusive options', () => {
-  const cliExclusiveOptions: {
+  const _cliExclusiveOptions: {
     [key: string]: string[];
   }[] = [
     {
@@ -14,30 +14,30 @@ describe('exclusive options', () => {
   ];
 
   // eslint-disable-next-line mocha/no-setup-in-describe
-  cliExclusiveOptions.forEach(option => {
+  _cliExclusiveOptions.forEach(option => {
     // eslint-disable-next-line mocha/no-setup-in-describe
     context(Object.keys(option).toString(), () => {
       // eslint-disable-next-line mocha/no-setup-in-describe
-      let optStr = '';
-      let args: {
+      let _optStr = '';
+      let _args: {
         [key: string]: string;
       };
-      let cmdArgs: string;
+      let _cmdArgs: string;
 
       before(() => {
-        args = {
+        _args = {
           src: 'srcPath',
           dest: 'destPath'
         };
-        cmdArgs = `${args.src} ${args.dest}`;
+        _cmdArgs = `${_args.src} ${_args.dest}`;
 
-        optStr = Object.keys(option)
+        _optStr = Object.keys(option)
           .map(key => `--${key} ${option[key].join(' ')}`)
           .join(' ');
       });
 
       it('should fail when exclusive options are used', done => {
-        yargs.parse(`${cmdArgs} ${optStr}`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
+        yargs.parse(`${_cmdArgs} ${_optStr}`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
           expect({ error, output }).to.be.errorOnArgsParsing();
 
           done();

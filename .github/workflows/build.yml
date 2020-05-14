@@ -1,36 +1,37 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+---
+# This workflow will do a clean install of node dependencies, build the source code and run build across different
+# versions of node
+# For more information
+# see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Build CI
+name: build
 
+# yamllint disable-line rule:truthy
 on:
   push:
     branches:
       - master
       - develop
-      - feature/**
-      - bugfix/**
-      - release/**
-      - hotfix/**
-      - support/**
     tags:
       - v*
     paths:
-      - 'package*.json'
-      - 'tsconfig*'
-      - 'src/**.ts'
-      - "!src/**.spec.ts"
-      - "!src/**.spec/**.ts"
+      - package*.json
+      - tsconfig*
+      - src/**.ts
+      - '!src/**.spec.ts'
+      - '!src/*.spec.e2e.ts'
+      - '!src/**.spec/**.ts'
   pull_request:
     branches:
       - master
       - develop
     paths:
-      - 'package*.json'
-      - 'tsconfig*'
-      - 'src/**.ts'
-      - "!src/**.spec.ts"
-      - "!src/**.spec/**.ts"
+      - package*.json
+      - tsconfig*
+      - src/**.ts
+      - '!src/**.spec.ts'
+      - '!src/*.spec.e2e.ts'
+      - '!src/**.spec/**.ts'
 
 jobs:
   build:
@@ -40,33 +41,34 @@ jobs:
         node-version:
           - 12.x
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Cache Node.js modules
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-node-modules
-      with:
-        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-        key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.OS }}-${{ env.cache-name }}-
-          ${{ runner.OS }}-
-    - name: Cache Project node_modules
-      uses: actions/cache@v1
-      id: cache-project-node-modules
-      env:
-        cache-name: cache-project-node-modules
-      with:
-        path: node_modules
-        key: ${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles('**/package-lock.json') }}
-    - name: Install Dependencies
-      if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
-      run: npm ci
-    - run: npm run build
-      env:
-        CI: true
-        NODE_ENV: production
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm  # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-${{ env.cache-name }}-
+            ${{ runner.OS }}-
+      - name: Cache Project node_modules
+        uses: actions/cache@v1
+        id: cache-project-node-modules
+        env:
+          cache-name: cache-project-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Dependencies
+        if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+      - run: npm run build
+        env:
+          CI: true
+          NODE_ENV: production
+...

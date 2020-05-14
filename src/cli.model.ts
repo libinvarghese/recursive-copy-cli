@@ -14,7 +14,6 @@ export interface RecursiveCopyCliModel {
   rename?: RenameFn;
   transformModule?: string[];
   transform?: TransformFn;
-  results?: boolean;
   concurrency?: number;
   debug?: boolean;
 }

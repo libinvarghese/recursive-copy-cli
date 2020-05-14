@@ -3,30 +3,30 @@ import { requireTryAll } from './requireTryAll';
 import flow from 'lodash/fp/flow';
 
 export function renameParamsToFunction(argv: RecursiveCopyCliModel): void {
-  let rename: RenameFn | undefined = undefined;
+  let _rename: RenameFn | undefined = undefined;
 
   if (argv.renameModule) {
-    const renameFnList = argv.renameModule.map(module => requireTryAll(module) as RenameFn);
-    rename = (src: string): string => flow(renameFnList)(src);
+    const _renameFnList = argv.renameModule.map(module => requireTryAll(module) as RenameFn);
+    _rename = (src: string): string => flow(_renameFnList)(src);
   } else if (argv.renamePattern) {
-    const [regexpStr, substitute] = argv.renamePattern;
-    const regParts = /^\/(.*?)\/([gim]*)$/.exec(regexpStr);
-    let regexp: RegExp;
-    if (regParts) {
+    const [_regexpStr, _substitute] = argv.renamePattern;
+    const _regParts = /^\/(.*?)\/([gim]*)$/.exec(_regexpStr);
+    let _regexp: RegExp;
+    if (_regParts) {
       // the parsed pattern had delimiters and modifiers. handle them.
 
       // if flags is "", use undefined as you cant pass "" to new RegExp
-      const flags = regParts[2] || undefined;
+      const _flags = _regParts[2] || undefined;
 
-      regexp = new RegExp(regParts[1], flags);
+      _regexp = new RegExp(_regParts[1], _flags);
     } else {
       // we got pattern string without delimiters
-      regexp = new RegExp(regexpStr);
+      _regexp = new RegExp(_regexpStr);
     }
-    rename = (src: string): string => src.replace(regexp, substitute);
+    _rename = (src: string): string => src.replace(_regexp, _substitute);
   }
 
-  if (rename) {
-    argv.rename = rename;
+  if (_rename) {
+    argv.rename = _rename;
   }
 }

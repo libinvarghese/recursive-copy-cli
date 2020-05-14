@@ -4,5 +4,5 @@
     "noEmit": false,
     "outDir": "./dist"
   },
-  "exclude": ["src/**/*.spec.ts", "src/**/*.spec/*"]
+  "exclude": ["**/*.spec.ts", "**/*.spec/*", "**/*.spec.e2e.ts"]
 }
