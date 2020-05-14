@@ -21,10 +21,12 @@
     "precommit": "run-s checkNotStaged precommit:parallel",
     "checkNotStaged": "ts-node -P scripts/tsconfig.json scripts/check-not-staged.ts",
     "test": "mocha src/**/*.spec.ts",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc npm run test",
+    "git-commit": "commit"
   },
   "husky": {
     "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "npm run precommit"
     }
   },
@@ -35,6 +37,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/prompt-cli": "^8.3.5",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
     "@types/chai-arrays": "^1.0.3",

@@ -36,6 +36,7 @@
     "Parens",
     "Unrecognized",
     "builtins",
+    "commitlint",
     "dont",
     "maximatch",
     "nargs",
