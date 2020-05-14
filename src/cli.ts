@@ -23,9 +23,9 @@ const cliOptionsKeysToCopy = [
 // Copy the options from argv to pass to copy
 const options: { [key: string]: unknown } = cliOptionsKeysToCopy.reduce((prev, key) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const value = (argv as any)[key];
-  if (value) {
-    prev[key] = value;
+  const _value = (argv as any)[key];
+  if (_value) {
+    prev[key] = _value;
   }
 
   return prev;
