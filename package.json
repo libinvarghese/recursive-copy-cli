@@ -1,11 +1,12 @@
 {
   "name": "recursive-copy-cli",
   "version": "1.0.0",
-  "description": "",
-  "homepage": "http://documentcloud.github.com/underscore/",
+  "description": "CLI for [recursive-copy](https://github.com/timkendrick/recursive-copy)",
+  "repository": "https://github.com/libinvarghese/recursive-copy-cli",
+  "homepage": "https://github.com/libinvarghese/recursive-copy-cli",
   "main": "./dist/cli.js",
   "bin": {
-    "rc": "./dist/cli.js"
+    "recursive-copy": "./dist/cli.js"
   },
   "scripts": {
     "start": "ts-node src/cli.ts",
