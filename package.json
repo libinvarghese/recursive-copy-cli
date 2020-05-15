@@ -28,7 +28,9 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "npm run precommit"
+      "pre-commit": "npm run precommit",
+      "post-checkout": "scripts/hooks/post-checkout/update-deps.sh",
+      "post-merge": "scripts/hooks/post-merge/update-deps.sh"
     }
   },
   "engine": {
