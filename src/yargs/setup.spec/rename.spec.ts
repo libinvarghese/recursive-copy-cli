@@ -19,7 +19,12 @@ describe('rename option', () => {
 
   it('should be undefined when not specified', done => {
     yargs.parse(`${_cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-      expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+      expect({
+        error,
+        argv,
+        output,
+        args: _args
+      }).to.be.argsSuccessfullyParsed();
       expect(argv).to.not.have.property('rename');
 
       done();
@@ -32,7 +37,12 @@ describe('rename option', () => {
       yargs.parse(
         `${_cmdArgs} --rename-module pascalcase`,
         (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+          expect({
+            error,
+            argv,
+            output,
+            args: _args
+          }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
           const _renameFn = argv.rename as RenameFn;
@@ -48,7 +58,12 @@ describe('rename option', () => {
       yargs.parse(
         `${_cmdArgs} --rename-module pascalcase ./src/yargs/setup.spec/toupper.rename.module.mock.ts`,
         (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+          expect({
+            error,
+            argv,
+            output,
+            args: _args
+          }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
           const _renameFn = argv.rename as RenameFn;
@@ -75,7 +90,12 @@ describe('rename option', () => {
     it('should create a function when rename pattern string is provided', done => {
       // > recursive-copy srcPath destPath --rename-pattern a A
       yargs.parse(`${_cmdArgs} --rename-pattern a A`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-        expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+        expect({
+          error,
+          argv,
+          output,
+          args: _args
+        }).to.be.argsSuccessfullyParsed();
         expect(argv.rename).to.be.a('function');
 
         const _renameFn = argv.rename as RenameFn;
@@ -90,7 +110,12 @@ describe('rename option', () => {
       yargs.parse(
         `${_cmdArgs} --rename-pattern /a/g A`,
         (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+          expect({
+            error,
+            argv,
+            output,
+            args: _args
+          }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
           const _renameFn = argv.rename as RenameFn;
@@ -106,7 +131,12 @@ describe('rename option', () => {
       yargs.parse(
         `${_cmdArgs} --rename-pattern /(.*)-(.*)\\.(.*)/g $2-$1.$3`,
         (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+          expect({
+            error,
+            argv,
+            output,
+            args: _args
+          }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
           const _renameFn = argv.rename as RenameFn;

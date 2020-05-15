@@ -12,7 +12,12 @@ describe('src and dest is mandatory', () => {
     };
     // > recursive-copy srcPath destPath
     yargs.parse(`${_args.src} ${_args.dest}`, (error: unknown, argv: RecursiveCopyCliModel, output: unknown) => {
-      expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+      expect({
+        error,
+        argv,
+        output,
+        args: _args
+      }).to.be.argsSuccessfullyParsed();
 
       done();
     });

@@ -7,7 +7,12 @@ import yargs from '../setup';
 // eslint-disable-next-line mocha/no-setup-in-describe
 describe('array options', () => {
   const _cliArrayOptions: {
-    [key: string]: { alias: string; value: string[]; args?: 2; mapKey?: string };
+    [key: string]: {
+      alias: string;
+      value: string[];
+      args?: 2;
+      mapKey?: string;
+    };
   } = {
     'rename-pattern': {
       alias: 'p',
@@ -52,7 +57,12 @@ describe('array options', () => {
 
       it('should be undefined when not specified', done => {
         yargs.parse(`${_cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+          expect({
+            error,
+            argv,
+            output,
+            args: _args
+          }).to.be.argsSuccessfullyParsed();
           expect(argv).to.not.have.property(key);
           if (_cliArrayOptions[key].mapKey) {
             expect(argv).to.not.have.property(_cliArrayOptions[key].mapKey as string);
@@ -66,7 +76,12 @@ describe('array options', () => {
         yargs.parse(
           `${_cmdArgs} --${key} ${_cliArrayOptions[key].value.join(' ')}`,
           (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-            expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+            expect({
+              error,
+              argv,
+              output,
+              args: _args
+            }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(_cliArrayOptions[key].value);
             if (_cliArrayOptions[key].mapKey) {
@@ -82,7 +97,12 @@ describe('array options', () => {
         yargs.parse(
           `${_cmdArgs} --${_cliArrayOptions[key].alias} ${_cliArrayOptions[key].value.join(' ')}`,
           (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-            expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+            expect({
+              error,
+              argv,
+              output,
+              args: _args
+            }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(_cliArrayOptions[key].value);
             if (_cliArrayOptions[key].mapKey) {

@@ -7,7 +7,11 @@ import yargs from '../setup';
 // eslint-disable-next-line mocha/no-setup-in-describe
 describe('value options', () => {
   const _cliOtherOptions: {
-    [key: string]: { alias: string; value: string | number; invalidValue?: unknown };
+    [key: string]: {
+      alias: string;
+      value: string | number;
+      invalidValue?: unknown;
+    };
   } = {
     concurrency: {
       alias: 'c',
@@ -34,7 +38,12 @@ describe('value options', () => {
 
       it('should be undefined when not specified', done => {
         yargs.parse(`${_cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+          expect({
+            error,
+            argv,
+            output,
+            args: _args
+          }).to.be.argsSuccessfullyParsed();
           expect(argv).to.not.have.property(key);
 
           done();
@@ -45,7 +54,12 @@ describe('value options', () => {
         yargs.parse(
           `${_cmdArgs} --${key} ${_cliOtherOptions[key].value}`,
           (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-            expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+            expect({
+              error,
+              argv,
+              output,
+              args: _args
+            }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.equal(_cliOtherOptions[key].value);
 
@@ -58,7 +72,12 @@ describe('value options', () => {
         yargs.parse(
           `${_cmdArgs} --${_cliOtherOptions[key].alias} ${_cliOtherOptions[key].value}`,
           (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-            expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+            expect({
+              error,
+              argv,
+              output,
+              args: _args
+            }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.equal(_cliOtherOptions[key].value);
 

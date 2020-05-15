@@ -19,7 +19,12 @@ describe('filter option', () => {
 
   it('should be undefined when not specified', done => {
     yargs.parse(`${_cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-      expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+      expect({
+        error,
+        argv,
+        output,
+        args: _args
+      }).to.be.argsSuccessfullyParsed();
       expect(argv).to.not.have.property('filter');
 
       done();
@@ -31,7 +36,12 @@ describe('filter option', () => {
     yargs.parse(
       `${_cmdArgs} --filter "*.js" "*.json"`,
       (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-        expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+        expect({
+          error,
+          argv,
+          output,
+          args: _args
+        }).to.be.argsSuccessfullyParsed();
         expect(argv.filter).to.be.array();
         expect(argv.filter).to.be.deep.equal(['*.js', '*.json']);
 
@@ -43,7 +53,12 @@ describe('filter option', () => {
   it('should create an array of filter globs when regexp are provided', done => {
     // > recursive-copy srcPath destPath --filter "/\\.ts$/"
     yargs.parse(`${_cmdArgs} --filter "/\\.ts$/"`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-      expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+      expect({
+        error,
+        argv,
+        output,
+        args: _args
+      }).to.be.argsSuccessfullyParsed();
       expect(argv.filter).to.be.array();
       expect(argv.filter).to.be.deep.equal([/\.ts$/]);
 
@@ -56,7 +71,12 @@ describe('filter option', () => {
       // > recursive-copy srcPath destPath --filter "/\\.ts$/" "*.js"
       `${_cmdArgs} --filter "/\\.ts$/" "*.js"`,
       (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-        expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+        expect({
+          error,
+          argv,
+          output,
+          args: _args
+        }).to.be.argsSuccessfullyParsed();
         expect(argv.filter).to.be.array();
         expect(argv.filter).to.be.deep.equal([/\.ts$/, '*.js']);
 

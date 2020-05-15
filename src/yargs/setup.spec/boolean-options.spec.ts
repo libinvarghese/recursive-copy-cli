@@ -35,7 +35,12 @@ describe('boolean options', () => {
 
       it('should be undefined when not specified', done => {
         yargs.parse(`${_cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+          expect({
+            error,
+            argv,
+            output,
+            args: _args
+          }).to.be.argsSuccessfullyParsed();
           expect(argv).to.not.have.property(key);
 
           done();
@@ -44,7 +49,12 @@ describe('boolean options', () => {
 
       it('should be true when set', done => {
         yargs.parse(`${_cmdArgs} --${key}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+          expect({
+            error,
+            argv,
+            output,
+            args: _args
+          }).to.be.argsSuccessfullyParsed();
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           expect((argv as any)[camelCase(key)]).to.be.true;
 
@@ -56,7 +66,12 @@ describe('boolean options', () => {
         yargs.parse(
           `${_cmdArgs} -${_cliBooleanOptions[key]}`,
           (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-            expect({ error, argv, output, args: _args }).to.be.argsSuccessfullyParsed();
+            expect({
+              error,
+              argv,
+              output,
+              args: _args
+            }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.true;
 
