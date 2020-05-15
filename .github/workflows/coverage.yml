@@ -1,8 +1,13 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+---
+
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different
+# versions of node
+# For more information
+# see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: coverage
 
+# yamllint disable-line rule:truthy
 on:
   push:
     branches:
@@ -12,8 +17,8 @@ on:
       - v*
     paths-ignore:
       - '**.md'
-      - 'scripts/**'
-      - '.vscode/**'
+      - scripts/**
+      - .vscode/**
       # - '.github/**'
   pull_request:
     branches:
@@ -21,44 +26,45 @@ on:
       - develop
     paths-ignore:
       - '**.md'
-      - 'scripts/**'
-      - '.vscode/**'
+      - scripts/**
+      - .vscode/**
       # - '.github/**'
 
 jobs:
   coverage:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - name: Cache Node.js modules
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-node-modules
-      with:
-        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-        key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.OS }}-${{ env.cache-name }}-
-          ${{ runner.OS }}-
-    - name: Cache Project node_modules
-      uses: actions/cache@v1
-      id: cache-project-node-modules
-      env:
-        cache-name: cache-project-node-modules
-      with:
-        path: node_modules
-        key: ${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles('**/package-lock.json') }}
-    - name: Install Dependencies
-      if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
-      run: npm ci
-    - run: npm run coverage
-      env:
-        CI: true
-    - name: Upload to Codecov
-      uses: codecov/codecov-action@v1.0.6
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Cache Node.js modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm  # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-${{ env.cache-name }}-
+            ${{ runner.OS }}-
+      - name: Cache Project node_modules
+        uses: actions/cache@v1
+        id: cache-project-node-modules
+        env:
+          cache-name: cache-project-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Dependencies
+        if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+      - run: npm run coverage
+        env:
+          CI: true
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v1.0.6
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+...

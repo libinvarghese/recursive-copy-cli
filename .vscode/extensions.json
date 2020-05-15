@@ -8,6 +8,7 @@
     "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "hbenl.vscode-mocha-test-adapter"
+    "hbenl.vscode-mocha-test-adapter",
+    "redhat.vscode-yaml"
   ]
 }

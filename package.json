@@ -13,6 +13,7 @@
     "format:fix": "prettier --write './**/*.{js,ts,json,css,scss,html}'",
     "lint:format": "prettier -c './**/*.{js,ts,json,css,scss,html}'",
     "lint:json": "eslint --no-eslintrc -c .eslintrc.json.js --ext .json --format=unix .",
+    "lint:yaml": "yamllint -f parsable .",
     "lint:src": "eslint --ext .js,.ts --format=unix .",
     "lint": "run-p lint:*",
     "clean": "rimraf dist",

@@ -40,11 +40,16 @@
     "dont",
     "maximatch",
     "nargs",
+    "parsable",
     "pascalcase",
     "requireg",
     "shebang",
     "toupper",
     "uglifyify",
-    "vars"
-  ]
+    "vars",
+    "yamllint"
+  ],
+  "yaml.format.singleQuote": true,
+  "yaml.format.proseWrap": "always",
+  "yaml.format.printWidth": 120
 }
