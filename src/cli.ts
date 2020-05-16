@@ -14,7 +14,7 @@ const cliOptionsKeysToCopy = ['overwrite', 'expand', 'dot', 'junk', 'filter', 'r
 const options: { [key: string]: unknown } = cliOptionsKeysToCopy.reduce((prev, key) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const _value = (argv as any)[key];
-  if (_value) {
+  if (_value != undefined) {
     prev[key] = _value;
   }
 
