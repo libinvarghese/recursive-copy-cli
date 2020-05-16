@@ -13,7 +13,6 @@ describe('boolean options', () => {
     expand: 'e',
     dot: 'd',
     junk: 'j',
-    results: 'o',
     debug: 'v'
   };
 

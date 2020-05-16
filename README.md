@@ -44,7 +44,6 @@ Installation is as simple as running the following command
       --junk, -j              Whether to copy OS junk files (e.g. .DS_Store, Thumbs.db) [Default: false]            [boolean]
       --filter, -f            Filter regular expression / glob that determines which files to copy (uses maximatch)   [array]
       --transform-module, -t  Function that returns a transform stream used to modify file contents                   [array]
-      --results, -o           Whether to return an array of copy results [Default: true]                            [boolean]
       --concurrency, -c       Maximum number of simultaneous copy operations [Default: 255]                          [number]
       --debug, -v             Whether to log debug information [Default: false]                                     [boolean]
       --rename-module, -r     renames source paths using the module                                                   [array]
@@ -57,7 +56,7 @@ Installation is as simple as running the following command
       recursive-copy srcPath destPath -f '*.json' '/\*.js$/'              Only Copies json & js files
       recursive-copy srcPath destPath -f "*.js" -t some-transform-module  modify the contents of js files
 
-    Use --no-<option> to toggle boolean options. eg: --no-results or --no-o
+    Use --no-<option> to toggle boolean options. eg: --no-overwrite or --no-w
 
     When specifying a module, you could specify a global module, local module or provide the path to file.
     eg: ./someFolder/pascalcase/index.js

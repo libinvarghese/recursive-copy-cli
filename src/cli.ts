@@ -8,17 +8,7 @@ const copy = require('recursive-copy');
 
 const argv: RecursiveCopyCliModel = (yargs.argv as unknown) as RecursiveCopyCliModel;
 
-const cliOptionsKeysToCopy = [
-  'overwrite',
-  'expand',
-  'dot',
-  'junk',
-  'filter',
-  'rename',
-  'transform',
-  'results',
-  'debug'
-];
+const cliOptionsKeysToCopy = ['overwrite', 'expand', 'dot', 'junk', 'filter', 'rename', 'transform', 'debug'];
 
 // Copy the options from argv to pass to copy
 const options: { [key: string]: unknown } = cliOptionsKeysToCopy.reduce((prev, key) => {
