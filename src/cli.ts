@@ -21,18 +21,22 @@ const options: { [key: string]: unknown } = cliOptionsKeysToCopy.reduce((prev, k
   return prev;
 }, {} as { [key: string]: unknown });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function onCopyItemEvent(copyOperation: any): void {
+  // eslint-disable-next-line no-console
+  console.info(`${copyOperation.src} -> ${copyOperation.dest}`);
+}
+
 copy(argv.src, argv.dest, options)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  .on(copy.events.COPY_FILE_COMPLETE, (copyOperation: any) =>
-    // eslint-disable-next-line no-console
-    console.info(`${copyOperation.src} -> ${copyOperation.dest}`)
-  )
+  .on(copy.events.COPY_FILE_COMPLETE, onCopyItemEvent)
+  .on(copy.events.CREATE_SYMLINK_COMPLETE, onCopyItemEvent)
+  .on(copy.events.CREATE_DIRECTORY_COMPLETE, onCopyItemEvent)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   .on(copy.events.ERROR, (error: unknown, copyOperation: any) =>
     // eslint-disable-next-line no-console
-    console.error(`Unable to copy ${copyOperation.src} -> ${copyOperation.src}. ERR: ${error}`)
+    console.error(`Unable to copy ${copyOperation.src} -> ${copyOperation.dest}. ERR: ${error}`)
   )
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-console
-  .then((results: any) => console.info(results.length + ' file(s) copied'))
+  .then((results: any) => console.info(results.length + ' items(s) copied'))
   // eslint-disable-next-line no-console
   .catch((error: unknown) => console.error('Copy failed! ERR: ' + error));
