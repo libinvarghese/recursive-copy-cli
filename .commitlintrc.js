@@ -15,7 +15,8 @@ module.exports = {
         'deps-dev'
       ]
     ]
-  }
+  },
+  ignores: [message => message.match(/^.*?: WIP/)]
 };
 
 /**
