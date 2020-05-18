@@ -25,6 +25,7 @@ Pull requests are the best way to propose changes to the codebase (we use [Git F
 ```shellscript
 git checkout develop
 git checkout -b feature/some_branch # OR git flow feature start some_branch
+pip install -r requirements.txt # Install yamllint
 npm install # Install dependencies.
 #
 #.... modify the code ....
