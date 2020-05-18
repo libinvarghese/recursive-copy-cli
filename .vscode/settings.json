@@ -32,18 +32,34 @@
 
   "cSpell.language": "en-GB",
   "cSpell.words": [
+    "Atomics",
     "FOOBARBAZ",
     "Parens",
     "Unrecognized",
     "builtins",
+    "codecov",
+    "commitlint",
+    "dependabot",
+    "deps",
     "dont",
+    "libinvarghese",
     "maximatch",
     "nargs",
+    "parsable",
     "pascalcase",
+    "readonly",
+    "refs",
     "requireg",
+    "semver",
+    "setup",
     "shebang",
     "toupper",
     "uglifyify",
-    "vars"
-  ]
+    "vars",
+    "yamllint",
+    "yargs"
+  ],
+  "yaml.format.singleQuote": true,
+  "yaml.format.proseWrap": "always",
+  "yaml.format.printWidth": 120
 }

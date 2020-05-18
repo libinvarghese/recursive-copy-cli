@@ -41,6 +41,37 @@ module.exports = {
     'prefer-object-spread': 'error',
     'no-console': 'warn',
     '@typescript-eslint/no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      { selector: 'default', format: ['camelCase'] },
+      {
+        selector: 'variableLike',
+        format: ['camelCase'],
+        leadingUnderscore: 'allow'
+      },
+      {
+        selector: 'variable',
+        types: ['boolean'],
+        format: ['PascalCase'],
+        prefix: ['is', 'should', 'has', 'can', 'did', 'will']
+      },
+      {
+        selector: 'parameter',
+        types: ['boolean'],
+        format: ['PascalCase'],
+        prefix: ['is', 'should', 'has', 'can', 'did', 'will']
+      },
+      {
+        selector: 'memberLike',
+        modifiers: ['private'],
+        format: ['camelCase'],
+        leadingUnderscore: 'require'
+      },
+      {
+        selector: 'typeLike',
+        format: ['PascalCase']
+      }
+    ],
     'node/no-unsupported-features/es-syntax': [
       'error',
       {

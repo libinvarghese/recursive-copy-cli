@@ -1,28 +1,28 @@
 export function filterCoerce(filter: string[]): (string | RegExp)[] | undefined {
-  let filterList: (string | RegExp)[] | undefined = undefined;
+  let _filterList: (string | RegExp)[] | undefined = undefined;
   if (filter) {
-    const globList = filter.map(glob => {
-      const regParts = /^\/(.*?)\/([gim]*)$/.exec(glob);
+    const _globList = filter.map(glob => {
+      const _regParts = /^\/(.*?)\/([gim]*)$/.exec(glob);
 
-      let regexp: RegExp | string = glob;
-      if (regParts) {
+      let _regexp: RegExp | string = glob;
+      if (_regParts) {
         // the parsed pattern had delimiters and modifiers. handle them.
 
         // if flags is "", use undefined as you cant pass "" to new RegExp
-        const flags = regParts[2] || undefined;
+        const _flags = _regParts[2] || undefined;
 
-        regexp = new RegExp(regParts[1], flags);
+        _regexp = new RegExp(_regParts[1], _flags);
       }
 
-      return regexp;
+      return _regexp;
     });
 
-    if (globList.length !== 0) {
-      filterList = globList;
+    if (_globList.length !== 0) {
+      _filterList = _globList;
     } else {
       throw new Error('Error: Invalid filter option');
     }
   }
 
-  return filterList;
+  return _filterList;
 }

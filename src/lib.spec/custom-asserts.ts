@@ -2,14 +2,15 @@ import { RecursiveCopyCliModel } from '../cli.model';
 import { usageRegexp } from './constants';
 
 export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, _utils: Chai.ChaiUtils) => {
-  const Assertion = chai.Assertion;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const _Assertion = chai.Assertion;
 
-  Assertion.addMethod('argsSuccessfullyParsed', function() {
+  _Assertion.addMethod('argsSuccessfullyParsed', function() {
     const {
-      error,
-      argv,
-      output,
-      args
+      error: _error,
+      argv: _argv,
+      output: _output,
+      args: _args
     }: {
       error: Error;
       argv: RecursiveCopyCliModel;
@@ -19,22 +20,22 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, _utils: Cha
       };
     } = this._obj;
 
-    new Assertion(error).to.not.exist;
-    new Assertion(output).to.empty;
-    new Assertion(argv).to.include(args);
+    new _Assertion(_error).to.not.exist;
+    new _Assertion(_output).to.empty;
+    new _Assertion(_argv).to.include(_args);
   });
 
-  Assertion.addMethod('errorOnArgsParsing', function() {
+  _Assertion.addMethod('errorOnArgsParsing', function() {
     const {
-      error,
-      output
+      error: _error,
+      output: _output
     }: {
       error: Error;
       output: unknown;
     } = this._obj;
 
-    new Assertion(error).to.exist;
-    new Assertion(output).to.match(usageRegexp);
+    new _Assertion(_error).to.exist;
+    new _Assertion(_output).to.match(usageRegexp);
   });
 };
 

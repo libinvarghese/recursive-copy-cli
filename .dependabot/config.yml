@@ -1,7 +1,8 @@
+---
 version: 1
 update_configs:
   - package_manager: javascript
-    directory: '/'
+    directory: /
     update_schedule: live
     target_branch: develop
     default_reviewers:
@@ -20,3 +21,4 @@ update_configs:
       prefix: fix
       prefix_development: chore
       include_scope: true
+...
