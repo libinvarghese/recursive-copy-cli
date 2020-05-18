@@ -20,6 +20,9 @@ check_deps() {
   # check_run yarn.lock "yarn install"
   check_run package-lock.json "npm install"
 
+  # python
+  check_run requirements.txt "pip install -r requirements.txt"
+
   # composer
   # check_run composer.lock "composer install"
 }

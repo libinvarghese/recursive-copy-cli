@@ -28,6 +28,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - name: Cache pip
+        uses: actions/cache@v1
+        id: cache-pip
+        env:
+          cache-name: cache-pip
+        with:
+          path: ~/.cache/pip  # This path is specific to Ubuntu
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        if: steps.cache-pip.outputs.cache-hit != 'true'
+        run: |
+          python -m pip install --upgrade pip
+          pip3 install -r requirements.txt
       - name: Use Node.js $12.x
         uses: actions/setup-node@v1
         with:
@@ -54,9 +74,6 @@ jobs:
         if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
         run: npm ci
       - run: npm run lint
-        env:
-          CI: true
-      - run: npm run check:format
         env:
           CI: true
 ...
