@@ -39,6 +39,7 @@
     "builtins",
     "codecov",
     "commitlint",
+    "commitlintrc",
     "dependabot",
     "deps",
     "dont",
