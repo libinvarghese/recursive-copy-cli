@@ -76,7 +76,4 @@ jobs:
       - run: npm run lint
         env:
           CI: true
-      - run: npm run check:format
-        env:
-          CI: true
 ...
