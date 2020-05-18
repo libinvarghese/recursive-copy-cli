@@ -54,9 +54,9 @@ describe('rename option', () => {
     });
 
     it('should create a function when multiple rename modules are provided', done => {
-      // > recursive-copy srcPath destPath --rename-module pascalcase ./src/yargs/setup.spec/toupper.rename.module.mock.ts
+      // > recursive-copy srcPath destPath --rename-module pascalcase ./src/mocks.spec/toupper.rename.module.mock.ts
       yargs.parse(
-        `${_cmdArgs} --rename-module pascalcase ./src/yargs/setup.spec/toupper.rename.module.mock.ts`,
+        `${_cmdArgs} --rename-module pascalcase ./src/mocks.spec/toupper.rename.module.mock.ts`,
         (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
           expect({
             error,

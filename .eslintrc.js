@@ -72,6 +72,7 @@ module.exports = {
         format: ['PascalCase']
       }
     ],
+    'promise/catch-or-return': ['error', { allowFinally: true }],
     'node/no-unsupported-features/es-syntax': [
       'error',
       {
@@ -114,12 +115,21 @@ module.exports = {
       }
     },
     {
-      files: ['src/**/*.spec.ts', 'src/**/*.spec/*'],
+      files: ['**/*.spec.ts', '**/*.spec/*', '**/*.spec.e2e.ts'],
       rules: {
         'node/no-unpublished-import': [
           'error',
           {
-            allowModules: ['chai', 'chai-arrays']
+            allowModules: [
+              'chai',
+              'sinon',
+              'chai-arrays',
+              '@jsdevtools/chai-exec',
+              'mock-fs',
+              'chai-fs',
+              'sinon-chai',
+              'rimraf'
+            ]
           }
         ],
         'node/no-unpublished-require': [

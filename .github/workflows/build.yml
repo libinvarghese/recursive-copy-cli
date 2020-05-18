@@ -19,6 +19,7 @@ on:
       - tsconfig*
       - src/**.ts
       - '!src/**.spec.ts'
+      - '!src/*.spec.e2e.ts'
       - '!src/**.spec/**.ts'
   pull_request:
     branches:
@@ -29,6 +30,7 @@ on:
       - tsconfig*
       - src/**.ts
       - '!src/**.spec.ts'
+      - '!src/*.spec.e2e.ts'
       - '!src/**.spec/**.ts'
 
 jobs:

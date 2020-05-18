@@ -23,7 +23,7 @@
 
   "mochaExplorer.cwd": "./",
   "mochaExplorer.logpanel": true,
-  "mochaExplorer.files": "src/**/*.spec.ts",
+  "mochaExplorer.files": "**/*.spec{.e2e}*.ts",
 
   "docthis.includeMemberOfOnClassMembers": false,
   "docthis.includeMemberOfOnInterfaceMembers": false,
@@ -33,6 +33,7 @@
   "cSpell.language": "en-GB",
   "cSpell.words": [
     "Atomics",
+    "Chainable",
     "FOOBARBAZ",
     "Parens",
     "Unrecognized",
@@ -43,11 +44,13 @@
     "dependabot",
     "deps",
     "dont",
+    "jsdevtools",
     "libinvarghese",
     "maximatch",
     "nargs",
     "parsable",
     "pascalcase",
+    "promisify",
     "readonly",
     "refs",
     "requireg",

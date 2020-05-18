@@ -32,9 +32,9 @@ describe('transform option', () => {
   });
 
   it('should create a function when transform module is provided', done => {
-    // > recursive-copy srcPath destPath --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts
+    // > recursive-copy srcPath destPath --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts
     yargs.parse(
-      `${_cmdArgs} --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts`,
+      `${_cmdArgs} --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts`,
       (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
         expect({
           error,
@@ -50,10 +50,10 @@ describe('transform option', () => {
   });
 
   it('should create a function when multiple transform modules are provided', done => {
-    // > recursive-copy srcPath destPath --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts \
-    //     ./src/yargs/setup.spec/eol.transform.module.mock.ts
+    // > recursive-copy srcPath destPath --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts \
+    //     ./src/mocks.spec/eol.transform.module.mock.ts
     yargs.parse(
-      `${_cmdArgs} --transform-module ./src/yargs/setup.spec/toupper.transform.module.mock.ts ./src/yargs/setup.spec/eol.transform.module.mock.ts`,
+      `${_cmdArgs} --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts ./src/mocks.spec/eol.transform.module.mock.ts`,
       (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
         expect({
           error,

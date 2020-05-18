@@ -59,7 +59,7 @@ jobs:
       - name: Install Dependencies
         if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
         run: npm ci
-      - run: npm run coverage
+      - run: npm run cover
         env:
           CI: true
       - name: Upload to Codecov

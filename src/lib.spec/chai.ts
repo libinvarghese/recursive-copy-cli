@@ -1,12 +1,18 @@
 import chai from 'chai';
 import chaiArrays from 'chai-arrays';
 import { customAssert } from './custom-asserts';
+import chaiExec from '@jsdevtools/chai-exec';
+import chaiFs from 'chai-fs';
+import sinonChai from 'sinon-chai';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const chaiSemver = require('chai-semver');
-chai.use(chaiSemver);
 
+chai.use(chaiSemver);
+chai.use(chaiExec);
 chai.use(chaiArrays);
+chai.use(chaiFs);
+chai.use(sinonChai);
 chai.use(customAssert);
 
 declare global {
