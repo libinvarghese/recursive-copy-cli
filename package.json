@@ -104,7 +104,7 @@
     "pascalcase": "^1.0.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
-    "simple-git": "^1.132.0",
+    "simple-git": "^2.5.0",
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
     "source-map-support": "^0.5.19",
