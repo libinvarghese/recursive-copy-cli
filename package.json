@@ -4,9 +4,21 @@
   "description": "CLI for [recursive-copy](https://github.com/timkendrick/recursive-copy)",
   "repository": "https://github.com/libinvarghese/recursive-copy-cli",
   "homepage": "https://github.com/libinvarghese/recursive-copy-cli",
-  "main": "./dist/cli.js",
+  "keywords": [
+    "cli",
+    "copy",
+    "recursive-copy",
+    "rename-files",
+    "transforming-files"
+  ],
+  "author": "Libin Varghese <libinv@gmail.com>",
+  "license": "ISC",
+  "engine": {
+    "node": ">=10.19.0"
+  },
+  "main": "./dist/src/cli.js",
   "bin": {
-    "recursive-copy": "./dist/cli.js"
+    "recursive-copy": "./dist/src/cli.js"
   },
   "scripts": {
     "start": "ts-node src/cli.ts",
@@ -16,9 +28,12 @@
     "lint:yaml": "yamllint -f parsable .",
     "lint:src": "eslint --ext .js,.ts --format=unix .",
     "lint": "run-p lint:*",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist/src && ts-node scripts/publish-package.ts",
+    "prebuild": "npm run clean",
     "build": "tsc -p tsconfig.${NODE_ENV:=development}.json",
-    "rebuild": "run-s clean build",
+    "postbuild": "npm run build:test",
+    "build:prod": "NODE_ENV=production npm run build",
+    "build:test": "mocha test/**/*.spec.e2e.ts",
     "precommit:parallel": "run-p lint cover",
     "precommit": "run-s checkNotStaged precommit:parallel",
     "checkNotStaged": "ts-node -P scripts/tsconfig.json scripts/check-not-staged.ts",
@@ -39,12 +54,6 @@
       "post-merge": "scripts/hooks/post-merge/update-deps.sh"
     }
   },
-  "engine": {
-    "node": ">=10.19.0"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",

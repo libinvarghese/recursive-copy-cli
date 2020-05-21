@@ -2,7 +2,7 @@
   "extends": "./tsconfig",
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "./dist"
+    "outDir": "./dist/src"
   },
   "exclude": ["**/*.spec.ts", "**/*.spec/*", "**/*.spec.e2e.ts"]
 }

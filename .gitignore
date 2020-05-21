@@ -19,7 +19,7 @@ $RECYCLE.BIN/
 *.log
 log.txt
 npm-debug.log*
-/dist
+/dist/*
 /.nyc_output
 /coverage
 /test/fixtures/destination
