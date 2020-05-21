@@ -12,7 +12,7 @@ describe('filter option', () => {
   before(() => {
     _args = {
       src: 'srcPath',
-      dest: 'destPath'
+      dest: 'destPath',
     };
     _cmdArgs = `${_args.src} ${_args.dest}`;
   });
@@ -23,7 +23,7 @@ describe('filter option', () => {
         error,
         argv,
         output,
-        args: _args
+        args: _args,
       }).to.be.argsSuccessfullyParsed();
       expect(argv).not.to.have.property('filter');
 
@@ -40,7 +40,7 @@ describe('filter option', () => {
           error,
           argv,
           output,
-          args: _args
+          args: _args,
         }).to.be.argsSuccessfullyParsed();
         expect(argv.filter).to.be.array();
         expect(argv.filter).to.be.deep.equal(['*.js', '*.json']);
@@ -57,7 +57,7 @@ describe('filter option', () => {
         error,
         argv,
         output,
-        args: _args
+        args: _args,
       }).to.be.argsSuccessfullyParsed();
       expect(argv.filter).to.be.array();
       expect(argv.filter).to.be.deep.equal([/\.ts$/]);
@@ -75,7 +75,7 @@ describe('filter option', () => {
           error,
           argv,
           output,
-          args: _args
+          args: _args,
         }).to.be.argsSuccessfullyParsed();
         expect(argv.filter).to.be.array();
         expect(argv.filter).to.be.deep.equal([/\.ts$/, '*.js']);

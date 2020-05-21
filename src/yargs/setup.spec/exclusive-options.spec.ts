@@ -9,8 +9,8 @@ describe('exclusive options', () => {
   }[] = [
     {
       'rename-pattern': ['a', 'b'],
-      'rename-module': ['a', 'b']
-    }
+      'rename-module': ['a', 'b'],
+    },
   ];
 
   // eslint-disable-next-line mocha/no-setup-in-describe
@@ -27,7 +27,7 @@ describe('exclusive options', () => {
       before(() => {
         _args = {
           src: 'srcPath',
-          dest: 'destPath'
+          dest: 'destPath',
         };
         _cmdArgs = `${_args.src} ${_args.dest}`;
 

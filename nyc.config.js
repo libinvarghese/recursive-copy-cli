@@ -13,10 +13,10 @@ module.exports = {
     'dist/*',
     'coverage/*',
     '*.js',
-    'scripts/*'
+    'scripts/*',
   ],
   statements: 100,
   branches: 95,
   functions: 95,
-  lines: 100
+  lines: 100,
 };

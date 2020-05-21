@@ -6,7 +6,7 @@ module.exports = {
   // spec: 'src/**/*.spec.ts',
   'check-leaks': true,
   'watch-files': ['**/*.ts', '**/*.spec.ts', '**/*.spec.e2e.ts'],
-  reporters: ['spec', 'progress']
+  reporters: ['spec', 'progress'],
 };
 
 /*

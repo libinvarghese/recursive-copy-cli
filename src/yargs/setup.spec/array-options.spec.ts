@@ -18,22 +18,22 @@ describe('array options', () => {
       alias: 'p',
       args: 2,
       value: ['a', 'b'],
-      mapKey: 'rename'
+      mapKey: 'rename',
     },
     'rename-module': {
       alias: 'r',
       value: ['pascalcase', './src/mocks.spec/toupper.rename.module.mock.ts'],
-      mapKey: 'rename'
+      mapKey: 'rename',
     },
     'transform-module': {
       alias: 't',
       value: ['./src/mocks.spec/toupper.transform.module.mock.ts', './src/mocks.spec/eol.transform.module.mock.ts'],
-      mapKey: 'transform'
+      mapKey: 'transform',
     },
     filter: {
       alias: 'f',
-      value: ['*.ts', '*.js']
-    }
+      value: ['*.ts', '*.js'],
+    },
   };
 
   // eslint-disable-next-line mocha/no-setup-in-describe
@@ -47,7 +47,7 @@ describe('array options', () => {
       before(() => {
         _args = {
           src: 'srcPath',
-          dest: 'destPath'
+          dest: 'destPath',
         };
         _cmdArgs = `${_args.src} ${_args.dest}`;
       });
@@ -58,7 +58,7 @@ describe('array options', () => {
             error,
             argv,
             output,
-            args: _args
+            args: _args,
           }).to.be.argsSuccessfullyParsed();
           expect(argv).not.to.have.property(key);
           if (_cliArrayOptions[key].mapKey) {
@@ -77,7 +77,7 @@ describe('array options', () => {
               error,
               argv,
               output,
-              args: _args
+              args: _args,
             }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(_cliArrayOptions[key].value);
@@ -98,7 +98,7 @@ describe('array options', () => {
               error,
               argv,
               output,
-              args: _args
+              args: _args,
             }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(_cliArrayOptions[key].value);

@@ -16,8 +16,8 @@ describe('value options', () => {
     concurrency: {
       alias: 'c',
       value: 10,
-      invalidValue: 'a'
-    }
+      invalidValue: 'a',
+    },
   };
 
   // eslint-disable-next-line mocha/no-setup-in-describe
@@ -31,7 +31,7 @@ describe('value options', () => {
       before(() => {
         _args = {
           src: 'srcPath',
-          dest: 'destPath'
+          dest: 'destPath',
         };
         _cmdArgs = `${_args.src} ${_args.dest}`;
       });
@@ -42,7 +42,7 @@ describe('value options', () => {
             error,
             argv,
             output,
-            args: _args
+            args: _args,
           }).to.be.argsSuccessfullyParsed();
           expect(argv).not.to.have.property(key);
 
@@ -58,7 +58,7 @@ describe('value options', () => {
               error,
               argv,
               output,
-              args: _args
+              args: _args,
             }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.equal(_cliOtherOptions[key].value);
@@ -76,7 +76,7 @@ describe('value options', () => {
               error,
               argv,
               output,
-              args: _args
+              args: _args,
             }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.equal(_cliOtherOptions[key].value);

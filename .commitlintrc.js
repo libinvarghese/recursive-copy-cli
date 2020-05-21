@@ -1,6 +1,6 @@
 module.exports = {
   extends: [
-    '@commitlint/config-conventional' // scoped packages are not prefixed
+    '@commitlint/config-conventional', // scoped packages are not prefixed
   ],
   rules: {
     'header-max-length': [2, 'always', 72],
@@ -12,11 +12,11 @@ module.exports = {
         'cli',
         // The below scope is used by dependabot
         'deps',
-        'deps-dev'
-      ]
-    ]
+        'deps-dev',
+      ],
+    ],
   },
-  ignores: [message => message.match(/^.*?: WIP/)]
+  ignores: [message => message.match(/^.*?: WIP/)],
 };
 
 /**
