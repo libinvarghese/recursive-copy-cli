@@ -110,7 +110,7 @@
     "source-map-support": "^0.5.19",
     "through2": "^3.0.1",
     "ts-node": "^8.10.1",
-    "typescript": "^3.8.2"
+    "typescript": "^3.9.3"
   },
   "dependencies": {
     "highland": "^2.13.5",
