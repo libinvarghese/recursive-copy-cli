@@ -7,12 +7,12 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const flag = utils.flag;
 
-  _Assertion.addMethod('argsSuccessfullyParsed', function() {
+  _Assertion.addMethod('argsSuccessfullyParsed', function () {
     const {
       error: _error,
       argv: _argv,
       output: _output,
-      args: _args
+      args: _args,
     }: {
       error: Error;
       argv: RecursiveCopyCliModel;
@@ -27,10 +27,10 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
     new _Assertion(_argv).to.include(_args);
   });
 
-  _Assertion.addMethod('errorOnArgsParsing', function() {
+  _Assertion.addMethod('errorOnArgsParsing', function () {
     const {
       error: _error,
-      output: _output
+      output: _output,
     }: {
       error: Error;
       output: unknown;
@@ -41,7 +41,7 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
   });
 
   // eslint-disable-next-line mocha/prefer-arrow-callback
-  _Assertion.addChainableMethod('contentsEquals', function(expected, msg) {
+  _Assertion.addChainableMethod('contentsEquals', function (expected, msg) {
     const _isDirectory = flag(this, 'fs.isDirectory');
     if (_isDirectory) {
       const dir = flag(this, 'object');

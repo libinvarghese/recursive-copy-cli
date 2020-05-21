@@ -29,9 +29,7 @@ describe('dist', () => {
       expect(_cliResult).stderr.to.be.empty;
       expect(_cliResult).stdout.to.contains('1 item(s) copied');
 
-      expect(`${_destPath}/${_testItem}`)
-        .to.be.file()
-        .and.equal(`${_sourcePath}/${_testItem}`);
+      expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
     });
   });
 });

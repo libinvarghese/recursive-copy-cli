@@ -12,7 +12,7 @@ describe('rename option', () => {
   before(() => {
     _args = {
       src: 'srcPath',
-      dest: 'destPath'
+      dest: 'destPath',
     };
     _cmdArgs = `${_args.src} ${_args.dest}`;
   });
@@ -23,7 +23,7 @@ describe('rename option', () => {
         error,
         argv,
         output,
-        args: _args
+        args: _args,
       }).to.be.argsSuccessfullyParsed();
       expect(argv).not.to.have.property('rename');
 
@@ -41,7 +41,7 @@ describe('rename option', () => {
             error,
             argv,
             output,
-            args: _args
+            args: _args,
           }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
@@ -62,7 +62,7 @@ describe('rename option', () => {
             error,
             argv,
             output,
-            args: _args
+            args: _args,
           }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
@@ -94,7 +94,7 @@ describe('rename option', () => {
           error,
           argv,
           output,
-          args: _args
+          args: _args,
         }).to.be.argsSuccessfullyParsed();
         expect(argv.rename).to.be.a('function');
 
@@ -114,7 +114,7 @@ describe('rename option', () => {
             error,
             argv,
             output,
-            args: _args
+            args: _args,
           }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
@@ -135,7 +135,7 @@ describe('rename option', () => {
             error,
             argv,
             output,
-            args: _args
+            args: _args,
           }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 

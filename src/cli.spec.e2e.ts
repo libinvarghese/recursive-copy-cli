@@ -33,9 +33,7 @@ describe('cli', () => {
       expect(_cliResult).stderr.to.be.empty;
       expect(_cliResult).stdout.to.contains('1 item(s) copied');
 
-      expect(`${_destPath}/${_testItem}`)
-        .to.be.file()
-        .and.equal(`${_sourcePath}/${_testItem}`);
+      expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
     });
   });
 
@@ -56,144 +54,144 @@ describe('cli', () => {
       _fsMock = {
         file: 'Hello, world!\n',
         symlink: mock.symlink({
-          path: 'file'
+          path: 'file',
         }),
         'nested-file': {
-          file: 'Hello, world!\n'
+          file: 'Hello, world!\n',
         },
         empty: {},
         directory: {
           a: 'a\n',
           b: 'b\n',
-          c: 'c\n'
+          c: 'c\n',
         },
         'renamed-directory': {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           A: 'a\n',
           b: 'b\n',
-          c: 'c\n'
+          c: 'c\n',
         },
         'transformed-directory': {
           a: 'A\n',
           b: 'B\n',
-          c: 'C\n'
+          c: 'C\n',
         },
         'symlink-directory': mock.symlink({
-          path: 'directory'
+          path: 'directory',
         }),
         'nested-symlinks': {
           file: mock.symlink({
-            path: '../file'
+            path: '../file',
           }),
           directory: mock.symlink({
-            path: '../directory'
+            path: '../directory',
           }),
           nested: {
             directory: mock.symlink({
-              path: '../../directory'
-            })
-          }
+              path: '../../directory',
+            }),
+          },
         },
         'nested-directory': {
           '1': {
             '1-1': {
               '1-1-a': '1-1-a\n',
-              '1-1-b': '1-1-b\n'
+              '1-1-b': '1-1-b\n',
             },
             '1-2': {
               '1-2-a': '1-2-a\n',
-              '1-2-b': '1-2-b\n'
+              '1-2-b': '1-2-b\n',
             },
             '1-a': '1-a\n',
-            '1-b': '1-b\n'
+            '1-b': '1-b\n',
           },
           '2': {
             '2-1': {
               '2-1-a': '2-1-a\n',
-              '2-1-b': '2-1-b\n'
+              '2-1-b': '2-1-b\n',
             },
             '2-2': {
               '2-2-a': '2-2-a\n',
-              '2-2-b': '2-2-b\n'
+              '2-2-b': '2-2-b\n',
             },
             '2-a': '2-a\n',
-            '2-b': '2-b\n'
+            '2-b': '2-b\n',
           },
           a: 'a\n',
-          b: 'b\n'
+          b: 'b\n',
         },
         'renamed-nested-directory': {
           '1': {
             '11': {
               '11A': '1-1-a\n',
-              '11B': '1-1-b\n'
+              '11B': '1-1-b\n',
             },
             '12': {
               '12A': '1-2-a\n',
-              '12B': '1-2-b\n'
+              '12B': '1-2-b\n',
             },
             '1A': '1-a\n',
-            '1B': '1-b\n'
+            '1B': '1-b\n',
           },
           '2': {
             '21': {
               '21A': '2-1-a\n',
-              '21B': '2-1-b\n'
+              '21B': '2-1-b\n',
             },
             '22': {
               '22A': '2-2-a\n',
-              '22B': '2-2-b\n'
+              '22B': '2-2-b\n',
             },
             '2A': '2-a\n',
-            '2B': '2-b\n'
+            '2B': '2-b\n',
           },
           // eslint-disable-next-line @typescript-eslint/naming-convention
           A: 'a\n',
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          B: 'b\n'
+          B: 'b\n',
         },
         'filtered-nested-directory': {
           '1': {},
           '2': {
             '2-1': {
               '2-1-a': '2-1-a\n',
-              '2-1-b': '2-1-b\n'
+              '2-1-b': '2-1-b\n',
             },
             '2-2': {
               '2-2-a': '2-2-a\n',
-              '2-2-b': '2-2-b\n'
+              '2-2-b': '2-2-b\n',
             },
             '2-a': '2-a\n',
-            '2-b': '2-b\n'
+            '2-b': '2-b\n',
           },
           a: 'a\n',
-          b: 'b\n'
+          b: 'b\n',
         },
         dotfiles: {
           '.a': '.a\n',
           '.b': '.b\n',
           a: 'a\n',
-          b: 'b\n'
+          b: 'b\n',
         },
         'dotfiles-directory-without-dotfiles': {
           a: 'a\n',
-          b: 'b\n'
+          b: 'b\n',
         },
         junk: {
           a: 'a\n',
           b: 'b\n',
           'npm-debug.log': 'npm-debug.log\n',
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          'Thumbs.db': 'Thumbs.db\n'
+          'Thumbs.db': 'Thumbs.db\n',
         },
         'junk-directory-without-junk': {
           a: 'a\n',
-          b: 'b\n'
-        }
+          b: 'b\n',
+        },
       };
 
       mock({
-        source: _fsMock
+        source: _fsMock,
       });
     });
 
@@ -218,9 +216,7 @@ describe('cli', () => {
 
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`)
-          .to.be.file()
-          .and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
       });
 
       it('should create parent directory if it does not exist', async () => {
@@ -229,9 +225,7 @@ describe('cli', () => {
 
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`)
-          .to.be.file()
-          .and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
       });
 
       it('should copy empty directories', async () => {
@@ -292,9 +286,7 @@ describe('cli', () => {
         await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--overwrite']);
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`)
-          .to.be.file()
-          .and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
       });
 
       it('should overwrite destination symlink if overwrite is specified', async () => {
@@ -305,9 +297,7 @@ describe('cli', () => {
         await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--overwrite']);
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`)
-          .to.be.file()
-          .and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
       });
 
       it('should overwrite destination directory if overwrite is specified', async () => {
@@ -318,9 +308,7 @@ describe('cli', () => {
         await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--overwrite']);
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`)
-          .to.be.file()
-          .and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
       });
 
       it('should not copy dotfiles if dotfiles is not specified', async () => {
@@ -374,9 +362,7 @@ describe('cli', () => {
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
         expect(`${_destPath}/expanded-${_testItem}`).not.to.be.symlink();
-        expect(`${_destPath}/expanded-${_testItem}`)
-          .to.be.file()
-          .and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${_destPath}/expanded-${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
       });
 
       it('should expand symlinked source directories if expand is specified', async () => {
@@ -407,7 +393,7 @@ describe('cli', () => {
           `${_sourcePath}/${_testItem}`,
           `${_destPath}/${_testItem}`,
           '--filter',
-          '/(^[^1].*$)|(^1$)/'
+          '/(^[^1].*$)|(^1$)/',
         ]);
 
         const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
@@ -422,7 +408,7 @@ describe('cli', () => {
           `${_destPath}/${_testItem}`,
           '--filter',
           '2/**/*',
-          '{1,a,b}'
+          '{1,a,b}',
         ]);
 
         const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
@@ -438,7 +424,7 @@ describe('cli', () => {
           '--filter',
           '2/**/*',
           '1',
-          '/^[^1]$/'
+          '/^[^1]$/',
         ]);
 
         const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
@@ -462,7 +448,7 @@ describe('cli', () => {
           `${_destPath}/${_testItem}`,
           '--rename-pattern',
           '/a/',
-          'A'
+          'A',
         ]);
 
         const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
@@ -478,7 +464,7 @@ describe('cli', () => {
           `${_sourcePath}/${_testItem}`,
           `${_destPath}/${_testItem}`,
           '--rename-module',
-          'pascalcase'
+          'pascalcase',
         ]);
 
         const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
@@ -494,7 +480,7 @@ describe('cli', () => {
           `${_sourcePath}/${_testItem}`,
           `${_destPath}/${_testItem}`,
           '--rename-module',
-          './src/mocks.spec/toupper.rename.module.mock.ts'
+          './src/mocks.spec/toupper.rename.module.mock.ts',
         ]);
 
         const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
@@ -510,7 +496,7 @@ describe('cli', () => {
           `${_sourcePath}/${_testItem}`,
           `${_destPath}/${_testItem}`,
           '--transform-module',
-          './src/mocks.spec/toupper.transform.module.mock.ts'
+          './src/mocks.spec/toupper.transform.module.mock.ts',
         ]);
 
         const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
@@ -536,9 +522,7 @@ describe('cli', () => {
         await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
 
         expect(console.error).to.have.been.called;
-        expect(`${_destPath}/${_testItem}`)
-          .to.be.file()
-          .and.not.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${_destPath}/${_testItem}`).to.be.file().and.not.equal(`${_sourcePath}/${_testItem}`);
       });
     });
   });

@@ -12,7 +12,7 @@ describe('transform option', () => {
   before(() => {
     _args = {
       src: 'srcPath',
-      dest: 'destPath'
+      dest: 'destPath',
     };
     _cmdArgs = `${_args.src} ${_args.dest}`;
   });
@@ -23,7 +23,7 @@ describe('transform option', () => {
         error,
         argv,
         output,
-        args: _args
+        args: _args,
       }).to.be.argsSuccessfullyParsed();
       expect(argv).not.to.have.property('transform');
 
@@ -40,7 +40,7 @@ describe('transform option', () => {
           error,
           argv,
           output,
-          args: _args
+          args: _args,
         }).to.be.argsSuccessfullyParsed();
         expect(argv.transform).to.be.a('function');
 
@@ -59,7 +59,7 @@ describe('transform option', () => {
           error,
           argv,
           output,
-          args: _args
+          args: _args,
         }).to.be.argsSuccessfullyParsed();
         expect(argv.transform).to.be.a('function');
 

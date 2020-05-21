@@ -13,7 +13,7 @@ describe('boolean options', () => {
     expand: 'e',
     dot: 'd',
     junk: 'j',
-    debug: 'v'
+    debug: 'v',
   };
 
   // eslint-disable-next-line mocha/no-setup-in-describe
@@ -27,7 +27,7 @@ describe('boolean options', () => {
       before(() => {
         _args = {
           src: 'srcPath',
-          dest: 'destPath'
+          dest: 'destPath',
         };
         _cmdArgs = `${_args.src} ${_args.dest}`;
       });
@@ -38,7 +38,7 @@ describe('boolean options', () => {
             error,
             argv,
             output,
-            args: _args
+            args: _args,
           }).to.be.argsSuccessfullyParsed();
           expect(argv).not.to.have.property(key);
 
@@ -52,7 +52,7 @@ describe('boolean options', () => {
             error,
             argv,
             output,
-            args: _args
+            args: _args,
           }).to.be.argsSuccessfullyParsed();
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           expect((argv as any)[camelCase(key)]).to.be.true;
@@ -69,7 +69,7 @@ describe('boolean options', () => {
               error,
               argv,
               output,
-              args: _args
+              args: _args,
             }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect((argv as any)[camelCase(key)]).to.be.true;
