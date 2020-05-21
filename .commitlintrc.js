@@ -13,6 +13,8 @@ module.exports = {
         // The below scope is used by dependabot
         'deps',
         'deps-dev',
+        // The below scope is used by semantic-release
+        'release',
       ],
     ],
   },

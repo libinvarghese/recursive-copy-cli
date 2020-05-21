@@ -1,25 +1,24 @@
 # recursive-copy-cli
 
-![GitHub](https://img.shields.io/github/license/libinvarghese/recursive-copy-cli)
-![Dependabot](https://badgen.net/dependabot/libinvarghese/recursive-copy-cli?icon=dependabot)
-<!-- post release
-![npm](https://img.shields.io/npm/v/recursive-copy-cli)
-![downloads](https://img.shields.io/npm/dt/recursive-copy-cli)
+[![License: ISC](https://img.shields.io/npm/l/recursive-copy-cli)](https://opensource.org/licenses/ISC)
+![Dependabot](https://badgen.net/dependabot/libinvarghese/recursive-copy-cli?icon=dependabot) <!-- ![Dependabot](https://img.shields.io/badge/Dependabot-active-green?logo=dependabot) -->
+![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)
+[![npm](https://img.shields.io/npm/v/recursive-copy-cli)](https://www.npmjs.com/package/recursive-copy-cli)
+[![downloads](https://img.shields.io/npm/dt/recursive-copy-cli)](https://www.npmjs.com/package/recursive-copy-cli)
 ![node-lts](https://img.shields.io/node/v-lts/recursive-copy-cli)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
--->
 <!-- Alternative for npm version
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue?logo=open-source-initiative)](https://opensource.org/licenses/ISC)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/libinvarghese/recursive-copy-cli)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/libinvarghese/recursive-copy-cli)
 -->
 
-**master**: ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/libinvarghese/recursive-copy-cli/build)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/libinvarghese/recursive-copy-cli/test)
-![Codecov](https://img.shields.io/codecov/c/github/libinvarghese/recursive-copy-cli)
+**master**: ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/libinvarghese/recursive-copy-cli/build?logo=github)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/libinvarghese/recursive-copy-cli/test?label=test&logo=github)
+![Codecov](https://img.shields.io/codecov/c/github/libinvarghese/recursive-copy-cli?logo=codecov)
 
-**develop**: ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/libinvarghese/recursive-copy-cli/build/develop)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/libinvarghese/recursive-copy-cli/test/develop)
-![Codecov](https://img.shields.io/codecov/c/github/libinvarghese/recursive-copy-cli/develop)
+**develop**: ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/libinvarghese/recursive-copy-cli/build/develop?logo=github)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/libinvarghese/recursive-copy-cli/test/develop?label=test&logo=github)
+![Codecov](https://img.shields.io/codecov/c/github/libinvarghese/recursive-copy-cli/develop?logo=codecov)
 
 > CLI for [recursive-copy](https://github.com/timkendrick/recursive-copy)
 
