@@ -13,7 +13,7 @@
   ],
   "author": "Libin Varghese <libinv@gmail.com>",
   "license": "ISC",
-  "engine": {
+  "engines": {
     "node": ">=10.19.0"
   },
   "main": "./dist/src/cli.js",
