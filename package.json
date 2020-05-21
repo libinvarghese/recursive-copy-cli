@@ -13,7 +13,7 @@
   ],
   "author": "Libin Varghese <libinv@gmail.com>",
   "license": "ISC",
-  "engine": {
+  "engines": {
     "node": ">=10.19.0"
   },
   "main": "./dist/src/cli.js",
@@ -28,7 +28,9 @@
     "lint:yaml": "yamllint -f parsable .",
     "lint:src": "eslint --ext .js,.ts --format=unix .",
     "lint": "run-p lint:*",
-    "prebuild:copy": "npx ts-node scripts/publish-package.ts",
+    "prebuild:copy:others": "cp README.md dist",
+    "prebuild:copy:package": "npx ts-node scripts/publish-package.ts",
+    "prebuild:copy": "run-p prebuild:copy:*",
     "prebuild:clean": "rimraf dist/src",
     "prebuild": "run-p prebuild:*",
     "build": "tsc -p tsconfig.${NODE_ENV:=development}.json",

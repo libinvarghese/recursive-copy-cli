@@ -4,9 +4,9 @@
 ![Dependabot](https://badgen.net/dependabot/libinvarghese/recursive-copy-cli?icon=dependabot) <!-- ![Dependabot](https://img.shields.io/badge/Dependabot-active-green?logo=dependabot) -->
 ![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)
 [![npm](https://img.shields.io/npm/v/recursive-copy-cli)](https://www.npmjs.com/package/recursive-copy-cli)
-[![downloads](https://img.shields.io/npm/dt/recursive-copy-cli)](https://www.npmjs.com/package/recursive-copy-cli)
 ![node-lts](https://img.shields.io/node/v-lts/recursive-copy-cli)
 <!-- Alternative for npm version
+[![downloads](https://img.shields.io/npm/dt/recursive-copy-cli)](https://www.npmjs.com/package/recursive-copy-cli)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue?logo=open-source-initiative)](https://opensource.org/licenses/ISC)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/libinvarghese/recursive-copy-cli)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/libinvarghese/recursive-copy-cli)
