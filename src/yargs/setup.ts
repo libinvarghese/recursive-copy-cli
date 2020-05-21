@@ -29,7 +29,7 @@ declare module 'yargs' {
 yargs.parserConfiguration({
   'parse-numbers': false,
   'strip-aliased': true,
-  'strip-dashed': true
+  'strip-dashed': true,
 });
 
 yargs
@@ -37,11 +37,11 @@ yargs
     yargs
       .positional('src', {
         description: 'Source file/folder path',
-        type: 'string'
+        type: 'string',
       })
       .positional('dest', {
         description: 'Destination file/folder path',
-        type: 'string'
+        type: 'string',
       })
       .demandCommand(0, 0, '', 'Too many arguments: got $0 unknown arguments')
       .example(`$0 srcPath destPath -r pascalcase`, 'Renames files using the pascalcase module')
@@ -52,7 +52,7 @@ yargs
       )
       .example(`$0 srcPath destPath -f '*.json' '/\\*.js$/'`, 'Only Copies json & js files')
       .example(`$0 srcPath destPath -f "*.js" -t some-transform-module`, 'modify the contents of js files')
-      .epilogue(`Use --no-<option> to toggle boolean options. eg: --no-results or --no-o
+      .epilogue(`Use --no-<option> to toggle boolean options. eg: --no-overwrite or --no-w
 
 When specifying a module, you could specify a global module, local module or provide the path to file.
 eg: ./someFolder/pascalcase/index.js
@@ -65,51 +65,46 @@ yargs
   .option('overwrite', {
     alias: 'w',
     description: 'Whether to overwrite destination files [Default: false]',
-    type: 'boolean'
+    type: 'boolean',
   })
   .option('expand', {
     alias: 'e',
     description: 'Whether to expand symbolic links [Default: false]',
-    type: 'boolean'
+    type: 'boolean',
   })
   .option('dot', {
     alias: 'd',
     description: 'Whether to copy files beginning with a .(dot) [Default: false]',
-    type: 'boolean'
+    type: 'boolean',
   })
   .option('junk', {
     alias: 'j',
     description: 'Whether to copy OS junk files (e.g. .DS_Store, Thumbs.db) [Default: false]',
-    type: 'boolean'
+    type: 'boolean',
   })
   .option('filter', {
     alias: 'f',
     description: 'Filter regular expression / glob that determines which files to copy (uses maximatch)',
     type: 'array',
     requiresArg: true,
-    coerce: filterCoerce
+    coerce: filterCoerce,
   })
   .option('transform-module', {
     alias: 't',
     description: 'Function that returns a transform stream used to modify file contents',
     type: 'array',
-    requiresArg: true
-  })
-  .option('results', {
-    alias: 'o',
-    description: 'Whether to return an array of copy results [Default: true]',
-    type: 'boolean'
+    requiresArg: true,
   })
   .option('concurrency', {
     alias: 'c',
     description: 'Maximum number of simultaneous copy operations [Default: 255]',
     type: 'number',
-    requiresArg: true
+    requiresArg: true,
   })
   .option('debug', {
     alias: 'v',
     description: 'Whether to log debug information [Default: false]',
-    type: 'boolean'
+    type: 'boolean',
   });
 
 yargs
@@ -118,14 +113,14 @@ yargs
     description: 'renames source paths using the module',
     type: 'array',
     conflicts: ['rename-pattern'],
-    requiresArg: true
+    requiresArg: true,
   })
   .option('rename-pattern', {
     alias: 'p',
     description: 'renames patterns in source paths. eg: :: -',
     type: 'array',
     nargs: 2,
-    requiresArg: true
+    requiresArg: true,
   })
   .strict();
 
@@ -153,7 +148,7 @@ yargs.middleware([
   }),
   gracefulMiddleware((argv): void => {
     transformParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
-  })
+  }),
 ]);
 
 yargs.wrap(yargs.terminalWidth());

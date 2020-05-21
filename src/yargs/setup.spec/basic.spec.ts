@@ -7,7 +7,7 @@ describe('cli basics', () => {
   it('should have options to show help', done => {
     // > recursive-copy --help
     yargs.parse('--help', (error: unknown, _: unknown, output: unknown) => {
-      expect(error).to.not.exist;
+      expect(error).not.to.exist;
       expect(output).to.match(usageRegexp);
 
       done();
@@ -17,7 +17,7 @@ describe('cli basics', () => {
   it('should have options to show version', done => {
     // > recursive-copy --version
     yargs.parse('--version', (error: unknown, _: unknown, output: unknown) => {
-      expect(error).to.not.exist;
+      expect(error).not.to.exist;
       expect(output).to.be.semver();
       done();
     });

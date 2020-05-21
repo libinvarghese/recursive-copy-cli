@@ -5,9 +5,18 @@ module.exports = {
   reporter: ['lcov', 'text', 'text-summary'],
   all: true,
   'check-coverage': true,
-  exclude: ['**/*.spec.ts', '**/.mock.ts', '**/*.spec/*', 'dist/*', 'coverage/*', '*.js', 'scripts/*'],
-  statements: 85,
-  branches: 80,
-  functions: 70,
-  lines: 80
+  exclude: [
+    '**/*.spec.ts',
+    '**/*.spec.e2e.ts',
+    '**/.mock.ts',
+    '**/*.spec/*',
+    'dist/*',
+    'coverage/*',
+    '*.js',
+    'scripts/*',
+  ],
+  statements: 100,
+  branches: 95,
+  functions: 95,
+  lines: 100,
 };
