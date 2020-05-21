@@ -58,7 +58,7 @@ Installation is as simple as running the following command
     Use --no-<option> to toggle boolean options. eg: --no-overwrite or --no-w
 
     When specifying a module, you could specify a global module, local module or provide the path to file.
-    eg: ./someFolder/pascalcase/index.js
+    eg: ./someFolder/pascalcase/index.js in case of file or node_modules/pascalcase in case of local module
 
     For more help refer https://github.com/libinvarghese/recursive-copy-cli
 

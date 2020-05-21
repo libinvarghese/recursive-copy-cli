@@ -10,22 +10,21 @@ import { promises } from 'fs';
 
 describe('cli', () => {
   let _rimrafP: (path: string) => Promise<void>;
+  const _cmd = 'npx ts-node src/cli.ts';
+  const _destPath = 'test/fixtures/destination';
+  const _sourcePath = 'test/fixtures/source';
 
   before(() => {
     _rimrafP = promisify(rimraf);
   });
 
+  beforeEach(async () => {
+    await _rimrafP(_destPath);
+  });
+
   describe('basic cli operation', () => {
-    const _destPath = 'test/fixtures/destination';
-
-    beforeEach(async () => {
-      await _rimrafP(_destPath);
-    });
-
     it('should copy single files via cli', async () => {
-      const _cmd = 'npx ts-node src/cli.ts';
       const _testItem = 'file';
-      const _sourcePath = 'test/fixtures/source';
 
       const _cliResult = await chaiExecAsync(`${_cmd} ${_sourcePath}/${_testItem} ${_destPath}/${_testItem}`);
 
@@ -34,6 +33,37 @@ describe('cli', () => {
       expect(_cliResult).stdout.to.contains('1 item(s) copied');
 
       expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
+    });
+
+    // For some reason testing of loading of modules via mocha fails in bootstrap-cli
+    describe('output transformation', () => {
+      it('should rename files via rename local module', async () => {
+        const _testItem = 'nested-directory';
+        const _cliResult = await chaiExecAsync(
+          `${_cmd} ${_sourcePath}/${_testItem} ${_destPath}/${_testItem} --rename-module src/mocks.spec/toupper.rename.module.mock.ts`
+        );
+
+        expect(_cliResult).to.exit.with.code(0);
+        expect(_cliResult).stderr.to.be.empty;
+
+        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
+        _isDirectory.and.deep.equal(`${_sourcePath}/renamed-${_testItem}`);
+        _isDirectory.and.contentsEquals(`${_sourcePath}/renamed-${_testItem}`);
+      });
+
+      it('should transform files', async () => {
+        const _testItem = 'directory';
+        const _cliResult = await chaiExecAsync(
+          `${_cmd} ${_sourcePath}/${_testItem} ${_destPath}/${_testItem} --transform-module src/mocks.spec/toupper.transform.module.mock.ts`
+        );
+
+        expect(_cliResult).to.exit.with.code(0);
+        expect(_cliResult).stderr.to.be.empty;
+
+        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
+        _isDirectory.and.deep.equal(`${_sourcePath}/transformed-${_testItem}`);
+        _isDirectory.and.contentsEquals(`${_sourcePath}/transformed-${_testItem}`);
+      });
     });
   });
 
@@ -70,11 +100,6 @@ describe('cli', () => {
           A: 'a\n',
           b: 'b\n',
           c: 'c\n',
-        },
-        'transformed-directory': {
-          a: 'A\n',
-          b: 'B\n',
-          c: 'C\n',
         },
         'symlink-directory': mock.symlink({
           path: 'directory',
@@ -119,36 +144,6 @@ describe('cli', () => {
           },
           a: 'a\n',
           b: 'b\n',
-        },
-        'renamed-nested-directory': {
-          '1': {
-            '11': {
-              '11A': '1-1-a\n',
-              '11B': '1-1-b\n',
-            },
-            '12': {
-              '12A': '1-2-a\n',
-              '12B': '1-2-b\n',
-            },
-            '1A': '1-a\n',
-            '1B': '1-b\n',
-          },
-          '2': {
-            '21': {
-              '21A': '2-1-a\n',
-              '21B': '2-1-b\n',
-            },
-            '22': {
-              '22A': '2-2-a\n',
-              '22B': '2-2-b\n',
-            },
-            '2A': '2-a\n',
-            '2B': '2-b\n',
-          },
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          A: 'a\n',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          B: 'b\n',
         },
         'filtered-nested-directory': {
           '1': {},
@@ -454,54 +449,6 @@ describe('cli', () => {
         const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
         _isDirectory.and.deep.equal(`${_sourcePath}/renamed-${_testItem}`);
         _isDirectory.and.contentsEquals(`${_sourcePath}/renamed-${_testItem}`);
-      });
-
-      // TODO: require of modules within yargs fails
-      // eslint-disable-next-line mocha/no-skipped-tests
-      it.skip('should rename files via rename local module', async () => {
-        const _testItem = 'nested-directory';
-        await bootstrapCli([
-          `${_sourcePath}/${_testItem}`,
-          `${_destPath}/${_testItem}`,
-          '--rename-module',
-          'pascalcase',
-        ]);
-
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/renamed-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/renamed-${_testItem}`);
-      });
-
-      // TODO: require of modules within yargs fails
-      // eslint-disable-next-line mocha/no-skipped-tests
-      it.skip('should rename files via rename local file module', async () => {
-        const _testItem = 'nested-directory';
-        await bootstrapCli([
-          `${_sourcePath}/${_testItem}`,
-          `${_destPath}/${_testItem}`,
-          '--rename-module',
-          './src/mocks.spec/toupper.rename.module.mock.ts',
-        ]);
-
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/renamed-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/renamed-${_testItem}`);
-      });
-
-      // TODO: require of modules within yargs fails
-      // eslint-disable-next-line mocha/no-skipped-tests
-      it.skip('should transform files', async () => {
-        const _testItem = 'directory';
-        await bootstrapCli([
-          `${_sourcePath}/${_testItem}`,
-          `${_destPath}/${_testItem}`,
-          '--transform-module',
-          './src/mocks.spec/toupper.transform.module.mock.ts',
-        ]);
-
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/transformed-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/transformed-${_testItem}`);
       });
     });
 
