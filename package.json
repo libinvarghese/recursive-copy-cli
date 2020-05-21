@@ -66,7 +66,7 @@
     "@types/eslint": "^6.8.1",
     "@types/eslint-plugin-prettier": "^2.2.0",
     "@types/highland": "^2.12.9",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash": "^4.14.152",
     "@types/mocha": "^7.0.2",
     "@types/mock-fs": "^4.10.0",
     "@types/node": "^13.7.6",
