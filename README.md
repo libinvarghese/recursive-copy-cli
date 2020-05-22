@@ -72,13 +72,67 @@ Installation is as simple as running the following command
     4 item(s) copied
 
 ## FAQ
-* **What is a rename or transform module?**
+* **What is a transform module?**
 
   **rename-module** a function that renames the file name.
 
+  Refer [examples/toupper.rename.module.mock.js](https://github.com/libinvarghese/recursive-copy-cli/blob/master/examples/toupper.rename.module.mock.js)
+  ```js
+  'use strict';
+  /**
+  * @param src string  Name of the file to rename
+  *
+  * @return renamed string
+  */
+  module.exports = function toUpperCase(src) {
+    return src.toUpperCase();
+  };
+  ```
+  ```
+  $ recursive-copy source dest -r examples/toupper.rename.module.mock.js
+  source -> dest
+  source/a -> dest/A
+  source/b -> dest/B
+  source/c -> dest/C
+  4 item(s) copied
+  ```
+
+  Refer [recursive-copy](https://github.com/timkendrick/recursive-copy#advanced-options) for more info regarding rename function
+
+* **What is a transform module?**
+
   **transform-module** a function that transforms the content of the file
 
-  Refer [recursive-copy](https://github.com/timkendrick/recursive-copy#advanced-options) for more info regarding rename/transform module.
+  Refer [examples/toupper.transform.module.mock.js](https://github.com/libinvarghese/recursive-copy-cli/blob/master/examples/toupper.transform.module.mock.js)
+  ```js
+  'use strict';
+  const through2 = require('through2');
+
+  /**
+  * @param src string  Name of the source file
+  * @param dest string Name of the dest file
+  * @param stats fs.Stats stats of the src file
+  *
+  * @return TransformStream
+  */
+  module.exports = function caseTransform(src, _dest, _stats) {
+    return through2(function (chunk, _encoding, callback) {
+      this.push(chunk.toString().toUpperCase());
+      callback();
+    });
+  };
+  ```
+
+  ```
+  $ echo "Hello World" > testfile.txt
+  $ recursive-copy testfile.txt transformedfile.txt -t examples/toupper.transform.module.mock.js
+  testfile.txt -> transformedfile.txt
+  1 item(s) copied
+  $ cat transformedfile.txt
+  HELLO WORLD
+  ```
+
+  Refer [recursive-copy](https://github.com/timkendrick/recursive-copy#advanced-options) for more info regarding transform function.
 * **Can I provide multiple modules?**
 
   Yes, you can pipe the result of one module into another.

@@ -1,6 +1,7 @@
 node_modules/
 .vscode/
 dist/*
+examples/
 .nyc_output/
 coverage/
 package-lock.json
