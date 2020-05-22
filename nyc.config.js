@@ -10,6 +10,7 @@ module.exports = {
     '**/.mock.ts',
     '**/*.spec/*',
     'dist/*',
+    'examples/*',
     'coverage/*',
     '*.js',
     'scripts/*',
