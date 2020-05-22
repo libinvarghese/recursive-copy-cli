@@ -31,7 +31,7 @@
     "prebuild:copy:others": "cp README.md dist",
     "prebuild:copy:package": "npx ts-node scripts/publish-package.ts",
     "prebuild:copy": "run-p prebuild:copy:*",
-    "prebuild:clean": "rimraf dist/src",
+    "prebuild:clean": "rimraf !dist/.npmignore dist/**/*",
     "prebuild": "run-p prebuild:*",
     "build": "tsc -p tsconfig.${NODE_ENV:=development}.json",
     "postbuild": "npm run build:test",
