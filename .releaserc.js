@@ -60,13 +60,7 @@ All notable changes to this project will be documented in this file. See
       '@semantic-release/github',
       {
         assignees: ['libinvarghese'],
-        assets: [
-          {
-            path: 'dist',
-            label: 'recursive-copy-cli-${nextRelease.gitTag}',
-            name: 'recursive-copy-cli-${nextRelease.gitTag}',
-          },
-        ],
+        assets: ['dist/**'],
       },
     ],
   ],
