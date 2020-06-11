@@ -73,7 +73,7 @@
     "@types/chai": "^4.2.11",
     "@types/chai-arrays": "^1.0.3",
     "@types/chai-fs": "^2.0.2",
-    "@types/eslint": "^6.8.1",
+    "@types/eslint": "^7.2.0",
     "@types/eslint-plugin-prettier": "^3.1.0",
     "@types/highland": "^2.12.10",
     "@types/lodash": "^4.14.152",
