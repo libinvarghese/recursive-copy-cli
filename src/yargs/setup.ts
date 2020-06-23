@@ -1,9 +1,8 @@
 import yargs, { MiddlewareFunctionEx, Arguments, Argv } from 'yargs';
-import { renameParamsToFunction } from './rename-params-to-fn';
 import { RecursiveCopyCliModel } from '../cli.model';
+import { renameParamsToFunction } from './rename-params-to-fn';
 import { transformParamsToFunction } from './transform-to-fn';
 import { filterCoerce } from './filter-coerce';
-
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageJSON = require('../../package.json');
 

@@ -1,7 +1,7 @@
-// eslint-disable-next-line node/no-unpublished-import
-import through2 from 'through2';
 import { Stats } from 'fs';
 import { Transform } from 'stream';
+// eslint-disable-next-line node/no-unpublished-import
+import through2 from 'through2';
 // eslint-disable-next-line node/no-unpublished-import
 import eol from 'eol';
 

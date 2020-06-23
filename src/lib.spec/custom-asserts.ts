@@ -1,6 +1,19 @@
 import { RecursiveCopyCliModel } from '../cli.model';
 import { usageRegexp } from './constants';
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Chai {
+    interface Assertion {
+      argsSuccessfullyParsed(): Assertion;
+      errorOnArgsParsing(): Assertion;
+
+      contentsEquals(path: string, msg?: string): Assertion;
+      symlink(msg?: string): Assertion;
+    }
+  }
+}
+
 export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai.ChaiUtils) => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const _Assertion = chai.Assertion;
@@ -72,16 +85,3 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
     }
   });
 };
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Chai {
-    interface Assertion {
-      argsSuccessfullyParsed(): Assertion;
-      errorOnArgsParsing(): Assertion;
-
-      contentsEquals(path: string, msg?: string): Assertion;
-      symlink(msg?: string): Assertion;
-    }
-  }
-}

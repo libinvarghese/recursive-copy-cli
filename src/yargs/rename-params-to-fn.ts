@@ -1,6 +1,6 @@
+import flow from 'lodash/fp/flow';
 import { RecursiveCopyCliModel, RenameFn } from '../cli.model';
 import { requireTryAll } from './requireTryAll';
-import flow from 'lodash/fp/flow';
 
 export function renameParamsToFunction(argv: RecursiveCopyCliModel): void {
   let _rename: RenameFn | undefined = undefined;

@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
+import { promisify } from 'util';
+import { promises } from 'fs';
 import { expect } from 'chai';
 import mock from 'mock-fs';
-import { bootstrapCli } from './bootstrap-cli';
 import sinon, { SinonSpy, SinonSandbox } from 'sinon';
 import { chaiExecAsync } from '@jsdevtools/chai-exec';
 import rimraf from 'rimraf';
-import { promisify } from 'util';
-import { promises } from 'fs';
+import { bootstrapCli } from './bootstrap-cli';
 
 describe('cli', () => {
   let _rimrafP: (path: string) => Promise<void>;

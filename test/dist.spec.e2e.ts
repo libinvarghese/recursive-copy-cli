@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
+import { promisify } from 'util';
 import { expect } from 'chai';
 import { chaiExecAsync } from '@jsdevtools/chai-exec';
 import rimraf from 'rimraf';
-import { promisify } from 'util';
 
 describe('dist', () => {
   let _rimrafP: (path: string) => Promise<void>;

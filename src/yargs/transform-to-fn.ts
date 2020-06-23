@@ -1,8 +1,8 @@
-import { RecursiveCopyCliModel, TransformFn } from '../cli.model';
-import { requireTryAll } from './requireTryAll';
 import { Stats } from 'fs';
 import { Transform } from 'stream';
 import highland from 'highland';
+import { RecursiveCopyCliModel, TransformFn } from '../cli.model';
+import { requireTryAll } from './requireTryAll';
 
 export function transformParamsToFunction(argv: RecursiveCopyCliModel): void {
   let _transform: TransformFn | undefined = undefined;
