@@ -1,5 +1,5 @@
 // eslint-disable-next-line node/no-unpublished-import,import/default
-import gitP from 'simple-git/promise';
+import gitP from 'simple-git';
 const git = gitP();
 
 (async (): Promise<void> => {
