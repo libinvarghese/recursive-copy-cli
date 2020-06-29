@@ -6,13 +6,14 @@ module.exports = {
   ],
   rules: {
     'header-max-length': [2, 'always', 72],
-    'body-max-line-length': [2, 'always', 120],
     'scope-enum': [
       2,
       'always',
       [
         'yargs',
         'cli',
+        // type: ci
+        'commitlint',
         // The below scope is used by dependabot
         'deps',
         'deps-dev',
