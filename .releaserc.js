@@ -43,19 +43,31 @@ All notable changes to this project will be documented in this file. See
       },
     ],
     [
+      '@semantic-release/npm',
+      {
+        pkgRoot: 'dist',
+        // Uncomment below to test semantic-release without npm
+        // npmPublish: false,
+      },
+    ],
+    // Update the package.json, since @semantic-release/npm only update the package.json in dist
+    [
+      '@semantic-release/exec',
+      {
+        prepareCmd: 'npm --no-git-tag-version --allow-same-version version ${nextRelease.version}',
+      },
+    ],
+    [
       'semantic-release-git-branches',
       {
         message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
         branchMerges: ['master', 'develop'],
       },
     ],
-    ['@semantic-release/git'],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'dist',
-      },
-    ],
+    // Uncomment as alternative for git-flow
+    // ['@semantic-release/git'],
+
+    // Uncomment to test semantic-release without github actions
     [
       '@semantic-release/github',
       {
