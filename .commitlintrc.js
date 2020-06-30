@@ -14,6 +14,7 @@ module.exports = {
         'cli',
         // type: ci
         'commitlint',
+        'dependabot',
         'release',
         // The below scope is used by dependabot
         'deps',
