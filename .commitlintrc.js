@@ -10,6 +10,8 @@ module.exports = {
       [
         'yargs',
         'cli',
+        // type: ci
+        'dependabot',
         // The below scope is used by dependabot
         'deps',
         'deps-dev',
