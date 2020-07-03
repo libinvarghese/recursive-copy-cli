@@ -44,7 +44,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Get npm cache directory
-        id: npm-cache
+        id: get-npm-cache
         run: |
           echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache Node.js modules
@@ -52,7 +52,7 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: ${{ steps.npm-cache.outputs.dir }}
+          path: ${{ steps.get-npm-cache.outputs.dir }}
           key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-${{ env.cache-name }}-
