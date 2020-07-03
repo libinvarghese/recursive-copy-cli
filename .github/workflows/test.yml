@@ -1,5 +1,4 @@
 ---
-
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different
 # versions of node
 # For more information
@@ -38,6 +37,20 @@ jobs:
         node-version:
           - 12.x
     steps:
+      - name: Wait for build
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-build
+        with:
+          token: ${{ secrets.REPO_ACCESS }}
+          # yamllint disable-line rule:quoted-strings
+          checkName: 'build (12.x)'
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          timeoutSeconds: 180
+      - name: Exit when build workflow has failed
+        if:
+          steps.wait-for-build.outputs.conclusion != 'success' && steps.wait-for-build.outputs.conclusion != 'timed_out'
+        run: |
+          exit 1
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
