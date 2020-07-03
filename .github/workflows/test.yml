@@ -18,7 +18,8 @@ on:
       - '**.md'
       - scripts/**
       - .vscode/**
-      # - '.github/**'
+      - .github/**
+      - '!.github/workflows/test.yml'
   pull_request:
     branches:
       - master
@@ -27,7 +28,8 @@ on:
       - '**.md'
       - scripts/**
       - .vscode/**
-      # - '.github/**'
+      - .github/**
+      - '!.github/workflows/test.yml'
 
 jobs:
   test:

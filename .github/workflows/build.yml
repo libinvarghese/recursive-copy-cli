@@ -19,6 +19,7 @@ on:
       - tsconfig*
       - src/**.ts
       - test/**.ts
+      - .github/workflows/build.yml
       - '!src/**.spec.ts'
       - '!src/*.spec.e2e.ts'
       - '!src/**.spec/**.ts'
@@ -31,6 +32,7 @@ on:
       - tsconfig*
       - src/**.ts
       - test/**.ts
+      - .github/workflows/build.yml
       - '!src/**.spec.ts'
       - '!src/*.spec.e2e.ts'
       - '!src/**.spec/**.ts'
