@@ -1,0 +1,78 @@
+---
+# Merge me!
+name: automerge-dependabot
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - keep/ci-debug
+
+jobs:
+  merge-me:
+    name: automerge-dependabot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for build
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-build
+        with:
+          token: ${{ secrets.REPO_ACCESS }}
+          checkName: build (12.x)
+          timeoutSeconds: 60
+      - name: Dump wait-for-build output
+        run: |
+          echo Status of step ${{ steps.wait-for-build.outputs.conclusion }}
+      - name: Exit when build workflow has failed
+        if:
+          steps.wait-for-build.outputs.conclusion != 'success' && steps.wait-for-build.outputs.conclusion != 'timed_out'
+        run: |
+          exit 1
+      - name: Wait for test
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-test
+        with:
+          token: ${{ secrets.REPO_ACCESS }}
+          checkName: test (12.x)
+          timeoutSeconds: 60
+      - name: Dump wait-for-test output
+        run: |
+          echo Status of step ${{ steps.wait-for-test.outputs.conclusion }}
+      - name: Exit when test workflow has failed
+        if: steps.wait-for-test.outputs.conclusion != 'success' && steps.wait-for-test.outputs.conclusion != 'timed_out'
+        run: |
+          exit 1
+      - name: Wait for lint
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-lint
+        with:
+          token: ${{ secrets.REPO_ACCESS }}
+          checkName: lint
+          timeoutSeconds: 60
+      - name: Dump wait-for-lint output
+        run: |
+          echo Status of step ${{ steps.wait-for-lint.outputs.conclusion }}
+      - name: Exit when lint workflow has failed
+        if: steps.wait-for-lint.outputs.conclusion != 'success' && steps.wait-for-lint.outputs.conclusion != 'timed_out'
+        run: |
+          exit 1
+      - name: Wait for commitlint
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-commitlint
+        with:
+          token: ${{ secrets.REPO_ACCESS }}
+          checkName: commitlint
+          timeoutSeconds: 60
+      - name: Dump wait-for-commitlint output
+        run: |
+          echo Status of step ${{ steps.wait-for-commitlint.outputs.conclusion }}
+      - name: Exit when commitlint workflow has failed
+        if:
+          steps.wait-for-commitlint.outputs.conclusion != 'success' && steps.wait-for-commitlint.outputs.conclusion !=
+          'timed_out'
+        run: |
+          exit 1
+      - name: Check if can merge
+        run: |
+          echo "Can Merge!!"
+...

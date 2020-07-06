@@ -10,7 +10,7 @@ name: debug
 on:
   push:
     branches:
-      - 'keep/ci-debug'
+      - keep/ci-debug
 
 jobs:
   debug:

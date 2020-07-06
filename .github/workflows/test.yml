@@ -1,0 +1,49 @@
+---
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different
+# versions of node
+# For more information
+# see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: test
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - keep/ci-debug
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 12.x
+    steps:
+      - name: Wait for build
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-build
+        with:
+          token: ${{ secrets.REPO_ACCESS }}
+          checkName: build (12.x)
+          timeoutSeconds: 60
+      - name: Dump wait-for-build output
+        run: |
+          echo Status of step ${{ steps.wait-for-build.outputs.conclusion }}
+          echo Condition ${{ steps.wait-for-build.outputs.conclusion != 'success' && steps.wait-for-build.outputs.conclusion != 'timed_out' }}
+      - name: Exit when build workflow has failed
+        if:
+          steps.wait-for-build.outputs.conclusion != 'success' && steps.wait-for-build.outputs.conclusion != 'timed_out'
+        run: |
+          exit 1
+      - name: Dump workflow name & job name
+        run: |
+          echo ${{ github.workflow }} / ${{ github.job }}
+  waiting:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump workflow name & job name
+        run: |
+          echo ${{ github.workflow }} / ${{ github.job }}
+...
