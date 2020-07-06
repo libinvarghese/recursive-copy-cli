@@ -9,8 +9,19 @@ on:
       - keep/ci-debug
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.early.conclusion }}
+    steps:
+      - id: early
+        name: Early exit
+        run: |
+          echo Skip! Pull author not bot
+          exit 0
   merge-me:
-    name: automerge-dependabot
+    needs: [check]
+    if: needs.check.outputs.status != 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Wait for build
@@ -75,4 +86,3 @@ jobs:
       - name: Check if can merge
         run: |
           echo "Can Merge!!"
-...
