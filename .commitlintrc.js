@@ -12,6 +12,8 @@ module.exports = {
       [
         'yargs',
         'cli',
+        // type: docs
+        "README",
         // type: ci
         'commitlint',
         'dependabot',
