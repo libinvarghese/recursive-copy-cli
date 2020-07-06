@@ -1,32 +1,32 @@
----
-# This workflow will do a clean install of node dependencies, build the source code and run build across different
-# versions of node
-# For more information
-# see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# ==========================
+#
+# THIS IS A GENERATED FILE. Don't modify this file.
+#
+# Modify file in .github/jsTemplates/workflows/build.yml.ts
+#
+# ==========================
 
 name: build
-
-# yamllint disable-line rule:truthy
-on:
+'on':
   push:
     branches:
-      - master
       - develop
+      - master
+    paths:
+      - package*.json
+      - tsconfig*
+      - src/**.ts
+      - test/**.ts
+      - .github/workflows/build.yml
+      - '!src/**.spec.ts'
+      - '!src/*.spec.e2e.ts'
+      - '!src/**.spec/**.ts'
     tags:
       - v*
-    paths:
-      - package*.json
-      - tsconfig*
-      - src/**.ts
-      - test/**.ts
-      - .github/workflows/build.yml
-      - '!src/**.spec.ts'
-      - '!src/*.spec.e2e.ts'
-      - '!src/**.spec/**.ts'
   pull_request:
     branches:
-      - master
       - develop
+      - master
     paths:
       - package*.json
       - tsconfig*
@@ -36,7 +36,6 @@ on:
       - '!src/**.spec.ts'
       - '!src/*.spec.e2e.ts'
       - '!src/**.spec/**.ts'
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,10 +45,10 @@ jobs:
           - 12.x
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: 'Use Node.js ${{ matrix.node-version }}'
         uses: actions/setup-node@v2.1.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '${{ matrix.node-version }}'
       - name: Get npm cache directory
         id: get-npm-cache
         run: |
@@ -59,8 +58,8 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: ${{ steps.get-npm-cache.outputs.dir }}
-          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          path: '${{ steps.get-npm-cache.outputs.dir }}'
+          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles(''**/package-lock.json'') }}'
           restore-keys: |
             ${{ runner.OS }}-${{ env.cache-name }}-
             ${{ runner.OS }}-
@@ -71,7 +70,7 @@ jobs:
           cache-name: cache-project-node-modules
         with:
           path: node_modules
-          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles('**/package-lock.json') }}
+          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles(''**/package-lock.json'') }}'
       - name: Install Dependencies
         if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
         run: npm ci
@@ -79,4 +78,3 @@ jobs:
         env:
           CI: true
           NODE_ENV: production
-...

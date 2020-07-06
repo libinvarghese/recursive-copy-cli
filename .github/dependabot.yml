@@ -1,8 +1,14 @@
----
+# ==========================
+#
+# THIS IS A GENERATED FILE. Don't modify this file.
+#
+# Modify file in .github/jsTemplates/dependabot.yml.ts
+#
+# ==========================
+
 version: 2
 updates:
-  - package-ecosystem: npm
-    directory: /
+  - directory: /
     schedule:
       interval: daily
       time: '23:30'
@@ -19,8 +25,8 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
-  - package-ecosystem: pip
-    directory: /
+    package-ecosystem: npm
+  - directory: /
     schedule:
       interval: daily
       time: '23:30'
@@ -34,11 +40,11 @@ updates:
     allow:
       - dependency-type: direct
     commit-message:
-      prefix: chore
+      prefix: fix
       prefix-development: chore
       include: scope
-  - package-ecosystem: github-actions
-    directory: /
+    package-ecosystem: pip
+  - directory: /
     schedule:
       interval: daily
       time: '23:30'
@@ -50,7 +56,7 @@ updates:
     assignees:
       - libinvarghese
     commit-message:
-      prefix: chore
+      prefix: fix
       prefix-development: chore
       include: scope
-...
+    package-ecosystem: github-actions
