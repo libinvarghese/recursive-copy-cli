@@ -16,6 +16,7 @@ jobs:
     steps:
       - id: early
         name: Early exit
+        if: false == true
         run: |
           echo Skip! Pull author not bot
           exit 0
