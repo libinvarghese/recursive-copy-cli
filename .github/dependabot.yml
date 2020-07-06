@@ -37,4 +37,20 @@ updates:
       prefix: chore
       prefix-development: chore
       include: scope
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+      time: '23:30'
+      timezone: Asia/Kolkata
+    open-pull-requests-limit: 5
+    target-branch: develop
+    reviewers:
+      - libinvarghese
+    assignees:
+      - libinvarghese
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope
 ...
