@@ -17,10 +17,10 @@ module.exports = {
           // {type: 'fix', release: 'patch'},
           // {type: 'perf', release: 'patch'}
 
-          { type: 'docs', release: 'patch' },
+          { type: 'docs', scope: 'README', release: 'patch' },
           { type: 'refactor', release: 'patch' },
-          { type: 'style', release: 'patch' },
-          { type: 'test', release: 'patch' },
+          // { type: 'style', release: 'patch' },
+          // { type: 'test', release: 'patch' },
           // { type: 'ci', release: 'patch' },
           // { type: 'chore', release: 'patch' },
           // { type: 'chore', scope: 'deps-dev', release: false },

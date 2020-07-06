@@ -14,6 +14,7 @@ module.exports = {
     'coverage/*',
     '*.js',
     'scripts/*',
+    '.github/jsTemplates/*',
   ],
   statements: 100,
   branches: 95,

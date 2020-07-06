@@ -33,7 +33,13 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
-    project: ['./tsconfig.json', './scripts/tsconfig.json', './tsconfig.test.json', './tsconfig.config.json'],
+    project: [
+      './tsconfig.json',
+      './scripts/tsconfig.json',
+      './.github/jsTemplates/tsconfig.json',
+      './tsconfig.test.json',
+      './tsconfig.config.json',
+    ],
   },
   plugins: [
     // '@typescript-eslint',
@@ -47,6 +53,7 @@ module.exports = {
     'prefer-object-spread': 'error',
     'no-console': 'warn',
     '@typescript-eslint/no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
+    '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/naming-convention': [
       'error',
       { selector: 'default', format: ['camelCase'] },
@@ -86,7 +93,7 @@ module.exports = {
       'error',
       {
         version: '>=10.19.0',
-        ignores: ['fs.promises'],
+        ignores: ['fs.promises', 'stream.Readable.from'],
       },
     ],
     'node/no-missing-import': 'off',
