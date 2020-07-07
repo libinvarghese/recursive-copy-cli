@@ -94,7 +94,7 @@ jobs:
         run: |
           exit 1
       - name: Merge me!
-        uses: ridedott/merge-me-action@v1.3.12
+        uses: ridedott/merge-me-action@v1.3.13
         with:
           GITHUB_LOGIN: 'dependabot[bot]'
           GITHUB_TOKEN: '${{ secrets.REPO_ACCESS }}'
