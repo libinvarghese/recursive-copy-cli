@@ -1,4 +1,4 @@
-import { protectedBranches, defaultJobMachine } from './constants';
+import { defaultJobMachine } from './constants';
 import * as STEP from './steps';
 
 const bot = 'dependabot[bot]';
@@ -9,7 +9,7 @@ export = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     pull_request: {
       types: ['edited', 'labeled', 'opened', 'ready_for_review', 'reopened', 'synchronize', 'unlabeled', 'unlocked'],
-      branches: protectedBranches,
+      branches: ['develop'],
     },
   },
   jobs: {
