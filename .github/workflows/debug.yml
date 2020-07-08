@@ -1,0 +1,48 @@
+# ==========================
+#
+# THIS IS A GENERATED FILE. Don't modify this file.
+#
+# Modify file in .github/jsTemplates/workflows/debug.yml.ts
+#
+# ==========================
+
+name: debug
+'on':
+  push:
+    branches:
+      - develop
+      - master
+    tags:
+      - v*
+  pull_request:
+    branches:
+      - develop
+      - master
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump github context
+        env:
+          GITHUB_CONTEXT: '${{ toJson(github) }}'
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: '${{ toJson(job) }}'
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: '${{ toJson(steps) }}'
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: '${{ toJson(runner) }}'
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: '${{ toJson(strategy) }}'
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: '${{ toJson(matrix) }}'
+        run: echo "$MATRIX_CONTEXT"

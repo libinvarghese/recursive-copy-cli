@@ -1,3 +1,5 @@
+// Refer [Rules](https://commitlint.js.org/#/reference-rules)
+
 module.exports = {
   extends: [
     '@commitlint/config-conventional', // scoped packages are not prefixed
@@ -10,8 +12,12 @@ module.exports = {
       [
         'yargs',
         'cli',
+        // type: docs
+        'README',
         // type: ci
+        'commitlint',
         'dependabot',
+        'release',
         // The below scope is used by dependabot
         'deps',
         'deps-dev',

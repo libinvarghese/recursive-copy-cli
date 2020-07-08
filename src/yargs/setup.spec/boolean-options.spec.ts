@@ -1,9 +1,8 @@
+import { camelCase } from 'lodash';
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-
 import { RecursiveCopyCliModel } from '../../cli.model';
-import { camelCase } from 'lodash';
 
 describe('boolean options', () => {
   const _cliBooleanOptions: {

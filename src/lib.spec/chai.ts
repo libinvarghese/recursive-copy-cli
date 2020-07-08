@@ -1,10 +1,9 @@
 import chai from 'chai';
 import chaiArrays from 'chai-arrays';
-import { customAssert } from './custom-asserts';
 import chaiExec from '@jsdevtools/chai-exec';
 import chaiFs from 'chai-fs';
 import sinonChai from 'sinon-chai';
-
+import { customAssert } from './custom-asserts';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const chaiSemver = require('chai-semver');
 

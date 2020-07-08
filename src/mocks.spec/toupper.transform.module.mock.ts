@@ -1,7 +1,7 @@
-// eslint-disable-next-line node/no-unpublished-import
-import through2 from 'through2';
 import { Stats } from 'fs';
 import { Transform } from 'stream';
+// eslint-disable-next-line node/no-unpublished-import
+import through2 from 'through2';
 
 export = function caseTransform(src: string, _dest: string, _stats: Stats): Transform {
   // If 'js' file transform to lowerCase

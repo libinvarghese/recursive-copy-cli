@@ -1,9 +1,13 @@
----
-# Merge me!
-name: automerge-dependabot
+# ==========================
+#
+# THIS IS A GENERATED FILE. Don't modify this file.
+#
+# Modify file in .github/jsTemplates/workflows/automerge.yml.ts
+#
+# ==========================
 
-# yamllint disable-line rule:truthy
-on:
+name: automerge-dependabot
+'on':
   pull_request:
     types:
       - edited
@@ -15,71 +19,100 @@ on:
       - unlabeled
       - unlocked
     branches:
-      - master
       - develop
-
 jobs:
-  merge-me:
-    name: automerge-dependabot
+  pre-automerge-bot:
+    outputs:
+      status: '${{ steps.check-author.conclusion }}'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Check if author is dependabot[bot]'
+        id: check-author
+        if: 'github.event.pull_request.user.login != ''dependabot[bot]'''
+        run: |-
+          echo Skip! Pull request created by ${{ github.event.pull_request.user.login }} not dependabot[bot]
+          exit 0
+  pre-automerge-label:
+    needs:
+      - pre-automerge-bot
+    if: needs.pre-automerge-bot.outputs.status != 'success'
+    outputs:
+      status: '${{ steps.check-label.conclusion }}'
+    runs-on: ubuntu-latest
+    steps:
+      - id: search-label
+        uses: Dreamcodeio/pr-has-label-action@v1.2
+        with:
+          label: github_actions
+      - name: Check if label is github_actions
+        id: check-label
+        if: steps.search-label.outputs.hasLabel == true
+        run: |-
+          echo Skip! Pull request labelled github_actions
+          exit 0
+  automerge-dependabot:
+    needs:
+      - pre-automerge-label
+    if: needs.pre-automerge-label.outputs.status != 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Wait for commitlint
         uses: fountainhead/action-wait-for-check@v1.0.0
-        id: wait-for-commitlint
+        id: wait-for-Commitlint
         with:
-          token: ${{ secrets.REPO_ACCESS }}
-          timeoutSeconds: 180
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          token: '${{ secrets.REPO_ACCESS }}'
           checkName: commitlint
+          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
+          timeoutSeconds: 180
       - name: Exit when commitlint workflow has failed
-        if:
-          steps.wait-for-commitlint.outputs.conclusion != 'success' && steps.wait-for-commitlint.outputs.conclusion !=
+        if: >-
+          steps.wait-for-Commitlint.outputs.conclusion != 'success' && steps.wait-for-Commitlint.outputs.conclusion !=
           'timed_out'
         run: |
           exit 1
       - name: Wait for lint
         uses: fountainhead/action-wait-for-check@v1.0.0
-        id: wait-for-lint
+        id: wait-for-Lint
         with:
-          token: ${{ secrets.REPO_ACCESS }}
-          timeoutSeconds: 180
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          token: '${{ secrets.REPO_ACCESS }}'
           checkName: lint
+          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
+          timeoutSeconds: 180
       - name: Exit when lint workflow has failed
-        if: steps.wait-for-lint.outputs.conclusion != 'success' && steps.wait-for-lint.outputs.conclusion != 'timed_out'
+        if: steps.wait-for-Lint.outputs.conclusion != 'success' && steps.wait-for-Lint.outputs.conclusion != 'timed_out'
         run: |
           exit 1
-      - name: Wait for build
+      - name: Wait for build (12.x)
         uses: fountainhead/action-wait-for-check@v1.0.0
-        id: wait-for-build
+        id: wait-for-Build12X
         with:
-          token: ${{ secrets.REPO_ACCESS }}
+          token: '${{ secrets.REPO_ACCESS }}'
+          checkName: build (12.x)
+          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
           timeoutSeconds: 180
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          # yamllint disable-line rule:quoted-strings
-          checkName: 'build (12.x)'
-      - name: Exit when build workflow has failed
-        if:
-          steps.wait-for-build.outputs.conclusion != 'success' && steps.wait-for-build.outputs.conclusion != 'timed_out'
+      - name: Exit when build (12.x) workflow has failed
+        if: >-
+          steps.wait-for-Build12X.outputs.conclusion != 'success' && steps.wait-for-Build12X.outputs.conclusion !=
+          'timed_out'
         run: |
           exit 1
-      - name: Wait for test
+      - name: Wait for test (12.x)
         uses: fountainhead/action-wait-for-check@v1.0.0
-        id: wait-for-test
+        id: wait-for-Test12X
         with:
-          token: ${{ secrets.REPO_ACCESS }}
+          token: '${{ secrets.REPO_ACCESS }}'
+          checkName: test (12.x)
+          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
           timeoutSeconds: 180
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          # yamllint disable-line rule:quoted-strings
-          checkName: 'test (12.x)'
-      - name: Exit when test workflow has failed
-        if: steps.wait-for-test.outputs.conclusion != 'success' && steps.wait-for-test.outputs.conclusion != 'timed_out'
+      - name: Exit when test (12.x) workflow has failed
+        if: >-
+          steps.wait-for-Test12X.outputs.conclusion != 'success' && steps.wait-for-Test12X.outputs.conclusion !=
+          'timed_out'
         run: |
           exit 1
       - name: Merge me!
-        uses: ridedott/merge-me-action@v1.3.11
+        uses: ridedott/merge-me-action@v1.3.13
         with:
-          GITHUB_LOGIN: dependabot[bot]
-          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS }}
+          GITHUB_LOGIN: 'dependabot[bot]'
+          GITHUB_TOKEN: '${{ secrets.REPO_ACCESS }}'
           MERGE_METHOD: MERGE
-...

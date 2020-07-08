@@ -6,6 +6,8 @@ ignore: |
   /node_modules/
   /coverage/
   /.nyc_output/
+  /.github/workflows/
+  /.github/dependabot.yml
 
 rules:
   comments: enable

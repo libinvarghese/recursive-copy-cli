@@ -1,0 +1,39 @@
+# ==========================
+#
+# THIS IS A GENERATED FILE. Don't modify this file.
+#
+# Modify file in .github/jsTemplates/workflows/security-update.yml.ts
+#
+# ==========================
+
+name: security-update
+'on':
+  pull_request:
+    types:
+      - opened
+    branches:
+      - master
+jobs:
+  pre-pr-update-base:
+    outputs:
+      status: '${{ steps.check-author.conclusion }}'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Check if author is dependabot[bot]'
+        id: check-author
+        if: 'github.event.pull_request.user.login != ''dependabot[bot]'''
+        run: |-
+          echo Skip! Pull request created by ${{ github.event.pull_request.user.login }} not dependabot[bot]
+          exit 0
+  pr-update-base:
+    needs:
+      - pre-pr-update-base
+    if: needs.pre-pr-update-base.outputs.status != 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: a-b-r-o-w-n/check-base-branch-action@v1
+        with:
+          repo-token: '${{ secrets.REPO_ACCESS }}'
+          protectedBranches: master
+          defaultBranch: develop
+          update-branch: true
