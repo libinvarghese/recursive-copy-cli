@@ -49,7 +49,7 @@ exit 0`,
         ...STEP.waitForCheckName('test (12.x)'),
         {
           name: 'Merge me!',
-          uses: 'ridedott/merge-me-action@v1.3.13',
+          uses: 'libinvarghese/merge-me-action@v1',
           with: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
             GITHUB_LOGIN: bot,
