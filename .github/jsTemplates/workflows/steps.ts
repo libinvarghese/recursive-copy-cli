@@ -80,3 +80,17 @@ export function waitForCheckName(checkName: string): any[] {
     },
   ];
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function dumpContext(name: string): any {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const env: any = {};
+  const envVar = `${name.toUpperCase()}_CONTEXT`;
+
+  env[envVar] = `\${{ toJson(${name}) }}`;
+  return {
+    name: `Dump ${name} context`,
+    env,
+    run: `echo "$${envVar}"`,
+  };
+}

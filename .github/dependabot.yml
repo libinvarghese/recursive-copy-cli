@@ -15,8 +15,6 @@ updates:
       timezone: Asia/Kolkata
     open-pull-requests-limit: 5
     target-branch: develop
-    reviewers:
-      - libinvarghese
     assignees:
       - libinvarghese
     allow:
@@ -33,8 +31,6 @@ updates:
       timezone: Asia/Kolkata
     open-pull-requests-limit: 5
     target-branch: develop
-    reviewers:
-      - libinvarghese
     assignees:
       - libinvarghese
     allow:
@@ -51,8 +47,6 @@ updates:
       timezone: Asia/Kolkata
     open-pull-requests-limit: 5
     target-branch: develop
-    reviewers:
-      - libinvarghese
     assignees:
       - libinvarghese
     commit-message:

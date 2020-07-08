@@ -1,7 +1,5 @@
-import { protectedBranches, defaultJobMachine } from './constants';
+import { defaultJobMachine, bot, JOB } from './constants';
 import * as STEP from './steps';
-
-const bot = 'dependabot[bot]';
 
 export = {
   name: 'automerge-dependabot',
@@ -9,25 +7,11 @@ export = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     pull_request: {
       types: ['edited', 'labeled', 'opened', 'ready_for_review', 'reopened', 'synchronize', 'unlabeled', 'unlocked'],
-      branches: protectedBranches,
+      branches: ['develop'],
     },
   },
   jobs: {
-    'pre-automerge': {
-      outputs: {
-        status: '${{ steps.check-author.conclusion }}',
-      },
-      ...defaultJobMachine,
-      steps: [
-        {
-          name: `Check if author is ${bot}`,
-          id: 'check-author',
-          if: `github.event.pull_request.user.login != '${bot}'`,
-          run: `echo Skip! Pull request created by \${{ github.event.pull_request.user.login }} not ${bot}
-exit 0`,
-        },
-      ],
-    },
+    'pre-automerge': JOB.proceedIfBot,
     'automerge-dependabot': {
       needs: ['pre-automerge'],
       if: `needs.pre-automerge.outputs.status != 'success'`,

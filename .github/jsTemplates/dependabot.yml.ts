@@ -10,7 +10,7 @@ const packageSettings = {
   },
   'open-pull-requests-limit': 5,
   'target-branch': 'develop',
-  reviewers: ['libinvarghese'],
+  // reviewers: ['libinvarghese'],
   assignees: ['libinvarghese'],
   allow: [
     {
