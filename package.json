@@ -1,6 +1,6 @@
 {
   "name": "recursive-copy-cli",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "CLI for [recursive-copy](https://github.com/timkendrick/recursive-copy)",
   "repository": "https://github.com/libinvarghese/recursive-copy-cli.git",
   "homepage": "https://github.com/libinvarghese/recursive-copy-cli",
