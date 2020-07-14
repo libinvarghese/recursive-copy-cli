@@ -60,6 +60,8 @@
     "pascalcase",
     "postbuild",
     "prebuild",
+    "prerelease",
+    "printenv",
     "promisify",
     "readonly",
     "refs",

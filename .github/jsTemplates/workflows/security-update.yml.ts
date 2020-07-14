@@ -1,4 +1,6 @@
-import { defaultJobMachine, JOB } from './constants';
+import { defaultJobMachine, JOB, developBranch, productionBranch } from './constants';
+
+const protectedBranch = productionBranch;
 
 export = {
   name: 'security-update',
@@ -6,7 +8,7 @@ export = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     pull_request: {
       types: ['opened'],
-      branches: ['master'],
+      branches: [protectedBranch],
     },
   },
   jobs: {
@@ -20,8 +22,8 @@ export = {
           uses: 'a-b-r-o-w-n/check-base-branch-action@v1',
           with: {
             'repo-token': '${{ secrets.REPO_ACCESS }}',
-            protectedBranches: 'master',
-            defaultBranch: 'develop',
+            protectedBranches: protectedBranch,
+            defaultBranch: developBranch,
             'update-branch': true,
           },
         },

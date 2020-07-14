@@ -50,9 +50,9 @@
     "cover": "run-s cover:*",
     "git-commit": "commit",
     "prepublishOnly": "npm run prebuild:copy",
-    "release:dryrun": "npm run build:prod && HUSKY_SKIP_HOOKS=1 semantic-release --dry-run --no-ci --debug",
-    "release:local": "npm run build:prod && HUSKY_SKIP_HOOKS=1 semantic-release --no-ci --debug",
-    "release:ci": "HUSKY_SKIP_HOOKS=1 semantic-release --debug"
+    "release": "HUSKY_SKIP_HOOKS=1 semantic-release --no-ci --debug",
+    "release:local": "run-s build:prod release",
+    "release:dryrun": "npm run release -- --dry-run"
   },
   "husky": {
     "hooks": {

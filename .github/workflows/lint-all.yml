@@ -80,5 +80,3 @@ jobs:
         if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
         run: npm ci
       - run: npm run lint
-        env:
-          CI: true

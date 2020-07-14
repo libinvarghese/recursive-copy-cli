@@ -1,4 +1,4 @@
-import { defaultJobMachine, bot, JOB } from './constants';
+import { defaultJobMachine, bot, JOB, developBranch } from './constants';
 import * as STEP from './steps';
 
 const disableMergeLabel = 'github_actions';
@@ -9,7 +9,7 @@ export = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     pull_request: {
       types: ['edited', 'opened', 'reopened', 'synchronize'],
-      branches: ['develop'],
+      branches: [developBranch],
     },
   },
   jobs: {

@@ -1,4 +1,6 @@
-export const protectedBranches = ['develop', 'master'];
+export const developBranch = 'develop';
+export const productionBranch = 'master';
+export const protectedBranches = [developBranch, productionBranch];
 
 export const defaultJobMachine = {
   'runs-on': 'ubuntu-latest',

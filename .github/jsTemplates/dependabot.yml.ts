@@ -1,6 +1,8 @@
 // Refer https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates for
 // syntax
 
+import { developBranch } from './workflows/constants';
+
 const packageSettings = {
   directory: '/',
   schedule: {
@@ -9,7 +11,7 @@ const packageSettings = {
     timezone: 'Asia/Kolkata',
   },
   'open-pull-requests-limit': 5,
-  'target-branch': 'develop',
+  'target-branch': developBranch,
   // reviewers: ['libinvarghese'],
   assignees: ['libinvarghese'],
   allow: [

@@ -26,20 +26,7 @@ export = {
     build: {
       ...defaultJobMachine,
       ...defaultNodeStrategy,
-      steps: [
-        STEP.checkout,
-        STEP.setupNodeStrategy,
-        ...STEP.defaultNodeProjectSteps,
-        {
-          run: 'npm run build',
-          env: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            CI: true,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            NODE_ENV: 'production',
-          },
-        },
-      ],
+      steps: [STEP.checkout, STEP.setupNodeStrategy, ...STEP.defaultNodeProjectSteps, STEP.build],
     },
   },
 };

@@ -58,6 +58,58 @@ export const defaultNodeProjectSteps = [
   },
 ];
 
+export const setupPipDependenciesSteps = [
+  {
+    name: 'Set up Python 3.8',
+    uses: 'actions/setup-python@v2',
+    with: {
+      'python-version': '3.x',
+    },
+  },
+  {
+    name: 'Get pip cache directory',
+    id: 'get-pip-cache',
+    run: 'echo "::set-output name=dir::$(pip cache dir)"\n',
+  },
+  {
+    name: 'Cache pip',
+    uses: 'actions/cache@v2',
+    id: 'cache-pip',
+    env: {
+      'cache-name': 'cache-pip',
+    },
+    with: {
+      path: '${{ steps.get-pip-cache.outputs.dir }}',
+      key: "${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('requirements.txt') }}",
+      'restore-keys': '${{ runner.os }}-${{ env.cache-name }}-\n${{ runner.os }}-\n',
+    },
+  },
+  {
+    name: 'Install dependencies',
+    run: 'python -m pip install --upgrade pip\npip install -r requirements.txt\n',
+  },
+];
+
+export const build = {
+  run: 'npm run build',
+  env: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    NODE_ENV: 'production',
+  },
+};
+
+export const lint = {
+  run: 'npm run lint',
+};
+
+export const coverage = {
+  run: 'npm run cover',
+  env: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    CHECK_COVERAGE: true,
+  },
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function waitForCheckName(checkName: string): any[] {
   const stepId = `wait-for-${pascalCase(checkName)}`;
