@@ -1,11 +1,13 @@
 import { promisify } from 'util';
 import path from 'path';
-import { createWriteStream } from 'fs';
+import { createWriteStream, promises } from 'fs';
 import { Readable } from 'stream';
 // eslint-disable-next-line node/no-unpublished-import
 import glob from 'glob';
 // eslint-disable-next-line node/no-unpublished-import
 import { safeDump } from 'js-yaml';
+// eslint-disable-next-line node/no-unpublished-import
+import { Promise as Bluebird } from 'bluebird';
 
 // Converts a JS config (module.export) from src to YML config to dest
 //
@@ -26,17 +28,24 @@ const globP = promisify(glob);
     root: src,
   });
 
-  // npx ts-node scripts/get-config.ts ../.github/jsTemplates/workflows/test.yml.ts | yaml json --indent 2 --smart-string - | tee hello.yml
-  jsFiles.forEach(file => {
+  Bluebird.each(jsFiles, async file => {
     const absPath = path.resolve(file);
     // eslint-disable-next-line @typescript-eslint/no-var-requires, import/no-dynamic-require
     const config = require(absPath);
-
     const destFile = absPath.replace(src, dest).replace('.yml.ts', '.yml');
-    console.log(`${file} -> ${destFile}`);
-    const destStream = createWriteStream(destFile);
 
-    const fileHeader = `# ==========================
+    if (config.disable) {
+      console.log(`rm ${destFile}`);
+      await promises.unlink(destFile).catch((err: NodeJS.ErrnoException) => {
+        if (err.code !== 'ENOENT') {
+          throw err;
+        }
+      });
+    } else {
+      console.log(`${file} -> ${destFile}`);
+      const destStream = createWriteStream(destFile);
+
+      const fileHeader = `# ==========================
 #
 # THIS IS A GENERATED FILE. Don't modify this file.
 #
@@ -45,14 +54,15 @@ const globP = promisify(glob);
 # ==========================
 
 `;
-    Readable.from(fileHeader).pipe(destStream, {
-      end: false,
-    });
+      Readable.from(fileHeader).pipe(destStream, {
+        end: false,
+      });
 
-    const yaml = safeDump(config, {
-      noRefs: true,
-      lineWidth: 120,
-    });
-    Readable.from(yaml).pipe(destStream);
+      const yaml = safeDump(config, {
+        noRefs: true,
+        lineWidth: 120,
+      });
+      Readable.from(yaml).pipe(destStream);
+    }
   });
 })();

@@ -7,6 +7,8 @@ const pullConfig = {
 
 export = {
   name: 'debug',
+  // To disable a workflow simply uncomment the below
+  // disable: true,
   on: {
     push: { ...pullConfig, tags: ['v*'] },
     // eslint-disable-next-line @typescript-eslint/naming-convention
