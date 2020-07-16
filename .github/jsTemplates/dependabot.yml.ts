@@ -3,6 +3,12 @@
 
 import { developBranch } from './workflows/constants';
 
+const commitMessage = {
+  prefix: 'chore',
+  'prefix-development': 'chore',
+  include: 'scope',
+};
+
 const packageSettings = {
   directory: '/',
   schedule: {
@@ -19,15 +25,14 @@ const packageSettings = {
       'dependency-type': 'direct',
     },
   ],
-  'commit-message': {
-    prefix: 'chore',
-    'prefix-development': 'chore',
-    include: 'scope',
-  },
+  'commit-message': commitMessage,
 };
 
-const npmSettings = { ...packageSettings, 'package-ecosystem': 'npm' };
-npmSettings['commit-message'].prefix = 'fix';
+const npmSettings = {
+  ...packageSettings,
+  'package-ecosystem': 'npm',
+  'commit-message': { ...commitMessage, prefix: 'fix' },
+};
 const pipSettings = { ...packageSettings, 'package-ecosystem': 'pip' };
 const githubActionSettings = { ...packageSettings, 'package-ecosystem': 'github-actions' };
 delete githubActionSettings.allow;
