@@ -36,7 +36,7 @@ updates:
     allow:
       - dependency-type: direct
     commit-message:
-      prefix: fix
+      prefix: chore
       prefix-development: chore
       include: scope
     package-ecosystem: pip
@@ -50,7 +50,7 @@ updates:
     assignees:
       - libinvarghese
     commit-message:
-      prefix: fix
+      prefix: chore
       prefix-development: chore
       include: scope
     package-ecosystem: github-actions
