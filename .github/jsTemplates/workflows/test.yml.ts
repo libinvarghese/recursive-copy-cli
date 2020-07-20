@@ -25,7 +25,7 @@ export = {
         STEP.coverage,
         {
           name: 'Upload to Codecov',
-          uses: 'codecov/codecov-action@v1.0.10',
+          uses: 'codecov/codecov-action@v1.0.11',
           env: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
             CODECOV_TOKEN: '${{ secrets.CODECOV_TOKEN }}',
