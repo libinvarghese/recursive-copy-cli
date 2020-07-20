@@ -32,7 +32,7 @@ export = {
         {
           name: `Check if label is ${disableMergeLabel}`,
           id: 'check-label',
-          if: 'steps.search-label.outputs.hasLabel == true',
+          if: `steps.search-label.outputs.hasLabel == 'true'`,
           run: `echo Skip! Pull request labelled ${disableMergeLabel}
 exit 0`,
         },
