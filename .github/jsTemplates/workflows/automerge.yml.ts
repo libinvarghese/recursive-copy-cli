@@ -2,13 +2,14 @@ import { defaultJobMachine, bot, JOB, developBranch } from './constants';
 import * as STEP from './steps';
 
 const disableMergeLabel = 'github_actions';
+const autoMergeLabel = 'auto_merge';
 
 export = {
   name: 'automerge-dependabot',
   on: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     pull_request: {
-      types: ['edited', 'opened', 'reopened', 'synchronize'],
+      types: ['edited', 'reopened', 'synchronize', 'labeled'],
       branches: [developBranch],
     },
   },
@@ -22,17 +23,12 @@ export = {
       },
       ...defaultJobMachine,
       steps: [
+        STEP.dumpContext('github.event.pull_request.labels.*.name', 'pull_request_labels'),
         {
-          id: 'search-label',
-          uses: 'Dreamcodeio/pr-has-label-action@v1.2',
-          with: {
-            label: disableMergeLabel,
-          },
-        },
-        {
-          name: `Check if label is ${disableMergeLabel}`,
+          name: `Skip! Pull request labelled ${disableMergeLabel} && !${autoMergeLabel}`,
           id: 'check-label',
-          if: 'steps.search-label.outputs.hasLabel == true',
+          if: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')
+&& contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') == false`,
           run: `echo Skip! Pull request labelled ${disableMergeLabel}
 exit 0`,
         },
