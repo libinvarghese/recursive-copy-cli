@@ -134,10 +134,11 @@ export function waitForCheckName(checkName: string): any[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function dumpContext(name: string): any {
+export function dumpContext(name: string, simpleName: string | undefined = undefined): any {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const env: any = {};
-  const envVar = `${name.toUpperCase()}_CONTEXT`;
+  const contextName = simpleName ? simpleName.toUpperCase() : name.toUpperCase();
+  const envVar = `${contextName}_CONTEXT`;
 
   env[envVar] = `\${{ toJson(${name}) }}`;
   return {
