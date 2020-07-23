@@ -22,38 +22,116 @@ jobs:
       status: '${{ steps.check-author.conclusion }}'
     runs-on: ubuntu-latest
     steps:
+      - name: Dump github context
+        env:
+          GITHUB_CONTEXT: '${{ toJson(github) }}'
+        run: echo "$GITHUB_CONTEXT"
       - name: 'Check if author is dependabot[bot]'
         id: check-author
         if: 'github.event.pull_request.user.login != ''dependabot[bot]'''
         run: |-
           echo Skip! Pull request created by ${{ github.event.pull_request.user.login }} not dependabot[bot]
           exit 0
-  pre-automerge-label:
+  github-action:
     needs:
       - pre-automerge-bot
-    if: needs.pre-automerge-bot.outputs.status != 'success'
+    if: |-
+      needs.pre-automerge-bot.outputs.status != 'success'
+      && contains( github.event.pull_request.labels.*.name, 'dependencies')
     outputs:
-      status: '${{ steps.check-label.conclusion }}'
+      shouldMerge: '${{ steps.label-length.outputs.result >= 2 }}'
+      didCommit: '${{ steps.commit-dependencies.conclusion }}'
+      hasCommit: '${{ steps.update-dependencies.outputs.has-commit }}'
     runs-on: ubuntu-latest
     steps:
       - name: Dump github.event.pull_request.labels.*.name context
         env:
           PULL_REQUEST_LABELS_CONTEXT: '${{ toJson(github.event.pull_request.labels.*.name) }}'
         run: echo "$PULL_REQUEST_LABELS_CONTEXT"
-      - name: Skip! Pull request labelled github_actions && !auto_merge
-        id: check-label
-        if: |-
-          contains( github.event.pull_request.labels.*.name, 'github_actions')
-          && contains( github.event.pull_request.labels.*.name, 'auto_merge') == false
+      - uses: actions/checkout@v2
+        with:
+          ref: '${{ github.event.pull_request.head.ref }}'
+          token: '${{ secrets.PUSH_WORKFLOW_ACCESS }}'
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: 12.x
+      - name: Get npm cache directory
+        id: get-npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: '${{ steps.get-npm-cache.outputs.dir }}'
+          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles(''**/package-lock.json'') }}'
+          restore-keys: |
+            ${{ runner.OS }}-${{ env.cache-name }}-
+            ${{ runner.OS }}-
+      - name: Cache Project node_modules
+        uses: actions/cache@v2
+        id: cache-project-node-modules
+        env:
+          cache-name: cache-project-node-modules
+        with:
+          path: node_modules
+          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles(''**/package-lock.json'') }}'
+      - name: Install Dependencies
+        if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Get Array length of github.event.pull_request.labels
+        id: label-length
+        env:
+          ARRAY: '${{ toJson(github.event.pull_request.labels) }}'
         run: |-
-          echo Skip! Pull request labelled github_actions
-          exit 0
+          echo $ARRAY
+          ARRAY_LENGTH=$( echo $ARRAY | jq '. | length' )
+          echo "::set-output name=result::$ARRAY_LENGTH"
+      - name: Update .github/jsTemplates/utils/dependencies.ts
+        id: update-dependencies
+        if: |-
+          steps.label-length.outputs.result >= 2
+          && contains( github.event.pull_request.labels.*.name, 'github_actions')
+        run: >
+          npx ts-node scripts/githubActionsDepGen.ts
+
+          git add .github/jsTemplates/utils/dependencies.ts
+
+          npm run js2yaml
+
+          git add .github/workflows
+
+          git status
+
+          git diff --quiet
+
+          git diff --staged --quiet && echo "has-commit=false" || echo "has-commit=true"
+
+          git diff --staged --quiet && echo "::set-output name=has-commit::false" || echo "::set-output
+          name=has-commit::true"
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'chore(deps): bump dependency in template'
+          commit_options: '--no-verify'
+        id: commit-dependencies
+        if: |-
+          (steps.update-dependencies.conclusion == 'success'
+            && steps.update-dependencies.outputs.has-commit == 'true' )
+          || steps.update-dependencies.conclusion == 'skipped'
   automerge-dependabot:
     needs:
-      - pre-automerge-label
-    if: needs.pre-automerge-label.outputs.status != 'success'
+      - github-action
+    if: |-
+      needs.github-action.outputs.shouldMerge == 'true'
+      && ( needs.github-action.outputs.didCommit == 'success' || needs.github-action.outputs.didCommit == 'skipped')
     runs-on: ubuntu-latest
     steps:
+      - name: Dump needs context
+        env:
+          NEEDS_CONTEXT: '${{ toJson(needs) }}'
+        run: echo "$NEEDS_CONTEXT"
       - name: Wait for commitlint
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Commitlint

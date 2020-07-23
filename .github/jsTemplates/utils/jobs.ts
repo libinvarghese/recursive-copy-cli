@@ -1,20 +1,5 @@
-export const developBranch = 'develop';
-export const productionBranch = 'master';
-export const protectedBranches = [developBranch, productionBranch];
-
-export const defaultJobMachine = {
-  'runs-on': 'ubuntu-latest',
-};
-
-export const defaultNodeStrategy = {
-  strategy: {
-    matrix: {
-      'node-version': ['12.x'],
-    },
-  },
-};
-
-export const bot = 'dependabot[bot]';
+import * as STEP from './steps';
+import { defaultJobMachine, bot } from './constants';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const JOB = {
@@ -24,6 +9,7 @@ export const JOB = {
     },
     ...defaultJobMachine,
     steps: [
+      STEP.dumpContext('github'),
       {
         name: `Check if author is ${bot}`,
         id: 'check-author',

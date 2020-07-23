@@ -1,5 +1,5 @@
-import { protectedBranches, defaultJobMachine, defaultNodeStrategy } from './constants';
-import * as STEP from './steps';
+import { protectedBranches, defaultJobMachine, defaultNodeStrategy } from '../utils/constants';
+import * as STEP from '../utils/steps';
 
 const pullConfig = {
   branches: protectedBranches,
@@ -23,14 +23,7 @@ export = {
         STEP.setupNodeStrategy,
         ...STEP.defaultNodeProjectSteps,
         STEP.coverage,
-        {
-          name: 'Upload to Codecov',
-          uses: 'codecov/codecov-action@v1.0.10',
-          env: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            CODECOV_TOKEN: '${{ secrets.CODECOV_TOKEN }}',
-          },
-        },
+        STEP.uploadCoverage,
       ],
     },
   },

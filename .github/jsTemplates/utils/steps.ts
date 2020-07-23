@@ -1,13 +1,15 @@
+import { bot, developBranch, productionBranch } from './constants';
+import { DEPENDENCIES } from './dependencies';
 // eslint-disable-next-line @typescript-eslint/no-var-requires, node/no-unpublished-require
 const pascalCase = require('pascalcase');
 
 export const checkout = {
-  uses: 'actions/checkout@v2',
+  uses: DEPENDENCIES.checkout,
 };
 
 export const setupNodeStrategy = {
   name: 'Use Node.js ${{ matrix.node-version }}',
-  uses: 'actions/setup-node@v2.1.1',
+  uses: DEPENDENCIES['setup-node'],
   with: {
     'node-version': '${{ matrix.node-version }}',
   },
@@ -15,7 +17,7 @@ export const setupNodeStrategy = {
 
 export const setupNode12x = {
   name: 'Use Node.js 12.x',
-  uses: 'actions/setup-node@v2.1.1',
+  uses: DEPENDENCIES['setup-node'],
   with: {
     'node-version': '12.x',
   },
@@ -29,7 +31,7 @@ export const defaultNodeProjectSteps = [
   },
   {
     name: 'Cache Node.js modules',
-    uses: 'actions/cache@v2',
+    uses: DEPENDENCIES.cache,
     env: {
       'cache-name': 'cache-node-modules',
     },
@@ -41,7 +43,7 @@ export const defaultNodeProjectSteps = [
   },
   {
     name: 'Cache Project node_modules',
-    uses: 'actions/cache@v2',
+    uses: DEPENDENCIES.cache,
     id: 'cache-project-node-modules',
     env: {
       'cache-name': 'cache-project-node-modules',
@@ -61,7 +63,7 @@ export const defaultNodeProjectSteps = [
 export const setupPipDependenciesSteps = [
   {
     name: 'Set up Python 3.8',
-    uses: 'actions/setup-python@v2',
+    uses: DEPENDENCIES['setup-python'],
     with: {
       'python-version': '3.x',
     },
@@ -73,7 +75,7 @@ export const setupPipDependenciesSteps = [
   },
   {
     name: 'Cache pip',
-    uses: 'actions/cache@v2',
+    uses: DEPENDENCIES.cache,
     id: 'cache-pip',
     env: {
       'cache-name': 'cache-pip',
@@ -110,13 +112,75 @@ export const coverage = {
   },
 };
 
+export const uploadCoverage = {
+  name: 'Upload to Codecov',
+  uses: DEPENDENCIES['codecov-action'],
+  env: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    CODECOV_TOKEN: '${{ secrets.CODECOV_TOKEN }}',
+  },
+};
+
+export const mergeDependabotPR = {
+  name: 'Merge me!',
+  uses: DEPENDENCIES['merge-me-action'],
+  with: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    GITHUB_LOGIN: bot,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    GITHUB_TOKEN: '${{ secrets.REPO_ACCESS }}',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    MERGE_METHOD: 'MERGE',
+  },
+};
+
+export const changePRBaseFromMasterToDevelop = {
+  uses: DEPENDENCIES['check-base-branch-action'],
+  with: {
+    'repo-token': '${{ secrets.REPO_ACCESS }}',
+    protectedBranches: productionBranch,
+    defaultBranch: developBranch,
+    'update-branch': true,
+  },
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function commit(msg: string, options: any): any {
+  const { commitArgs } = options;
+  return {
+    uses: DEPENDENCIES['git-auto-commit-action'],
+    with: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      commit_message: msg,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      commit_options: commitArgs,
+    },
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getArrayLength(id: string, path: string): any {
+  return {
+    name: `Get Array length of ${path}`,
+    id,
+    env: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      ARRAY: `\${{ toJson(${path}) }}`,
+    },
+    // eslint-disable-next-line no-secrets/no-secrets
+    run: `echo $ARRAY
+ARRAY_LENGTH=$( echo $ARRAY | jq '. | length' )
+echo "::set-output name=result::$ARRAY_LENGTH"`,
+  };
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function waitForCheckName(checkName: string): any[] {
   const stepId = `wait-for-${pascalCase(checkName)}`;
   return [
     {
       name: `Wait for ${checkName}`,
-      uses: 'fountainhead/action-wait-for-check@v1.0.0',
+      uses: DEPENDENCIES['action-wait-for-check'],
       id: stepId,
       with: {
         token: '${{ secrets.REPO_ACCESS }}',
