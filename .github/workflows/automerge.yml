@@ -105,8 +105,8 @@ jobs:
 
           git diff --quiet
 
-          git diff --staged --quiet && echo "::set-output name=has-commit::true" || echo "::set-output
-          name=has-commit::false"
+          git diff --staged --quiet && echo "::set-output name=has-commit::false" || echo "::set-output
+          name=has-commit::true"
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'chore(deps): bump dependency in template'

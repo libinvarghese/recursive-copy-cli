@@ -48,7 +48,7 @@ npm run js2yaml
 git add .github/workflows
 git status
 git diff --quiet
-git diff --staged --quiet && echo "::set-output name=has-commit::true" || echo "::set-output name=has-commit::false"
+git diff --staged --quiet && echo "::set-output name=has-commit::false" || echo "::set-output name=has-commit::true"
 `,
         },
         {
