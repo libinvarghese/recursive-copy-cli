@@ -24,7 +24,7 @@ jobs:
       - name: Git fetch master
         run: 'git fetch --no-tags --prune --progress --no-recurse-submodules origin +master:master'
       - name: Use Node.js 12.x
-        uses: actions/setup-node@v2.1.0
+        uses: actions/setup-node@v2.1.1
         with:
           node-version: 12.x
       - name: Get npm cache directory
