@@ -44,8 +44,8 @@ export = {
 && contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')`,
           run: `npx ts-node scripts/githubActionsDepGen.ts
 git add .github/jsTemplates/utils/dependencies.ts
-git add .github/workflows
 npm run js2yaml
+git add .github/workflows
 git status
 git diff --quiet
 git diff --staged --quiet && echo "::set-output name=has-commit::true" || echo "::set-output name=has-commit::false"

@@ -97,9 +97,9 @@ jobs:
 
           git add .github/jsTemplates/utils/dependencies.ts
 
-          git add .github/workflows
-
           npm run js2yaml
+
+          git add .github/workflows
 
           git status
 
