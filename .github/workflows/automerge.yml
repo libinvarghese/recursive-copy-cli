@@ -41,6 +41,7 @@ jobs:
     outputs:
       shouldMerge: '${{ steps.label-length.outputs.result >= 2 }}'
       didCommit: '${{ steps.commit-dependencies.conclusion }}'
+      hasCommit: '${{ steps.update-dependencies.outputs.has-commit }}'
     runs-on: ubuntu-latest
     steps:
       - name: Dump github.event.pull_request.labels.*.name context
@@ -105,8 +106,14 @@ jobs:
 
           git diff --quiet
 
+          git diff --staged --quiet && echo "has-commit=false" || echo "has-commit=true"
+
           git diff --staged --quiet && echo "::set-output name=has-commit::false" || echo "::set-output
           name=has-commit::true"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: '${{ toJson(steps) }}'
+        run: echo "$STEPS_CONTEXT"
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'chore(deps): bump dependency in template'

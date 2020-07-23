@@ -23,6 +23,7 @@ export = {
       outputs: {
         shouldMerge: '${{ steps.label-length.outputs.result >= 2 }}',
         didCommit: '${{ steps.commit-dependencies.conclusion }}',
+        hasCommit: '${{ steps.update-dependencies.outputs.has-commit }}',
       },
       ...defaultJobMachine,
       steps: [
@@ -48,9 +49,11 @@ npm run js2yaml
 git add .github/workflows
 git status
 git diff --quiet
+git diff --staged --quiet && echo "has-commit=false" || echo "has-commit=true"
 git diff --staged --quiet && echo "::set-output name=has-commit::false" || echo "::set-output name=has-commit::true"
 `,
         },
+        STEP.dumpContext('steps'),
         {
           ...STEP.commit('chore(deps): bump dependency in template', {
             commitArgs: '--no-verify',
