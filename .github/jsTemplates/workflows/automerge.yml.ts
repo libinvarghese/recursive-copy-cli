@@ -24,14 +24,14 @@ export = {
       ...defaultJobMachine,
       steps: [
         {
-          run: `echo contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}') = $CHECK_RESULT`,
+          run: `echo contains '${disableMergeLabel}' = $CHECK_RESULT`,
           env: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
             CHECK_RESULT: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')`,
           },
         },
         {
-          run: `echo contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') = $CHECK_RESULT`,
+          run: `echo contains '${autoMergeLabel}' = $CHECK_RESULT`,
           env: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
             CHECK_RESULT: `contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}')`,
@@ -39,7 +39,7 @@ export = {
         },
         {
           if: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')`,
-          run: `echo contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}') = $CHECK_RESULT`,
+          run: `echo contains '${disableMergeLabel}' = $CHECK_RESULT`,
           env: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
             CHECK_RESULT: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')`,
@@ -47,7 +47,7 @@ export = {
         },
         {
           if: `contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') == 'false'`,
-          run: `echo contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') = $CHECK_RESULT`,
+          run: `echo contains '${autoMergeLabel}' = $CHECK_RESULT`,
           env: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
             CHECK_RESULT: `contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}')`,
