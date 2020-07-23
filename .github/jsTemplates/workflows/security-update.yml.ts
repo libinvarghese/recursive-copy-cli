@@ -1,4 +1,5 @@
-import { defaultJobMachine, JOB, developBranch, productionBranch } from './constants';
+import { defaultJobMachine, JOB, productionBranch } from '../utils/constants';
+import * as STEP from '../utils/steps';
 
 const protectedBranch = productionBranch;
 
@@ -17,17 +18,7 @@ export = {
       needs: ['pre-pr-update-base'],
       if: `needs.pre-pr-update-base.outputs.status != 'success'`,
       ...defaultJobMachine,
-      steps: [
-        {
-          uses: 'a-b-r-o-w-n/check-base-branch-action@v1',
-          with: {
-            'repo-token': '${{ secrets.REPO_ACCESS }}',
-            protectedBranches: protectedBranch,
-            defaultBranch: developBranch,
-            'update-branch': true,
-          },
-        },
-      ],
+      steps: [STEP.changePRBaseFromMasterToDevelop],
     },
   },
 };

@@ -1,5 +1,5 @@
-import { defaultJobMachine, developBranch, productionBranch } from './constants';
-import * as STEP from './steps';
+import { defaultJobMachine, developBranch, productionBranch } from '../utils/constants';
+import * as STEP from '../utils/steps';
 
 export = {
   name: 'release',

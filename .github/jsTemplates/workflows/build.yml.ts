@@ -1,5 +1,5 @@
-import { protectedBranches, defaultJobMachine, defaultNodeStrategy } from './constants';
-import * as STEP from './steps';
+import { protectedBranches, defaultJobMachine, defaultNodeStrategy } from '../utils/constants';
+import * as STEP from '../utils/steps';
 
 const pullConfig = {
   branches: protectedBranches,
