@@ -21,6 +21,7 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
   const flag = utils.flag;
 
   _Assertion.addMethod('argsSuccessfullyParsed', function () {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const {
       error: _error,
       argv: _argv,
@@ -41,6 +42,7 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
   });
 
   _Assertion.addMethod('errorOnArgsParsing', function () {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const {
       error: _error,
       output: _output,
@@ -54,15 +56,17 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
   });
 
   // eslint-disable-next-line mocha/prefer-arrow-callback
-  _Assertion.addChainableMethod('contentsEquals', function (expected, msg) {
+  _Assertion.addChainableMethod('contentsEquals', function (expected: string, msg: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const _isDirectory = flag(this, 'fs.isDirectory');
     if (_isDirectory) {
-      const dir = flag(this, 'object');
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const dir: string = flag(this, 'object');
 
       let preMsg = '';
       if (msg) {
         flag(this, 'message', msg);
-        preMsg = msg + ': ';
+        preMsg = `${msg} : `;
       }
 
       new chai.Assertion(expected, preMsg + 'expected-value').is.a('string');

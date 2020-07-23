@@ -3,10 +3,11 @@ import { RecursiveCopyCliModel } from '../cli.model';
 import { renameParamsToFunction } from './rename-params-to-fn';
 import { transformParamsToFunction } from './transform-to-fn';
 import { filterCoerce } from './filter-coerce';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment
 const packageJSON = require('../../package.json');
 
 declare module 'yargs' {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   interface Argv<T = {}> {
     /**
      * Any command-line argument given that is not demanded, or does not have a corresponding description, will be reported as an error.
@@ -22,6 +23,7 @@ declare module 'yargs' {
     ): Argv<T>;
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   type MiddlewareFunctionEx<T = {}> = (args: Arguments<T>, yargs: Argv<T>) => void;
 }
 
@@ -32,31 +34,34 @@ yargs.parserConfiguration({
 });
 
 yargs
-  .usage('$0 <src> <dest>', '', yargs =>
-    yargs
-      .positional('src', {
-        description: 'Source file/folder path',
-        type: 'string',
-      })
-      .positional('dest', {
-        description: 'Destination file/folder path',
-        type: 'string',
-      })
-      .demandCommand(0, 0, '', 'Too many arguments: got $0 unknown arguments')
-      .example(`$0 srcPath destPath -r pascalcase`, 'Renames files using the pascalcase module')
-      .example(`$0 srcPath destPath -p '::' '-'`, 'Renames someFile::name.ext to someFile-name.ext')
-      .example(
-        `$0 srcPath destPath -p '/(.*)-(.*)\\.(.*)/g' '$2-$1.$3'`,
-        'Renames author::title.ext to title-author.ext'
-      )
-      .example(`$0 srcPath destPath -f '*.json' '/\\*.js$/'`, 'Only Copies json & js files')
-      .example(`$0 srcPath destPath -f "*.js" -t some-transform-module`, 'modify the contents of js files')
-      .epilogue(`Use --no-<option> to toggle boolean options. eg: --no-overwrite or --no-w
+  .usage(
+    '$0 <src> <dest>',
+    '',
+    yargs =>
+      yargs
+        .positional('src', {
+          description: 'Source file/folder path',
+          type: 'string',
+        })
+        .positional('dest', {
+          description: 'Destination file/folder path',
+          type: 'string',
+        })
+        .demandCommand(0, 0, '', 'Too many arguments: got $0 unknown arguments')
+        .example(`$0 srcPath destPath -r pascalcase`, 'Renames files using the pascalcase module')
+        .example(`$0 srcPath destPath -p '::' '-'`, 'Renames someFile::name.ext to someFile-name.ext')
+        .example(
+          `$0 srcPath destPath -p '/(.*)-(.*)\\.(.*)/g' '$2-$1.$3'`,
+          'Renames author::title.ext to title-author.ext'
+        )
+        .example(`$0 srcPath destPath -f '*.json' '/\\*.js$/'`, 'Only Copies json & js files')
+        .example(`$0 srcPath destPath -f "*.js" -t some-transform-module`, 'modify the contents of js files')
+        .epilogue(`Use --no-<option> to toggle boolean options. eg: --no-overwrite or --no-w
 
 When specifying a module, you could specify a global module, local module or provide the path to file.
 eg: ./someFolder/pascalcase/index.js in case of file or node_modules/pascalcase in case of local module
 
-For more help refer ${packageJSON.homepage}`)
+For more help refer ${packageJSON.homepage}`) // eslint-disable-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
   )
   .strictCommands();
 
@@ -129,7 +134,7 @@ function gracefulMiddleware(middleware: MiddlewareFunctionEx): MiddlewareFunctio
     try {
       middleware(argv, yargs);
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       (yargs as any).getUsageInstance().fail(error.message);
     }
   };

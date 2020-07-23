@@ -18,6 +18,7 @@ export = {
       ...defaultJobMachine,
       ...defaultNodeStrategy,
       steps: [
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         ...STEP.waitForCheckName('build (12.x)'),
         STEP.checkout,
         STEP.setupNodeStrategy,

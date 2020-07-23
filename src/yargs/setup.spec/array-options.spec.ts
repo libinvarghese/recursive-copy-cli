@@ -79,7 +79,7 @@ describe('array options', () => {
               output,
               args: _args,
             }).to.be.argsSuccessfullyParsed();
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(_cliArrayOptions[key].value);
             if (_cliArrayOptions[key].mapKey) {
               expect(argv).to.have.property(_cliArrayOptions[key].mapKey as string);
@@ -100,7 +100,7 @@ describe('array options', () => {
               output,
               args: _args,
             }).to.be.argsSuccessfullyParsed();
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(_cliArrayOptions[key].value);
             if (_cliArrayOptions[key].mapKey) {
               expect(argv).to.have.property(_cliArrayOptions[key].mapKey as string);

@@ -23,16 +23,16 @@ const src = process.argv[3];
 const dest = process.argv[4];
 const globP = promisify(glob);
 
-(async (): Promise<void> => {
+void (async (): Promise<void> => {
   const jsFiles = await globP(pattern, {
     root: src,
     dot: true,
   });
 
-  Bluebird.each(jsFiles, async file => {
+  await Bluebird.each(jsFiles, async file => {
     const absPath = resolve(file);
-    // eslint-disable-next-line @typescript-eslint/no-var-requires, import/no-dynamic-require
-    const config = require(absPath);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires, import/no-dynamic-require
+    const config: { disable?: boolean } = require(absPath);
     const destFile = absPath.replace(src, dest).replace('.yml.ts', '.yml');
 
     if (config.disable) {

@@ -26,7 +26,9 @@ module.exports = {
     'plugin:mocha/recommended',
   ],
   globals: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     Atomics: 'readonly',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     SharedArrayBuffer: 'readonly',
   },
   parser: '@typescript-eslint/parser',

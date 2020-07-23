@@ -1,6 +1,6 @@
 import { bot, developBranch, productionBranch } from './constants';
 import { DEPENDENCIES } from './dependencies';
-// eslint-disable-next-line @typescript-eslint/no-var-requires, node/no-unpublished-require
+// eslint-disable-next-line @typescript-eslint/no-var-requires, node/no-unpublished-require, @typescript-eslint/no-unsafe-assignment
 const pascalCase = require('pascalcase');
 
 export const checkout = {
@@ -145,7 +145,7 @@ export const changePRBaseFromMasterToDevelop = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function commit(msg: string, options: any): any {
+export function commit(msg: string, options: { commitArgs: string }): any {
   const { commitArgs } = options;
   return {
     uses: DEPENDENCIES['git-auto-commit-action'],
@@ -176,6 +176,7 @@ echo "::set-output name=result::$ARRAY_LENGTH"`,
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function waitForCheckName(checkName: string): any[] {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/restrict-template-expressions
   const stepId = `wait-for-${pascalCase(checkName)}`;
   return [
     {
@@ -204,9 +205,11 @@ export function dumpContext(name: string, simpleName: string | undefined = undef
   const contextName = simpleName ? simpleName.toUpperCase() : name.toUpperCase();
   const envVar = `${contextName}_CONTEXT`;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   env[envVar] = `\${{ toJson(${name}) }}`;
   return {
     name: `Dump ${name} context`,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     env,
     run: `echo "$${envVar}"`,
   };

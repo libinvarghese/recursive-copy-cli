@@ -2,7 +2,7 @@
 import gitP from 'simple-git';
 const git = gitP();
 
-(async (): Promise<void> => {
+void (async (): Promise<void> => {
   const _gitStatus = await git.status();
   const _notStaged = _gitStatus.files.filter(status => status.working_dir !== ' ');
   if (_notStaged.length > 0) {

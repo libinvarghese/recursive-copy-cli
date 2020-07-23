@@ -4,5 +4,5 @@
     "noEmit": true
     // "outDir": "./dist"
   },
-  "include": ["*.js"]
+  "include": ["*.js", ".*.js"]
 }

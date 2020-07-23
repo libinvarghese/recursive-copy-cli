@@ -16,7 +16,7 @@ export = {
       steps: Object.keys(DEPENDENCIES).map(key => {
         return {
           if: `env.SHOULD_RUN == 'true'`,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
           uses: (DEPENDENCIES as any)[key],
         };
       }),

@@ -1,6 +1,11 @@
 import { Stats } from 'fs';
 import { Transform } from 'stream';
 
+export interface CopyOperation {
+  src: string;
+  dest: string;
+}
+
 export interface RecursiveCopyCliModel {
   src: string;
   dest: string;

@@ -68,6 +68,7 @@ describe('cli', () => {
   });
 
   describe('bootstrap-cli', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const _consoleSpy: {
       log: SinonSpy;
       error: SinonSpy;

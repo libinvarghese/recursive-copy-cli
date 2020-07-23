@@ -7,6 +7,7 @@ export function renameParamsToFunction(argv: RecursiveCopyCliModel): void {
 
   if (argv.renameModule) {
     const _renameFnList = argv.renameModule.map(module => requireTryAll(module) as RenameFn);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     _rename = (src: string): string => flow(_renameFnList)(src);
   } else if (argv.renamePattern) {
     const [_regexpStr, _substitute] = argv.renamePattern;

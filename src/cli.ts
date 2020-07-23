@@ -2,4 +2,4 @@
 
 import { bootstrapCli } from './bootstrap-cli';
 
-bootstrapCli();
+void bootstrapCli();

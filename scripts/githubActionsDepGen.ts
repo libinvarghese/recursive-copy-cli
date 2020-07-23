@@ -8,10 +8,10 @@ const ymlDepFile = resolve('.github/dependabotGithubActions/.github/workflows/du
 const ymlDepContent = readFileSync(ymlDepFile, 'utf8');
 const ymlDep = safeLoad(ymlDepContent);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const dependencies = ((ymlDep as any).jobs.dummy.steps as any[])
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+const dependencies = ((ymlDep as any).jobs.dummy.steps as { uses: string }[])
   .map(step => step.uses)
-  .reduce((list, dep: string) => {
+  .reduce((list, dep) => {
     const _match = /.*\/(.*)@.*/.exec(dep);
 
     if (_match === null) {
@@ -19,7 +19,8 @@ const dependencies = ((ymlDep as any).jobs.dummy.steps as any[])
     }
 
     const _key = _match[1];
-    list[_key] = dep;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+    (list as any)[_key] = dep;
 
     return list;
   }, {});

@@ -60,7 +60,7 @@ describe('value options', () => {
               output,
               args: _args,
             }).to.be.argsSuccessfullyParsed();
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
             expect((argv as any)[camelCase(key)]).to.be.equal(_cliOtherOptions[key].value);
 
             done();
@@ -78,7 +78,7 @@ describe('value options', () => {
               output,
               args: _args,
             }).to.be.argsSuccessfullyParsed();
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
             expect((argv as any)[camelCase(key)]).to.be.equal(_cliOtherOptions[key].value);
 
             done();
@@ -98,6 +98,7 @@ describe('value options', () => {
       if (_cliOtherOptions[key].invalidValue) {
         it(`should fail when invalid argument is passed with ${key}`, done => {
           yargs.parse(
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             `${_cmdArgs} --${key} ${_cliOtherOptions[key].invalidValue}`,
             (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
               expect({ error, output }).to.be.errorOnArgsParsing();

@@ -4,7 +4,7 @@ import chaiExec from '@jsdevtools/chai-exec';
 import chaiFs from 'chai-fs';
 import sinonChai from 'sinon-chai';
 import { customAssert } from './custom-asserts';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment
 const chaiSemver = require('chai-semver');
 
 chai.use(chaiSemver);

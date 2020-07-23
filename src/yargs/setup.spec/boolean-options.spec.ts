@@ -53,7 +53,7 @@ describe('boolean options', () => {
             output,
             args: _args,
           }).to.be.argsSuccessfullyParsed();
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
           expect((argv as any)[camelCase(key)]).to.be.true;
 
           done();
@@ -70,7 +70,7 @@ describe('boolean options', () => {
               output,
               args: _args,
             }).to.be.argsSuccessfullyParsed();
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
             expect((argv as any)[camelCase(key)]).to.be.true;
 
             done();

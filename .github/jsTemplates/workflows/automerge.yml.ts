@@ -72,9 +72,13 @@ git diff --staged --quiet && echo "::set-output name=has-commit::false" || echo 
       ...defaultJobMachine,
       steps: [
         STEP.dumpContext('needs'),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         ...STEP.waitForCheckName('commitlint'),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         ...STEP.waitForCheckName('lint'),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         ...STEP.waitForCheckName('build (12.x)'),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         ...STEP.waitForCheckName('test (12.x)'),
         STEP.mergeDependabotPR,
       ],
