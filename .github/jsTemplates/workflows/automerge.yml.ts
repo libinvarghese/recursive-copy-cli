@@ -24,7 +24,37 @@ export = {
       ...defaultJobMachine,
       steps: [
         {
-          name: `Check if label is ${disableMergeLabel}`,
+          run: `echo contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}') = $CHECK_RESULT`,
+          env: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            CHECK_RESULT: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')`,
+          },
+        },
+        {
+          run: `echo contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') = $CHECK_RESULT`,
+          env: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            CHECK_RESULT: `contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}')`,
+          },
+        },
+        {
+          if: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')`,
+          run: `echo contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}') = $CHECK_RESULT`,
+          env: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            CHECK_RESULT: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')`,
+          },
+        },
+        {
+          if: `contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') == 'false'`,
+          run: `echo contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') = $CHECK_RESULT`,
+          env: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            CHECK_RESULT: `contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}')`,
+          },
+        },
+        {
+          name: `Skip! Pull request labelled ${disableMergeLabel}`,
           id: 'check-label',
           if: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')
 && contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') == 'false'`,

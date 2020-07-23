@@ -36,7 +36,21 @@ jobs:
       status: '${{ steps.check-label.conclusion }}'
     runs-on: ubuntu-latest
     steps:
-      - name: Check if label is github_actions
+      - run: 'echo contains( github.event.pull_request.labels.*.name, ''github_actions'') = $CHECK_RESULT'
+        env:
+          CHECK_RESULT: 'contains( github.event.pull_request.labels.*.name, ''github_actions'')'
+      - run: 'echo contains( github.event.pull_request.labels.*.name, ''auto_merge'') = $CHECK_RESULT'
+        env:
+          CHECK_RESULT: 'contains( github.event.pull_request.labels.*.name, ''auto_merge'')'
+      - if: 'contains( github.event.pull_request.labels.*.name, ''github_actions'')'
+        run: 'echo contains( github.event.pull_request.labels.*.name, ''github_actions'') = $CHECK_RESULT'
+        env:
+          CHECK_RESULT: 'contains( github.event.pull_request.labels.*.name, ''github_actions'')'
+      - if: 'contains( github.event.pull_request.labels.*.name, ''auto_merge'') == ''false'''
+        run: 'echo contains( github.event.pull_request.labels.*.name, ''auto_merge'') = $CHECK_RESULT'
+        env:
+          CHECK_RESULT: 'contains( github.event.pull_request.labels.*.name, ''auto_merge'')'
+      - name: Skip! Pull request labelled github_actions
         id: check-label
         if: |-
           contains( github.event.pull_request.labels.*.name, 'github_actions')
