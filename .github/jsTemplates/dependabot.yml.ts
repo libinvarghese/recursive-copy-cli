@@ -1,7 +1,7 @@
 // Refer https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates for
 // syntax
 
-import { developBranch } from './workflows/constants';
+import { developBranch } from './utils/constants';
 
 const commitMessage = {
   prefix: 'chore',
@@ -34,7 +34,11 @@ const npmSettings = {
   'commit-message': { ...commitMessage, prefix: 'fix' },
 };
 const pipSettings = { ...packageSettings, 'package-ecosystem': 'pip' };
-const githubActionSettings = { ...packageSettings, 'package-ecosystem': 'github-actions' };
+const githubActionSettings = {
+  ...packageSettings,
+  'package-ecosystem': 'github-actions',
+  directory: '/.github/dependabotGithubActions/',
+};
 delete githubActionSettings.allow;
 
 export = {
