@@ -1,8 +1,9 @@
-import { defaultJobMachine, bot, JOB, developBranch } from './constants';
-import * as STEP from './steps';
+import { defaultJobMachine, developBranch } from '../utils/constants';
+import { JOB } from '../utils/jobs';
+import * as STEP from '../utils/steps';
 
 const disableMergeLabel = 'github_actions';
-const autoMergeLabel = 'auto_merge';
+const dependabotLabel = 'dependencies';
 
 export = {
   name: 'automerge-dependabot',
@@ -15,46 +16,62 @@ export = {
   },
   jobs: {
     'pre-automerge-bot': JOB.proceedIfBot,
-    'pre-automerge-label': {
+    'github-action': {
       needs: ['pre-automerge-bot'],
-      if: `needs.pre-automerge-bot.outputs.status != 'success'`,
+      if: `needs.pre-automerge-bot.outputs.status != 'success'
+&& contains( github.event.pull_request.labels.*.name, '${dependabotLabel}')`,
       outputs: {
-        status: '${{ steps.check-label.conclusion }}',
+        shouldMerge: '${{ steps.label-length.outputs.result >= 2 }}',
+        didCommit: '${{ steps.commit-dependencies.conclusion }}',
       },
       ...defaultJobMachine,
       steps: [
         STEP.dumpContext('github.event.pull_request.labels.*.name', 'pull_request_labels'),
         {
-          name: `Skip! Pull request labelled ${disableMergeLabel} && !${autoMergeLabel}`,
-          id: 'check-label',
-          if: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')
-&& contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') == false`,
-          run: `echo Skip! Pull request labelled ${disableMergeLabel}
-exit 0`,
+          ...STEP.checkout,
+          with: {
+            ref: '${{ github.event.pull_request.head.ref }}',
+            // token: '${{ secrets.REPO_ACCESS }}',
+          },
+        },
+        STEP.setupNode12x,
+        ...STEP.defaultNodeProjectSteps,
+        STEP.getArrayLength('label-length', 'github.event.pull_request.labels'),
+        {
+          name: 'Update .github/jsTemplates/utils/dependencies.ts',
+          id: 'update-dependencies',
+          if: `steps.label-length.outputs.result >= 2
+&& contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')`,
+          run: `npx ts-node scripts/githubActionsDepGen.ts
+git add .github/jsTemplates/utils/dependencies.ts
+npm run js2yaml
+git diff --quiet
+git diff --staged --quiet && echo "::set has-commit=true' || echo 'has-commit=false'
+`,
+        },
+        {
+          ...STEP.commit('chore(deps): bump dependency in template', {
+            commitArgs: '--no-verify',
+          }),
+          id: 'commit-dependencies',
+          if: `(steps.update-dependencies.outputs.conclusion == 'success'
+  && steps.update-dependencies.outputs.has-commit == 'true' )
+|| steps.update-dependencies.outputs.conclusion == 'skipped'`,
         },
       ],
     },
     'automerge-dependabot': {
-      needs: ['pre-automerge-label'],
-      if: `needs.pre-automerge-label.outputs.status != 'success'`,
+      needs: ['github-action'],
+      if: `needs.github-action.outputs.shouldMerge == 'true'
+&& ( needs.github-action.outputs.didCommit == 'success' || needs.github-action.outputs.didCommit == 'skipped')`,
       ...defaultJobMachine,
       steps: [
+        STEP.dumpContext('needs'),
         ...STEP.waitForCheckName('commitlint'),
         ...STEP.waitForCheckName('lint'),
         ...STEP.waitForCheckName('build (12.x)'),
         ...STEP.waitForCheckName('test (12.x)'),
-        {
-          name: 'Merge me!',
-          uses: 'libinvarghese/merge-me-action@v1',
-          with: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            GITHUB_LOGIN: bot,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            GITHUB_TOKEN: '${{ secrets.REPO_ACCESS }}',
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            MERGE_METHOD: 'MERGE',
-          },
-        },
+        STEP.mergeDependabotPR,
       ],
     },
   },

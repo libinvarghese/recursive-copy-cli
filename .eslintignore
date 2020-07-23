@@ -6,3 +6,4 @@ examples/
 coverage/
 package-lock.json
 !.github/
+.github/jsTemplates/utils/dependencies.ts

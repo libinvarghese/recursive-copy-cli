@@ -19,6 +19,10 @@ jobs:
       status: '${{ steps.check-author.conclusion }}'
     runs-on: ubuntu-latest
     steps:
+      - name: Dump github context
+        env:
+          GITHUB_CONTEXT: '${{ toJson(github) }}'
+        run: echo "$GITHUB_CONTEXT"
       - name: 'Check if author is dependabot[bot]'
         id: check-author
         if: 'github.event.pull_request.user.login != ''dependabot[bot]'''

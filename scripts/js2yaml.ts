@@ -1,7 +1,7 @@
 import { promisify } from 'util';
-import path from 'path';
 import { createWriteStream, promises } from 'fs';
 import { Readable } from 'stream';
+import { resolve, relative } from 'path';
 // eslint-disable-next-line node/no-unpublished-import
 import glob from 'glob';
 // eslint-disable-next-line node/no-unpublished-import
@@ -26,10 +26,11 @@ const globP = promisify(glob);
 (async (): Promise<void> => {
   const jsFiles = await globP(pattern, {
     root: src,
+    dot: true,
   });
 
   Bluebird.each(jsFiles, async file => {
-    const absPath = path.resolve(file);
+    const absPath = resolve(file);
     // eslint-disable-next-line @typescript-eslint/no-var-requires, import/no-dynamic-require
     const config = require(absPath);
     const destFile = absPath.replace(src, dest).replace('.yml.ts', '.yml');
@@ -49,7 +50,7 @@ const globP = promisify(glob);
 #
 # THIS IS A GENERATED FILE. Don't modify this file.
 #
-# Modify file in ${path.relative('./', file)}
+# Modify file in ${relative('./', file)}
 #
 # ==========================
 
