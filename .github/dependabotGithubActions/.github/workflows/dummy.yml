@@ -1,0 +1,34 @@
+# ==========================
+#
+# THIS IS A GENERATED FILE. Don't modify this file.
+#
+# Modify file in .github/jsTemplates/dependabotGithubActions/.github/workflows/dummy.yml.ts
+#
+# ==========================
+
+name: dummy
+'on': fork
+env:
+  SHOULD_RUN: 'false'
+jobs:
+  dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - if: env.SHOULD_RUN == 'true'
+        uses: fountainhead/action-wait-for-check@v1.0.0
+      - if: env.SHOULD_RUN == 'true'
+        uses: libinvarghese/merge-me-action@v1
+      - if: env.SHOULD_RUN == 'true'
+        uses: actions/checkout@v2
+      - if: env.SHOULD_RUN == 'true'
+        uses: actions/setup-node@v2.1.0
+      - if: env.SHOULD_RUN == 'true'
+        uses: actions/cache@v2
+      - if: env.SHOULD_RUN == 'true'
+        uses: actions/setup-python@v2
+      - if: env.SHOULD_RUN == 'true'
+        uses: a-b-r-o-w-n/check-base-branch-action@v1
+      - if: env.SHOULD_RUN == 'true'
+        uses: codecov/codecov-action@v1.0.10
+      - if: env.SHOULD_RUN == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
