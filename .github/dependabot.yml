@@ -40,7 +40,7 @@ updates:
       prefix-development: chore
       include: scope
     package-ecosystem: pip
-  - directory: /
+  - directory: /.github/dependabotGithubActions/
     schedule:
       interval: daily
       time: '23:30'
