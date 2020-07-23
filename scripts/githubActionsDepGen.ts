@@ -30,9 +30,9 @@ const destStream = createWriteStream(destFile);
 
 const fileHeader = `// ==========================
 //
-// THIS IS A GENERATED FILE. Don't modify this file.
+// THIS IS A GENERATED FILE. Careful when modifying this file.
 //
-// Modify file in ${relative('./', ymlDepFile)}
+// Running js2yaml will overwrite ${relative('./', ymlDepFile)}
 //
 // ==========================
 

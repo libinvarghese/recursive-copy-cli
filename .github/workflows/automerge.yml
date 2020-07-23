@@ -92,12 +92,21 @@ jobs:
         if: |-
           steps.label-length.outputs.result >= 2
           && contains( github.event.pull_request.labels.*.name, 'github_actions')
-        run: |
+        run: >
           npx ts-node scripts/githubActionsDepGen.ts
+
           git add .github/jsTemplates/utils/dependencies.ts
+
+          git add .github/workflows
+
           npm run js2yaml
+
+          git status
+
           git diff --quiet
-          git diff --staged --quiet && echo "::set has-commit=true' || echo 'has-commit=false'
+
+          git diff --staged --quiet && echo "::set-output name=has-commit::true" || echo "::set-output
+          name=has-commit::false"
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'chore(deps): bump dependency in template'
