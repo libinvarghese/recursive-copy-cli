@@ -7,7 +7,7 @@ export const checkout = {
 
 export const setupNodeStrategy = {
   name: 'Use Node.js ${{ matrix.node-version }}',
-  uses: 'actions/setup-node@v2.1.0',
+  uses: 'actions/setup-node@v2.1.1',
   with: {
     'node-version': '${{ matrix.node-version }}',
   },
@@ -15,7 +15,7 @@ export const setupNodeStrategy = {
 
 export const setupNode12x = {
   name: 'Use Node.js 12.x',
-  uses: 'actions/setup-node@v2.1.0',
+  uses: 'actions/setup-node@v2.1.1',
   with: {
     'node-version': '12.x',
   },
