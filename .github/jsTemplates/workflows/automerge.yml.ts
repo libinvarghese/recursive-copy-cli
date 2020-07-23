@@ -32,7 +32,8 @@ export = {
           ...STEP.checkout,
           with: {
             ref: '${{ github.event.pull_request.head.ref }}',
-            // token: '${{ secrets.REPO_ACCESS }}',
+            // eslint-disable-next-line no-secrets/no-secrets
+            token: '${{ secrets.PUSH_WORKFLOW_ACCESS }}',
           },
         },
         STEP.setupNode12x,
