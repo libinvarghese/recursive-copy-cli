@@ -46,7 +46,7 @@ jobs:
         run: echo contains 'github_actions' = $CHECK_RESULT
         env:
           CHECK_RESULT: 'contains( github.event.pull_request.labels.*.name, ''github_actions'')'
-      - if: 'contains( github.event.pull_request.labels.*.name, ''auto_merge'') == ''false'''
+      - if: 'contains( github.event.pull_request.labels.*.name, ''auto_merge'') == false'
         run: echo contains 'auto_merge' = $CHECK_RESULT
         env:
           CHECK_RESULT: 'contains( github.event.pull_request.labels.*.name, ''auto_merge'')'

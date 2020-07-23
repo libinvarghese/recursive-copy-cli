@@ -46,7 +46,7 @@ export = {
           },
         },
         {
-          if: `contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') == 'false'`,
+          if: `contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') == false`,
           run: `echo contains '${autoMergeLabel}' = $CHECK_RESULT`,
           env: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
