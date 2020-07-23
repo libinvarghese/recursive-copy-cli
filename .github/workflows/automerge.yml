@@ -120,9 +120,9 @@ jobs:
           commit_options: '--no-verify'
         id: commit-dependencies
         if: |-
-          (steps.update-dependencies.outputs.conclusion == 'success'
+          (steps.update-dependencies.conclusion == 'success'
             && steps.update-dependencies.outputs.has-commit == 'true' )
-          || steps.update-dependencies.outputs.conclusion == 'skipped'
+          || steps.update-dependencies.conclusion == 'skipped'
   automerge-dependabot:
     needs:
       - github-action

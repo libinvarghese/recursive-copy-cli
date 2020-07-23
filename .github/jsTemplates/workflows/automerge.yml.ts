@@ -59,9 +59,9 @@ git diff --staged --quiet && echo "::set-output name=has-commit::false" || echo 
             commitArgs: '--no-verify',
           }),
           id: 'commit-dependencies',
-          if: `(steps.update-dependencies.outputs.conclusion == 'success'
+          if: `(steps.update-dependencies.conclusion == 'success'
   && steps.update-dependencies.outputs.has-commit == 'true' )
-|| steps.update-dependencies.outputs.conclusion == 'skipped'`,
+|| steps.update-dependencies.conclusion == 'skipped'`,
         },
       ],
     },
