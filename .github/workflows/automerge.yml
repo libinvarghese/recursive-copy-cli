@@ -28,30 +28,30 @@ jobs:
         run: |-
           echo Skip! Pull request created by ${{ github.event.pull_request.user.login }} not dependabot[bot]
           exit 0
-  pre-automerge-label:
+  github-action:
     needs:
       - pre-automerge-bot
     if: needs.pre-automerge-bot.outputs.status != 'success'
-    outputs:
-      status: '${{ steps.check-label.conclusion }}'
     runs-on: ubuntu-latest
     steps:
       - name: Dump github.event.pull_request.labels.*.name context
         env:
           PULL_REQUEST_LABELS_CONTEXT: '${{ toJson(github.event.pull_request.labels.*.name) }}'
         run: echo "$PULL_REQUEST_LABELS_CONTEXT"
-      - name: Skip! Pull request labelled github_actions && !auto_merge
-        id: check-label
-        if: |-
-          contains( github.event.pull_request.labels.*.name, 'github_actions')
-          && contains( github.event.pull_request.labels.*.name, 'auto_merge') == false
-        run: |-
-          echo Skip! Pull request labelled github_actions
-          exit 0
+      - name: Update .github/jsTemplates/utils/dependencies.ts
+        if: 'contains( github.event.pull_request.labels.*.name, ''github_actions'')'
+        run: >
+          npx ts-node scripts/githubActionsDepGen.ts
+
+          git add .github/jsTemplates/utils/dependencies.ts
+
+          npm run js2yaml
+
+          git diff --quiet || echo 'Files pending to stage!' || false &&   git diff --staged --quiet && echo 'No changes
+          to commit' ||   git commit --no-verify -m 'chore(deps): bump dependency in template'
   automerge-dependabot:
     needs:
-      - pre-automerge-label
-    if: needs.pre-automerge-label.outputs.status != 'success'
+      - github-action
     runs-on: ubuntu-latest
     steps:
       - name: Wait for commitlint

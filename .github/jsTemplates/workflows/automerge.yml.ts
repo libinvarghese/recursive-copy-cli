@@ -1,8 +1,7 @@
-import { defaultJobMachine, bot, JOB, developBranch } from './constants';
-import * as STEP from './steps';
+import { defaultJobMachine, JOB, developBranch } from '../utils/constants';
+import * as STEP from '../utils/steps';
 
 const disableMergeLabel = 'github_actions';
-const autoMergeLabel = 'auto_merge';
 
 export = {
   name: 'automerge-dependabot',
@@ -15,46 +14,34 @@ export = {
   },
   jobs: {
     'pre-automerge-bot': JOB.proceedIfBot,
-    'pre-automerge-label': {
+    'github-action': {
       needs: ['pre-automerge-bot'],
       if: `needs.pre-automerge-bot.outputs.status != 'success'`,
-      outputs: {
-        status: '${{ steps.check-label.conclusion }}',
-      },
       ...defaultJobMachine,
       steps: [
         STEP.dumpContext('github.event.pull_request.labels.*.name', 'pull_request_labels'),
         {
-          name: `Skip! Pull request labelled ${disableMergeLabel} && !${autoMergeLabel}`,
-          id: 'check-label',
-          if: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')
-&& contains( github.event.pull_request.labels.*.name, '${autoMergeLabel}') == false`,
-          run: `echo Skip! Pull request labelled ${disableMergeLabel}
-exit 0`,
+          name: 'Update .github/jsTemplates/utils/dependencies.ts',
+          if: `contains( github.event.pull_request.labels.*.name, '${disableMergeLabel}')`,
+          run: `npx ts-node scripts/githubActionsDepGen.ts
+git add .github/jsTemplates/utils/dependencies.ts
+npm run js2yaml
+git diff --quiet || echo 'Files pending to stage!' || false && \
+  git diff --staged --quiet && echo 'No changes to commit' || \
+  git commit --no-verify -m 'chore(deps): bump dependency in template'
+`,
         },
       ],
     },
     'automerge-dependabot': {
-      needs: ['pre-automerge-label'],
-      if: `needs.pre-automerge-label.outputs.status != 'success'`,
+      needs: ['github-action'],
       ...defaultJobMachine,
       steps: [
         ...STEP.waitForCheckName('commitlint'),
         ...STEP.waitForCheckName('lint'),
         ...STEP.waitForCheckName('build (12.x)'),
         ...STEP.waitForCheckName('test (12.x)'),
-        {
-          name: 'Merge me!',
-          uses: 'libinvarghese/merge-me-action@v1',
-          with: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            GITHUB_LOGIN: bot,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            GITHUB_TOKEN: '${{ secrets.REPO_ACCESS }}',
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            MERGE_METHOD: 'MERGE',
-          },
-        },
+        STEP.mergeDependabotPR,
       ],
     },
   },
