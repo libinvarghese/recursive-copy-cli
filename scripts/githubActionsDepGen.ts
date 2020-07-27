@@ -42,7 +42,7 @@ Readable.from(fileHeader).pipe(destStream, {
   end: false,
 });
 
-const depContent = `export const DEPENDENCIES = ${JSON.stringify(dependencies, null, 2)};
+const depContent = `export const DEPENDENCIES: {[key: string]: string} = ${JSON.stringify(dependencies, null, 2)};
 `;
 
 Readable.from(depContent).pipe(destStream);

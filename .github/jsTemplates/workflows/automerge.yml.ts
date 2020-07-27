@@ -16,10 +16,18 @@ export = {
   },
   jobs: {
     'pre-automerge-bot': JOB.proceedIfBot,
-    'github-action': {
+    // Since we are looking for 2 labels ['dependencies' & <ecosystem>],
+    // we get 2 runs of this workflow due to the 2 labelled trigger.
+    // Lets cancel the older workflow
+    'cancel-previous-workflow': {
       needs: ['pre-automerge-bot'],
       if: `needs.pre-automerge-bot.outputs.status != 'success'
 && contains( github.event.pull_request.labels.*.name, '${dependabotLabel}')`,
+      ...defaultJobMachine,
+      steps: [STEP.cancelWorkflow(1739794)],
+    },
+    'github-action': {
+      needs: ['cancel-previous-workflow'],
       outputs: {
         shouldMerge: '${{ steps.label-length.outputs.result >= 2 }}',
         didCommit: '${{ steps.commit-dependencies.conclusion }}',

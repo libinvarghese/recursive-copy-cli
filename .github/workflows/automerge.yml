@@ -32,12 +32,21 @@ jobs:
         run: |-
           echo Skip! Pull request created by ${{ github.event.pull_request.user.login }} not dependabot[bot]
           exit 0
-  github-action:
+  cancel-previous-workflow:
     needs:
       - pre-automerge-bot
     if: |-
       needs.pre-automerge-bot.outputs.status != 'success'
       && contains( github.event.pull_request.labels.*.name, 'dependencies')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: styfle/cancel-workflow-action@0.4.1
+        with:
+          workflow_id: 1739794
+          access_token: '${{ secrets.REPO_ACCESS }}'
+  github-action:
+    needs:
+      - cancel-previous-workflow
     outputs:
       shouldMerge: '${{ steps.label-length.outputs.result >= 2 }}'
       didCommit: '${{ steps.commit-dependencies.conclusion }}'

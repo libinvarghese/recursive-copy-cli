@@ -3,11 +3,31 @@ import { DEPENDENCIES } from './dependencies';
 // eslint-disable-next-line @typescript-eslint/no-var-requires, node/no-unpublished-require, @typescript-eslint/no-unsafe-assignment
 const pascalCase = require('pascalcase');
 
-export const checkout = {
+interface Env {
+  [key: string]: unknown;
+}
+
+interface Step {
+  name?: string;
+  id?: string;
+  env?: Env;
+  if?: string;
+}
+
+interface UsesStep extends Step {
+  uses: string;
+  with?: unknown;
+}
+
+interface RunStep extends Step {
+  run: string;
+}
+
+export const checkout: UsesStep = {
   uses: DEPENDENCIES.checkout,
 };
 
-export const setupNodeStrategy = {
+export const setupNodeStrategy: UsesStep = {
   name: 'Use Node.js ${{ matrix.node-version }}',
   uses: DEPENDENCIES['setup-node'],
   with: {
@@ -15,7 +35,7 @@ export const setupNodeStrategy = {
   },
 };
 
-export const setupNode12x = {
+export const setupNode12x: UsesStep = {
   name: 'Use Node.js 12.x',
   uses: DEPENDENCIES['setup-node'],
   with: {
@@ -23,7 +43,7 @@ export const setupNode12x = {
   },
 };
 
-export const defaultNodeProjectSteps = [
+export const defaultNodeProjectSteps: (RunStep | UsesStep)[] = [
   {
     name: 'Get npm cache directory',
     id: 'get-npm-cache',
@@ -60,7 +80,7 @@ export const defaultNodeProjectSteps = [
   },
 ];
 
-export const setupPipDependenciesSteps = [
+export const setupPipDependenciesSteps: (RunStep | UsesStep)[] = [
   {
     name: 'Set up Python 3.8',
     uses: DEPENDENCIES['setup-python'],
@@ -92,7 +112,7 @@ export const setupPipDependenciesSteps = [
   },
 ];
 
-export const build = {
+export const build: RunStep = {
   run: 'npm run build',
   env: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -100,11 +120,11 @@ export const build = {
   },
 };
 
-export const lint = {
+export const lint: RunStep = {
   run: 'npm run lint',
 };
 
-export const coverage = {
+export const coverage: RunStep = {
   run: 'npm run cover',
   env: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -112,7 +132,7 @@ export const coverage = {
   },
 };
 
-export const uploadCoverage = {
+export const uploadCoverage: UsesStep = {
   name: 'Upload to Codecov',
   uses: DEPENDENCIES['codecov-action'],
   env: {
@@ -121,7 +141,7 @@ export const uploadCoverage = {
   },
 };
 
-export const mergeDependabotPR = {
+export const mergeDependabotPR: UsesStep = {
   name: 'Merge me!',
   uses: DEPENDENCIES['merge-me-action'],
   with: {
@@ -134,7 +154,7 @@ export const mergeDependabotPR = {
   },
 };
 
-export const changePRBaseFromMasterToDevelop = {
+export const changePRBaseFromMasterToDevelop: UsesStep = {
   uses: DEPENDENCIES['check-base-branch-action'],
   with: {
     'repo-token': '${{ secrets.REPO_ACCESS }}',
@@ -144,8 +164,19 @@ export const changePRBaseFromMasterToDevelop = {
   },
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function commit(msg: string, options: { commitArgs: string }): any {
+export function cancelWorkflow(workflow: number): UsesStep {
+  return {
+    uses: DEPENDENCIES['cancel-workflow-action'],
+    with: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      workflow_id: workflow,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      access_token: '${{ secrets.REPO_ACCESS }}',
+    },
+  };
+}
+
+export function commit(msg: string, options: { commitArgs: string }): UsesStep {
   const { commitArgs } = options;
   return {
     uses: DEPENDENCIES['git-auto-commit-action'],
@@ -158,8 +189,7 @@ export function commit(msg: string, options: { commitArgs: string }): any {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getArrayLength(id: string, path: string): any {
+export function getArrayLength(id: string, path: string): RunStep {
   return {
     name: `Get Array length of ${path}`,
     id,
@@ -174,8 +204,7 @@ echo "::set-output name=result::$ARRAY_LENGTH"`,
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function waitForCheckName(checkName: string): any[] {
+export function waitForCheckName(checkName: string): (RunStep | UsesStep)[] {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/restrict-template-expressions
   const stepId = `wait-for-${pascalCase(checkName)}`;
   return [
@@ -198,18 +227,14 @@ export function waitForCheckName(checkName: string): any[] {
   ];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function dumpContext(name: string, simpleName: string | undefined = undefined): any {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const env: any = {};
+export function dumpContext(name: string, simpleName: string | undefined = undefined): RunStep {
+  const env: Env = {};
   const contextName = simpleName ? simpleName.toUpperCase() : name.toUpperCase();
   const envVar = `${contextName}_CONTEXT`;
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   env[envVar] = `\${{ toJson(${name}) }}`;
   return {
     name: `Dump ${name} context`,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     env,
     run: `echo "$${envVar}"`,
   };
