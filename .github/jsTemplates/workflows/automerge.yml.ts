@@ -46,7 +46,7 @@ export = {
         },
         STEP.setupNode12x,
         ...STEP.defaultNodeProjectSteps,
-        STEP.getArrayLength('label-length', 'github.event.pull_request.labels'),
+        STEP.getArrayLength('label-length', 'github.event.pull_request.labels.*.name'),
         {
           name: 'Update .github/jsTemplates/utils/dependencies.ts',
           id: 'update-dependencies',

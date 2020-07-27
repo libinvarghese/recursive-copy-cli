@@ -90,10 +90,10 @@ jobs:
       - name: Install Dependencies
         if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
         run: npm ci
-      - name: Get Array length of github.event.pull_request.labels
+      - name: Get Array length of github.event.pull_request.labels.*.name
         id: label-length
         env:
-          ARRAY: '${{ toJson(github.event.pull_request.labels) }}'
+          ARRAY: '${{ toJson(github.event.pull_request.labels.*.name) }}'
         run: |-
           echo $ARRAY
           ARRAY_LENGTH=$( echo $ARRAY | jq '. | length' )
