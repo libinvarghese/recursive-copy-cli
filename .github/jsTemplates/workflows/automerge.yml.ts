@@ -3,6 +3,7 @@ import { JOB } from '../utils/jobs';
 import * as STEP from '../utils/steps';
 
 const disableMergeLabel = 'github_actions';
+const avoidMergeLabel = 'released';
 const dependabotLabel = 'dependencies';
 
 export = {
@@ -16,14 +17,29 @@ export = {
   },
   jobs: {
     'pre-automerge-bot': JOB.proceedIfBot,
+    // Ignore labels does not contain 'dependencies' || contains 'released'
+    'pre-automerge-label': {
+      needs: ['pre-automerge-bot'],
+      if: `needs.pre-automerge-bot.outputs.status != 'success'
+&& contains( github.event.pull_request.labels.*.name, '${dependabotLabel}')
+&& !contains( github.event.pull_request.labels.*.name, '${avoidMergeLabel}')`,
+      steps: [
+        {
+          run: `echo pre-automerge-label passed!`,
+        },
+      ],
+    },
     // Since we are looking for 2 labels ['dependencies' & <ecosystem>],
     // we get 2 runs of this workflow due to the 2 labelled trigger.
     // Lets cancel the older workflow
     'cancel-previous-workflow': {
-      needs: ['pre-automerge-bot'],
-      if: `needs.pre-automerge-bot.outputs.status != 'success'
-&& contains( github.event.pull_request.labels.*.name, '${dependabotLabel}')`,
+      needs: ['pre-automerge-label'],
       ...defaultJobMachine,
+      // To identify workflows
+      // ```sh
+      // curl --header "Authorization: token <insert token here>" \
+      //   "https://api.github.com/repos/libinvarghese/recursive-copy-cli/actions/workflows"
+      // ```
       steps: [STEP.cancelWorkflow(1739794)],
     },
     'github-action': {
@@ -33,6 +49,8 @@ export = {
         didCommit: '${{ steps.commit-dependencies.conclusion }}',
         hasCommit: '${{ steps.update-dependencies.outputs.has-commit }}',
       },
+      // Skip if event.action == 'labelled' & event.label.name == '${dependabotLabel}'
+      if: `github.event.action != 'labelled' || github.event.label.name != '${dependabotLabel}'`,
       ...defaultJobMachine,
       steps: [
         STEP.dumpContext('github.event.pull_request.labels.*.name', 'pull_request_labels'),
