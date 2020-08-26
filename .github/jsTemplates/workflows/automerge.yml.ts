@@ -20,6 +20,7 @@ export = {
     // Ignore labels does not contain 'dependencies' || contains 'released'
     'pre-automerge-label': {
       needs: ['pre-automerge-bot'],
+      ...defaultJobMachine,
       if: `needs.pre-automerge-bot.outputs.status != 'success'
 && contains( github.event.pull_request.labels.*.name, '${dependabotLabel}')
 && !contains( github.event.pull_request.labels.*.name, '${avoidMergeLabel}')`,
