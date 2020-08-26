@@ -10,7 +10,6 @@ name: automerge-dependabot
 'on':
   pull_request:
     types:
-      - edited
       - reopened
       - synchronize
       - labeled

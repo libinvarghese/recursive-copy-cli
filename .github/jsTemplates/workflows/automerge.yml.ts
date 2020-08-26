@@ -11,7 +11,7 @@ export = {
   on: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     pull_request: {
-      types: ['edited', 'reopened', 'synchronize', 'labeled'],
+      types: ['reopened', 'synchronize', 'labeled'],
       branches: [developBranch],
     },
   },
