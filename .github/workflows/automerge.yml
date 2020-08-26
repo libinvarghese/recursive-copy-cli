@@ -35,6 +35,7 @@ jobs:
   pre-automerge-label:
     needs:
       - pre-automerge-bot
+    runs-on: ubuntu-latest
     if: |-
       needs.pre-automerge-bot.outputs.status != 'success'
       && contains( github.event.pull_request.labels.*.name, 'dependencies')
