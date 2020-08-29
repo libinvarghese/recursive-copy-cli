@@ -1,8 +1,7 @@
 // eslint-disable-next-line import/default
+import copy, { CopyOperation, CopyErrorInfo } from 'recursive-copy';
 import yargs from './yargs/setup';
-import { RecursiveCopyCliModel, CopyOperation } from './cli.model';
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment
-const copy = require('recursive-copy');
+import { RecursiveCopyCliModel } from './cli.model';
 
 export async function bootstrapCli(cliArgs?: string[]): Promise<void> {
   cliArgs = cliArgs || process.argv.slice(2);
@@ -26,7 +25,7 @@ export async function bootstrapCli(cliArgs?: string[]): Promise<void> {
       [key: string]: unknown;
     }
   );
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   function onCopyItemEvent(copyOperation: CopyOperation): void {
     // eslint-disable-next-line no-console
     console.log(`${copyOperation.src} -> ${copyOperation.dest}`);
@@ -41,13 +40,13 @@ export async function bootstrapCli(cliArgs?: string[]): Promise<void> {
     .on(copy.events.CREATE_DIRECTORY_COMPLETE, onCopyItemEvent)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    .on(copy.events.ERROR, (error: unknown, copyOperation: CopyOperation) => {
+    .on(copy.events.ERROR, (error: Error, copyOperation: CopyErrorInfo) => {
       // eslint-disable-next-line no-console, @typescript-eslint/restrict-template-expressions
       console.error(`Unable to copy ${copyOperation.src} -> ${copyOperation.dest}. ERR: ${error}`);
       process.exitCode = 1;
     })
     // eslint-disable-next-line no-console
-    .then((results: string[]) => console.log(`${results.length} item(s) copied`))
+    .then((results: CopyOperation[]) => console.log(`${results.length} item(s) copied`))
     // eslint-disable-next-line no-console, @typescript-eslint/restrict-template-expressions
     .catch((error: unknown) => console.error(`Copy failed! ERR: ${error}`));
 }
