@@ -16,5 +16,5 @@ export const DEPENDENCIES: {[key: string]: string} = {
   "check-base-branch-action": "a-b-r-o-w-n/check-base-branch-action@v1",
   "codecov-action": "codecov/codecov-action@v1.0.13",
   "git-auto-commit-action": "stefanzweifel/git-auto-commit-action@v4",
-  "cancel-workflow-action": "styfle/cancel-workflow-action@0.4.1"
+  "cancel-workflow-action": "styfle/cancel-workflow-action@0.5.0"
 };
