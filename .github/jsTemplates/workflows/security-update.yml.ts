@@ -14,10 +14,9 @@ export = {
     },
   },
   jobs: {
-    'pre-pr-update-base': JOB.proceedIfBot,
+    'cancel-not-dependabot': JOB.proceedIfBot,
     'pr-update-base': {
-      needs: ['pre-pr-update-base'],
-      if: `needs.pre-pr-update-base.outputs.status != 'success'`,
+      needs: ['cancel-not-dependabot'],
       ...defaultJobMachine,
       steps: [STEP.changePRBaseFromMasterToDevelop],
     },

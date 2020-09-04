@@ -16,19 +16,15 @@ export = {
     },
   },
   jobs: {
-    'pre-automerge-bot': JOB.proceedIfBot,
+    'dump-github-context': JOB.dumpGithubContext,
+    'cancel-not-dependabot': JOB.proceedIfBot,
     // Ignore labels does not contain 'dependencies' || contains 'released'
     'cancel-released-label': {
-      needs: ['pre-automerge-bot'],
+      needs: ['cancel-not-dependabot'],
       ...defaultJobMachine,
-      if: `needs.pre-automerge-bot.outputs.status != 'success'
-&& contains( github.event.pull_request.labels.*.name, '${dependabotLabel}')
+      if: `contains( github.event.pull_request.labels.*.name, '${dependabotLabel}')
 && !contains( github.event.pull_request.labels.*.name, '${avoidMergeLabel}')`,
-      steps: [
-        {
-          run: `echo "There is no '${avoidMergeLabel}' label!"`,
-        },
-      ],
+      steps: [STEP.echo(`There is no '${avoidMergeLabel}' label!`)],
     },
     // Since we are looking for 2 labels ['dependencies' & <ecosystem>],
     // we get 2 runs of this workflow due to the 2 labelled trigger.
@@ -37,11 +33,7 @@ export = {
       needs: ['cancel-released-label'],
       ...defaultJobMachine,
       if: `github.event.action != 'labeled' || github.event.label.name != '${dependabotLabel}'`,
-      steps: [
-        {
-          run: `echo "There is no '${dependabotLabel}' label!"`,
-        },
-      ],
+      steps: [STEP.echo(`There is no '${dependabotLabel}' label!`)],
     },
     'github-action': {
       needs: ['cancel-dependencies-label'],

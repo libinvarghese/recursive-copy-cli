@@ -164,6 +164,18 @@ export const changePRBaseFromMasterToDevelop: UsesStep = {
   },
 };
 
+export function echo(message: string, env?: { [key: string]: string }): RunStep {
+  const runStep: RunStep = {
+    run: `echo ${message}`,
+  };
+
+  if (env) {
+    runStep.env = env;
+  }
+
+  return runStep;
+}
+
 export function cancelWorkflow(workflow: number): UsesStep {
   return {
     uses: DEPENDENCIES['cancel-workflow-action'],

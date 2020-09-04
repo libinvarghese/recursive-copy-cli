@@ -14,25 +14,13 @@ name: security-update
     branches:
       - master
 jobs:
-  pre-pr-update-base:
-    outputs:
-      status: '${{ steps.check-author.conclusion }}'
-    runs-on: ubuntu-latest
+  cancel-not-dependabot:
+    if: 'github.event.pull_request.user.login == ''dependabot[bot]'''
     steps:
-      - name: Dump github context
-        env:
-          GITHUB_CONTEXT: '${{ toJson(github) }}'
-        run: echo "$GITHUB_CONTEXT"
-      - name: 'Check if author is dependabot[bot]'
-        id: check-author
-        if: 'github.event.pull_request.user.login != ''dependabot[bot]'''
-        run: |-
-          echo Skip! Pull request created by ${{ github.event.pull_request.user.login }} not dependabot[bot]
-          exit 0
+      - run: 'echo Pull request created by ${{ github.event.pull_request.user.login }} is dependabot[bot]'
   pr-update-base:
     needs:
-      - pre-pr-update-base
-    if: needs.pre-pr-update-base.outputs.status != 'success'
+      - cancel-not-dependabot
     runs-on: ubuntu-latest
     steps:
       - uses: a-b-r-o-w-n/check-base-branch-action@v1

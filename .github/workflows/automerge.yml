@@ -16,38 +16,33 @@ name: automerge-dependabot
     branches:
       - develop
 jobs:
-  pre-automerge-bot:
-    outputs:
-      status: '${{ steps.check-author.conclusion }}'
+  dump-github-context:
     runs-on: ubuntu-latest
     steps:
       - name: Dump github context
         env:
           GITHUB_CONTEXT: '${{ toJson(github) }}'
         run: echo "$GITHUB_CONTEXT"
-      - name: 'Check if author is dependabot[bot]'
-        id: check-author
-        if: 'github.event.pull_request.user.login != ''dependabot[bot]'''
-        run: |-
-          echo Skip! Pull request created by ${{ github.event.pull_request.user.login }} not dependabot[bot]
-          exit 0
+  cancel-not-dependabot:
+    if: 'github.event.pull_request.user.login == ''dependabot[bot]'''
+    steps:
+      - run: 'echo Pull request created by ${{ github.event.pull_request.user.login }} is dependabot[bot]'
   cancel-released-label:
     needs:
-      - pre-automerge-bot
+      - cancel-not-dependabot
     runs-on: ubuntu-latest
     if: |-
-      needs.pre-automerge-bot.outputs.status != 'success'
-      && contains( github.event.pull_request.labels.*.name, 'dependencies')
+      contains( github.event.pull_request.labels.*.name, 'dependencies')
       && !contains( github.event.pull_request.labels.*.name, 'released')
     steps:
-      - run: echo "There is no 'released' label!"
+      - run: echo There is no 'released' label!
   cancel-dependencies-label:
     needs:
       - cancel-released-label
     runs-on: ubuntu-latest
     if: github.event.action != 'labeled' || github.event.label.name != 'dependencies'
     steps:
-      - run: echo "There is no 'dependencies' label!"
+      - run: echo There is no 'dependencies' label!
   github-action:
     needs:
       - cancel-dependencies-label
