@@ -9,80 +9,80 @@ import rimraf from 'rimraf';
 import { bootstrapCli } from './bootstrap-cli';
 
 describe('cli', () => {
-  let _rimrafP: (path: string) => Promise<void>;
-  const _cmd = 'npx ts-node src/cli.ts';
-  const _destPath = 'test/fixtures/destination';
-  const _sourcePath = 'test/fixtures/source';
+  let rimrafP: (path: string) => Promise<void>;
+  const cmd = 'npx ts-node src/cli.ts';
+  const destPath = 'test/fixtures/destination';
+  const sourcePath = 'test/fixtures/source';
 
   before(() => {
-    _rimrafP = promisify(rimraf);
+    rimrafP = promisify(rimraf);
   });
 
   beforeEach(async () => {
-    await _rimrafP(_destPath);
+    await rimrafP(destPath);
   });
 
   describe('basic cli operation', () => {
     it('should copy single files via cli', async () => {
-      const _testItem = 'file';
+      const testItem = 'file';
 
-      const _cliResult = await chaiExecAsync(`${_cmd} ${_sourcePath}/${_testItem} ${_destPath}/${_testItem}`);
+      const cliResult = await chaiExecAsync(`${cmd} ${sourcePath}/${testItem} ${destPath}/${testItem}`);
 
-      expect(_cliResult).to.exit.with.code(0);
-      expect(_cliResult).stderr.to.be.empty;
-      expect(_cliResult).stdout.to.contains('1 item(s) copied');
+      expect(cliResult).to.exit.with.code(0);
+      expect(cliResult).stderr.to.be.empty;
+      expect(cliResult).stdout.to.contains('1 item(s) copied');
 
-      expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
+      expect(`${destPath}/${testItem}`).to.be.file().and.equal(`${sourcePath}/${testItem}`);
     });
 
     // For some reason testing of loading of modules via mocha fails in bootstrap-cli
     describe('output transformation', () => {
       it('should rename files via rename local module', async () => {
-        const _testItem = 'nested-directory';
-        const _cliResult = await chaiExecAsync(
-          `${_cmd} ${_sourcePath}/${_testItem} ${_destPath}/${_testItem} --rename-module src/mocks.spec/toupper.rename.module.mock.ts`
+        const testItem = 'nested-directory';
+        const cliResult = await chaiExecAsync(
+          `${cmd} ${sourcePath}/${testItem} ${destPath}/${testItem} --rename-module src/mocks.spec/toupper.rename.module.mock.ts`
         );
 
-        expect(_cliResult).to.exit.with.code(0);
-        expect(_cliResult).stderr.to.be.empty;
+        expect(cliResult).to.exit.with.code(0);
+        expect(cliResult).stderr.to.be.empty;
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/renamed-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/renamed-${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/renamed-${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/renamed-${testItem}`);
       });
 
       it('should transform files', async () => {
-        const _testItem = 'directory';
-        const _cliResult = await chaiExecAsync(
-          `${_cmd} ${_sourcePath}/${_testItem} ${_destPath}/${_testItem} --transform-module src/mocks.spec/toupper.transform.module.mock.ts`
+        const testItem = 'directory';
+        const cliResult = await chaiExecAsync(
+          `${cmd} ${sourcePath}/${testItem} ${destPath}/${testItem} --transform-module src/mocks.spec/toupper.transform.module.mock.ts`
         );
 
-        expect(_cliResult).to.exit.with.code(0);
-        expect(_cliResult).stderr.to.be.empty;
+        expect(cliResult).to.exit.with.code(0);
+        expect(cliResult).stderr.to.be.empty;
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/transformed-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/transformed-${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/transformed-${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/transformed-${testItem}`);
       });
     });
   });
 
   describe('bootstrap-cli', () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const _consoleSpy: {
+    const consoleSpy: {
       log: SinonSpy;
       error: SinonSpy;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } = {} as any;
-    const _sourcePath = 'source';
-    const _destPath = 'destination';
-    let _sandbox: SinonSandbox;
-    let _fsMock;
+    const sourcePath = 'source';
+    const destPath = 'destination';
+    let sandbox: SinonSandbox;
+    let fsMock;
 
     before(() => {
-      _sandbox = sinon.createSandbox();
+      sandbox = sinon.createSandbox();
 
-      _fsMock = {
+      fsMock = {
         file: 'Hello, world!\n',
         symlink: mock.symlink({
           path: 'file',
@@ -187,7 +187,7 @@ describe('cli', () => {
       };
 
       mock({
-        source: _fsMock,
+        source: fsMock,
       });
     });
 
@@ -196,281 +196,264 @@ describe('cli', () => {
     });
 
     beforeEach(async () => {
-      await _rimrafP(_destPath);
-      await promises.mkdir(_destPath);
+      await rimrafP(destPath);
+      await promises.mkdir(destPath);
 
-      _consoleSpy.log = _sandbox.spy(console, 'log');
-      _consoleSpy.error = _sandbox.spy(console, 'error');
+      consoleSpy.log = sandbox.spy(console, 'log');
+      consoleSpy.error = sandbox.spy(console, 'error');
     });
 
-    afterEach(() => _sandbox.restore());
+    afterEach(() => sandbox.restore());
 
     describe('basic operation', () => {
       it('should copy single files', async () => {
-        const _testItem = 'file';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'file';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${destPath}/${testItem}`).to.be.file().and.equal(`${sourcePath}/${testItem}`);
       });
 
       it('should create parent directory if it does not exist', async () => {
-        const _testItem = 'nested-file/file';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'nested-file/file';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${destPath}/${testItem}`).to.be.file().and.equal(`${sourcePath}/${testItem}`);
       });
 
       it('should copy empty directories', async () => {
-        const _testItem = 'empty';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'empty';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/${testItem}`);
       });
 
       it('should copy directories', async () => {
-        const _testItem = 'directory';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'directory';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
         expect(console.log).to.have.been.calledWithMatch('4 item(s) copied');
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/${testItem}`);
       });
 
       it('should copy nested directories', async () => {
-        const _testItem = 'nested-directory';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'nested-directory';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/${testItem}`);
       });
 
       it('should copy symlink', async () => {
-        const _testItem = 'symlink';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'symlink';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`).to.be.symlink();
+        expect(`${destPath}/${testItem}`).to.be.symlink();
       });
 
       it('should copy nested symlink', async () => {
-        const _testItem = 'nested-symlinks';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'nested-symlinks';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.equal(`${_sourcePath}/${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.equal(`${sourcePath}/${testItem}`);
       });
     });
 
     describe('options', () => {
       it('should overwrite destination file if overwrite is specified', async () => {
-        const _testItem = 'file';
+        const testItem = 'file';
 
-        await promises.writeFile(`${_destPath}/${_testItem}`, 'Goodbye, world!\n');
+        await promises.writeFile(`${destPath}/${testItem}`, 'Goodbye, world!\n');
 
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--overwrite']);
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--overwrite']);
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${destPath}/${testItem}`).to.be.file().and.equal(`${sourcePath}/${testItem}`);
       });
 
       it('should overwrite destination symlink if overwrite is specified', async () => {
-        const _testItem = 'file';
+        const testItem = 'file';
 
-        await promises.symlink('./symlink', `${_destPath}/${_testItem}`, 'file');
+        await promises.symlink('./symlink', `${destPath}/${testItem}`, 'file');
 
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--overwrite']);
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--overwrite']);
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${destPath}/${testItem}`).to.be.file().and.equal(`${sourcePath}/${testItem}`);
       });
 
       it('should overwrite destination directory if overwrite is specified', async () => {
-        const _testItem = 'file';
+        const testItem = 'file';
 
-        await promises.mkdir(`${_destPath}/${_testItem}`);
+        await promises.mkdir(`${destPath}/${testItem}`);
 
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--overwrite']);
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--overwrite']);
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${destPath}/${testItem}`).to.be.file().and.equal(`${sourcePath}/${testItem}`);
       });
 
       it('should not copy dotfiles if dotfiles is not specified', async () => {
-        const _testItem = 'dotfiles';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'dotfiles';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/dotfiles-directory-without-dotfiles`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/dotfiles-directory-without-dotfiles`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/dotfiles-directory-without-dotfiles`);
+        isDirectory.and.contentsEquals(`${sourcePath}/dotfiles-directory-without-dotfiles`);
       });
 
       it('should copy dotfiles if dotfiles is specified', async () => {
-        const _testItem = 'dotfiles';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--dot']);
+        const testItem = 'dotfiles';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--dot']);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/${testItem}`);
       });
 
       it('should not copy dotfiles if dotfiles is specified', async () => {
-        const _testItem = 'dotfiles';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--no-dot']);
+        const testItem = 'dotfiles';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--no-dot']);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/dotfiles-directory-without-dotfiles`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/dotfiles-directory-without-dotfiles`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/dotfiles-directory-without-dotfiles`);
+        isDirectory.and.contentsEquals(`${sourcePath}/dotfiles-directory-without-dotfiles`);
       });
 
       it('should not copy junk files if junk is not specified', async () => {
-        const _testItem = 'junk';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'junk';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/junk-directory-without-junk`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/junk-directory-without-junk`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/junk-directory-without-junk`);
+        isDirectory.and.contentsEquals(`${sourcePath}/junk-directory-without-junk`);
       });
 
       it('should copy junk files if junk is specified', async () => {
-        const _testItem = 'junk';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--junk']);
+        const testItem = 'junk';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--junk']);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/${testItem}`);
       });
 
       it('should expand symlinked source files if expand is specified', async () => {
-        const _testItem = 'symlink';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/expanded-${_testItem}`, '--expand']);
+        const testItem = 'symlink';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/expanded-${testItem}`, '--expand']);
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
-        expect(`${_destPath}/expanded-${_testItem}`).not.to.be.symlink();
-        expect(`${_destPath}/expanded-${_testItem}`).to.be.file().and.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${destPath}/expanded-${testItem}`).not.to.be.symlink();
+        expect(`${destPath}/expanded-${testItem}`).to.be.file().and.equal(`${sourcePath}/${testItem}`);
       });
 
       it('should expand symlinked source directories if expand is specified', async () => {
-        const _testItem = 'symlink-directory';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/expanded-${_testItem}`, '--expand']);
+        const testItem = 'symlink-directory';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/expanded-${testItem}`, '--expand']);
 
-        expect(`${_destPath}/expanded-${_testItem}`).not.to.be.symlink();
-        const _isDirectory = expect(`${_destPath}/expanded-${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/${_testItem}`);
+        expect(`${destPath}/expanded-${testItem}`).not.to.be.symlink();
+        const isDirectory = expect(`${destPath}/expanded-${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/${testItem}`);
       });
 
       it('should expand nested symlinks if expand is specified', async () => {
-        const _testItem = 'nested-symlinks';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/expanded-${_testItem}`, '--expand']);
+        const testItem = 'nested-symlinks';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/expanded-${testItem}`, '--expand']);
 
-        expect(`${_destPath}/expanded-${_testItem}`).to.be.directory();
-        expect(`${_destPath}/expanded-${_testItem}/file`).not.to.be.symlink();
-        expect(`${_destPath}/expanded-${_testItem}/directory`).not.to.be.symlink();
-        expect(`${_destPath}/expanded-${_testItem}/nested/directory`).not.to.be.symlink();
+        expect(`${destPath}/expanded-${testItem}`).to.be.directory();
+        expect(`${destPath}/expanded-${testItem}/file`).not.to.be.symlink();
+        expect(`${destPath}/expanded-${testItem}/directory`).not.to.be.symlink();
+        expect(`${destPath}/expanded-${testItem}/nested/directory`).not.to.be.symlink();
       });
     });
 
     describe('output transformation', () => {
       it('should filter output files via regular expression', async () => {
-        const _testItem = 'nested-directory';
-        await bootstrapCli([
-          `${_sourcePath}/${_testItem}`,
-          `${_destPath}/${_testItem}`,
-          '--filter',
-          '/(^[^1].*$)|(^1$)/',
-        ]);
+        const testItem = 'nested-directory';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--filter', '/(^[^1].*$)|(^1$)/']);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/filtered-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/filtered-${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/filtered-${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/filtered-${testItem}`);
       });
 
       it('should filter output files via glob', async () => {
-        const _testItem = 'nested-directory';
-        await bootstrapCli([
-          `${_sourcePath}/${_testItem}`,
-          `${_destPath}/${_testItem}`,
-          '--filter',
-          '2/**/*',
-          '{1,a,b}',
-        ]);
+        const testItem = 'nested-directory';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--filter', '2/**/*', '{1,a,b}']);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/filtered-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/filtered-${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/filtered-${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/filtered-${testItem}`);
       });
 
       it('should combine multiple filters from arrays', async () => {
-        const _testItem = 'nested-directory';
+        const testItem = 'nested-directory';
         await bootstrapCli([
-          `${_sourcePath}/${_testItem}`,
-          `${_destPath}/${_testItem}`,
+          `${sourcePath}/${testItem}`,
+          `${destPath}/${testItem}`,
           '--filter',
           '2/**/*',
           '1',
           '/^[^1]$/',
         ]);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/filtered-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/filtered-${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/filtered-${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/filtered-${testItem}`);
       });
 
       it('should rename files via string patterns', async () => {
-        const _testItem = 'directory';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`, '--rename-pattern', 'a', 'A']);
+        const testItem = 'directory';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--rename-pattern', 'a', 'A']);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/renamed-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/renamed-${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/renamed-${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/renamed-${testItem}`);
       });
 
       it('should rename files via regexp patterns', async () => {
-        const _testItem = 'directory';
-        await bootstrapCli([
-          `${_sourcePath}/${_testItem}`,
-          `${_destPath}/${_testItem}`,
-          '--rename-pattern',
-          '/a/',
-          'A',
-        ]);
+        const testItem = 'directory';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`, '--rename-pattern', '/a/', 'A']);
 
-        const _isDirectory = expect(`${_destPath}/${_testItem}`).to.be.directory();
-        _isDirectory.and.deep.equal(`${_sourcePath}/renamed-${_testItem}`);
-        _isDirectory.and.contentsEquals(`${_sourcePath}/renamed-${_testItem}`);
+        const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
+        isDirectory.and.deep.equal(`${sourcePath}/renamed-${testItem}`);
+        isDirectory.and.contentsEquals(`${sourcePath}/renamed-${testItem}`);
       });
     });
 
     describe('argument validation', () => {
       it('should throw an error if the source path does not exist', async () => {
-        const _testItem = 'nonexistent';
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        const testItem = 'nonexistent';
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
         expect(console.error).to.have.been.called;
-        expect(`${_destPath}/${_testItem}`).not.to.be.path();
+        expect(`${destPath}/${testItem}`).not.to.be.path();
       });
 
       it('should throw an error if the destination path exists (single file)', async () => {
-        const _testItem = 'file';
+        const testItem = 'file';
 
-        await promises.writeFile(`${_destPath}/${_testItem}`, 'Goodbye, world!\n');
+        await promises.writeFile(`${destPath}/${testItem}`, 'Goodbye, world!\n');
 
-        await bootstrapCli([`${_sourcePath}/${_testItem}`, `${_destPath}/${_testItem}`]);
+        await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
         expect(console.error).to.have.been.called;
-        expect(`${_destPath}/${_testItem}`).to.be.file().and.not.equal(`${_sourcePath}/${_testItem}`);
+        expect(`${destPath}/${testItem}`).to.be.file().and.not.equal(`${sourcePath}/${testItem}`);
       });
     });
   });

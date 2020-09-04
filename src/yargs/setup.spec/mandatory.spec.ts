@@ -6,17 +6,17 @@ import { usageRegexp } from '../../lib.spec/constants';
 
 describe('src and dest is mandatory', () => {
   it('should parse src and dest when passed as arguments', done => {
-    const _args = {
+    const args = {
       src: 'srcPath',
       dest: 'destPath',
     };
     // > recursive-copy srcPath destPath
-    yargs.parse(`${_args.src} ${_args.dest}`, (error: unknown, argv: RecursiveCopyCliModel, output: unknown) => {
+    yargs.parse(`${args.src} ${args.dest}`, (error: unknown, argv: RecursiveCopyCliModel, output: unknown) => {
       expect({
         error,
         argv,
         output,
-        args: _args,
+        args: args,
       }).to.be.argsSuccessfullyParsed();
 
       done();

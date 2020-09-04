@@ -4,26 +4,26 @@ import yargs from '../setup';
 import { RecursiveCopyCliModel } from '../../cli.model';
 
 describe('transform option', () => {
-  let _args: {
+  let args: {
     [key: string]: string;
   };
-  let _cmdArgs: string;
+  let cmdArgs: string;
 
   before(() => {
-    _args = {
+    args = {
       src: 'srcPath',
       dest: 'destPath',
     };
-    _cmdArgs = `${_args.src} ${_args.dest}`;
+    cmdArgs = `${args.src} ${args.dest}`;
   });
 
   it('should be undefined when not specified', done => {
-    yargs.parse(`${_cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+    yargs.parse(`${cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
       expect({
         error,
         argv,
         output,
-        args: _args,
+        args: args,
       }).to.be.argsSuccessfullyParsed();
       expect(argv).not.to.have.property('transform');
 
@@ -34,13 +34,13 @@ describe('transform option', () => {
   it('should create a function when transform module is provided', done => {
     // > recursive-copy srcPath destPath --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts
     yargs.parse(
-      `${_cmdArgs} --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts`,
+      `${cmdArgs} --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts`,
       (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
         expect({
           error,
           argv,
           output,
-          args: _args,
+          args: args,
         }).to.be.argsSuccessfullyParsed();
         expect(argv.transform).to.be.a('function');
 
@@ -53,13 +53,13 @@ describe('transform option', () => {
     // > recursive-copy srcPath destPath --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts \
     //     ./src/mocks.spec/eol.transform.module.mock.ts
     yargs.parse(
-      `${_cmdArgs} --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts ./src/mocks.spec/eol.transform.module.mock.ts`,
+      `${cmdArgs} --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts ./src/mocks.spec/eol.transform.module.mock.ts`,
       (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
         expect({
           error,
           argv,
           output,
-          args: _args,
+          args: args,
         }).to.be.argsSuccessfullyParsed();
         expect(argv.transform).to.be.a('function');
 
@@ -70,7 +70,7 @@ describe('transform option', () => {
 
   it('should fail when transform module is invalid', done => {
     yargs.parse(
-      `${_cmdArgs} --transform-module nonExistantModule`,
+      `${cmdArgs} --transform-module nonExistantModule`,
       (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
         expect({ error, output }).to.be.errorOnArgsParsing();
 

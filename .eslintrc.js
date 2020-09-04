@@ -1,7 +1,14 @@
+const booleanVarPrefix = ['is', 'should', 'has', 'can', 'did', 'will'];
+
 const booleanVariable = {
   types: ['boolean'],
   format: ['PascalCase'],
-  prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
+  prefix: booleanVarPrefix,
+};
+
+const booleanConst = {
+  types: ['boolean'],
+  prefix: booleanVarPrefix.map(prefix => `${prefix.toUpperCase()}_`),
 };
 
 module.exports = {
@@ -62,7 +69,17 @@ module.exports = {
       {
         selector: 'variableLike',
         format: ['camelCase'],
-        leadingUnderscore: 'allow',
+      },
+      {
+        selector: 'variable',
+        modifiers: ['const'],
+        format: ['camelCase'],
+      },
+      {
+        selector: 'variable',
+        modifiers: ['const'],
+        format: ['camelCase'],
+        ...booleanConst,
       },
       {
         selector: 'variable',
@@ -70,13 +87,29 @@ module.exports = {
       },
       {
         selector: 'parameter',
+        format: ['camelCase'],
+        leadingUnderscore: 'allow',
+      },
+      {
+        selector: 'parameter',
         ...booleanVariable,
+        leadingUnderscore: 'allow',
       },
       {
         selector: 'memberLike',
         modifiers: ['private'],
         format: ['camelCase'],
-        leadingUnderscore: 'require',
+      },
+      {
+        selector: 'memberLike',
+        modifiers: ['static', 'readonly'],
+        format: ['UPPER_CASE'],
+      },
+      {
+        selector: 'property',
+        modifiers: ['static', 'readonly'],
+        format: ['UPPER_CASE'],
+        ...booleanConst,
       },
       {
         selector: 'typeLike',

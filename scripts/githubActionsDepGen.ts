@@ -12,15 +12,15 @@ const ymlDep = safeLoad(ymlDepContent);
 const dependencies = ((ymlDep as any).jobs.dummy.steps as { uses: string }[])
   .map(step => step.uses)
   .reduce((list, dep) => {
-    const _match = /.*\/(.*)@.*/.exec(dep);
+    const match = /.*\/(.*)@.*/.exec(dep);
 
-    if (_match === null) {
+    if (match === null) {
       throw new Error(`Incorrect format for dependency - ${dep}`);
     }
 
-    const _key = _match[1];
+    const key = match[1];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-    (list as any)[_key] = dep;
+    (list as any)[key] = dep;
 
     return list;
   }, {});

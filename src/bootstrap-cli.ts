@@ -14,10 +14,10 @@ export async function bootstrapCli(cliArgs?: string[]): Promise<void> {
   } = cliOptionsKeysToCopy.reduce(
     (prev, key) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      const _value = (argv as any)[key];
-      if (_value != undefined) {
+      const value = (argv as any)[key];
+      if (value != undefined) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        prev[key] = _value;
+        prev[key] = value;
       }
       return prev;
     },
