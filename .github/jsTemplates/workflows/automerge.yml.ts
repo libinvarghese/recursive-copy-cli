@@ -18,7 +18,7 @@ export = {
   jobs: {
     'pre-automerge-bot': JOB.proceedIfBot,
     // Ignore labels does not contain 'dependencies' || contains 'released'
-    'pre-automerge-label': {
+    'cancel-released-label': {
       needs: ['pre-automerge-bot'],
       ...defaultJobMachine,
       if: `needs.pre-automerge-bot.outputs.status != 'success'
@@ -26,25 +26,25 @@ export = {
 && !contains( github.event.pull_request.labels.*.name, '${avoidMergeLabel}')`,
       steps: [
         {
-          run: `echo pre-automerge-label passed!`,
+          run: `echo "There is no '${avoidMergeLabel}' label!"`,
         },
       ],
     },
     // Since we are looking for 2 labels ['dependencies' & <ecosystem>],
     // we get 2 runs of this workflow due to the 2 labelled trigger.
-    // Lets cancel the older workflow
-    'cancel-previous-workflow': {
-      needs: ['pre-automerge-label'],
+    // Lets cancel the workflow if the event is labelled & 'dependencies'
+    'cancel-dependencies-label': {
+      needs: ['cancel-released-label'],
       ...defaultJobMachine,
-      // To identify workflows
-      // ```sh
-      // curl --header "Authorization: token <insert token here>" \
-      //   "https://api.github.com/repos/libinvarghese/recursive-copy-cli/actions/workflows"
-      // ```
-      steps: [STEP.cancelWorkflow(1739794)],
+      if: `github.event.action != 'labeled' || github.event.label.name != '${dependabotLabel}'`,
+      steps: [
+        {
+          run: `echo "There is no '${dependabotLabel}' label!"`,
+        },
+      ],
     },
     'github-action': {
-      needs: ['cancel-previous-workflow'],
+      needs: ['cancel-dependencies-label'],
       outputs: {
         shouldMerge: '${{ steps.label-length.outputs.result >= 2 }}',
         didCommit: '${{ steps.commit-dependencies.conclusion }}',

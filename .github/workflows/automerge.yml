@@ -31,7 +31,7 @@ jobs:
         run: |-
           echo Skip! Pull request created by ${{ github.event.pull_request.user.login }} not dependabot[bot]
           exit 0
-  pre-automerge-label:
+  cancel-released-label:
     needs:
       - pre-automerge-bot
     runs-on: ubuntu-latest
@@ -40,19 +40,17 @@ jobs:
       && contains( github.event.pull_request.labels.*.name, 'dependencies')
       && !contains( github.event.pull_request.labels.*.name, 'released')
     steps:
-      - run: echo pre-automerge-label passed!
-  cancel-previous-workflow:
+      - run: echo "There is no 'released' label!"
+  cancel-dependencies-label:
     needs:
-      - pre-automerge-label
+      - cancel-released-label
     runs-on: ubuntu-latest
+    if: github.event.action != 'labeled' || github.event.label.name != 'dependencies'
     steps:
-      - uses: styfle/cancel-workflow-action@0.5.0
-        with:
-          workflow_id: 1739794
-          access_token: '${{ secrets.REPO_ACCESS }}'
+      - run: echo "There is no 'dependencies' label!"
   github-action:
     needs:
-      - cancel-previous-workflow
+      - cancel-dependencies-label
     outputs:
       shouldMerge: '${{ steps.label-length.outputs.result >= 2 }}'
       didCommit: '${{ steps.commit-dependencies.conclusion }}'
