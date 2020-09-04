@@ -4,6 +4,7 @@ import { usageRegexp } from './constants';
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Chai {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Assertion {
       argsSuccessfullyParsed(): Assertion;
       errorOnArgsParsing(): Assertion;

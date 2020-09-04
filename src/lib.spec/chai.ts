@@ -17,6 +17,7 @@ chai.use(customAssert);
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Chai {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Assertion {
       semver(): Assertion;
       satisfySemver(expected: string): Assertion;

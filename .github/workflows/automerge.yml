@@ -46,7 +46,7 @@ jobs:
       - pre-automerge-label
     runs-on: ubuntu-latest
     steps:
-      - uses: styfle/cancel-workflow-action@0.4.1
+      - uses: styfle/cancel-workflow-action@0.5.0
         with:
           workflow_id: 1739794
           access_token: '${{ secrets.REPO_ACCESS }}'
