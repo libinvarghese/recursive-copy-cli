@@ -24,7 +24,7 @@ const packageSettings = {
     {
       'dependency-type': 'direct',
     },
-  ],
+  ] as unknown,
   'commit-message': commitMessage,
 };
 
