@@ -15,6 +15,7 @@ name: security-update
       - master
 jobs:
   cancel-not-dependabot:
+    runs-on: ubuntu-latest
     if: 'github.event.pull_request.user.login == ''dependabot[bot]'''
     steps:
       - run: 'echo Pull request created by ${{ github.event.pull_request.user.login }} is dependabot[bot]'

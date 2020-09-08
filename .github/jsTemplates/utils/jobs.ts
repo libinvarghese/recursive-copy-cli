@@ -8,6 +8,7 @@ export const JOB = {
     steps: [STEP.dumpContext('github')],
   },
   proceedIfBot: {
+    ...defaultJobMachine,
     if: `github.event.pull_request.user.login == '${bot}'`,
     steps: [STEP.echo(`Pull request created by \${{ github.event.pull_request.user.login }} is ${bot}`)],
   },
