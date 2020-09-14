@@ -1,6 +1,7 @@
 import { RecursiveCopyCliModel } from '../cli.model';
 import { usageRegexp } from './constants';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Chai {
