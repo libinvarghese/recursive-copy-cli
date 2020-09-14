@@ -158,8 +158,8 @@ export const changePRBaseFromMasterToDevelop: UsesStep = {
   uses: DEPENDENCIES['check-base-branch-action'],
   with: {
     'repo-token': '${{ secrets.REPO_ACCESS }}',
-    protectedBranches: productionBranch,
-    defaultBranch: developBranch,
+    'protected-branches': productionBranch,
+    'default-branch': developBranch,
     'update-branch': true,
   },
 };
