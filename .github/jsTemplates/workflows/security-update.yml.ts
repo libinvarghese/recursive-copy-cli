@@ -9,7 +9,7 @@ export = {
   on: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     pull_request: {
-      types: ['opened'],
+      types: ['opened', 'synchronize'],
       branches: [protectedBranch],
     },
   },
