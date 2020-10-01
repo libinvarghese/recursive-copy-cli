@@ -63,7 +63,7 @@ jobs:
           ref: '${{ github.event.pull_request.head.ref }}'
           token: '${{ secrets.PUSH_WORKFLOW_ACCESS }}'
       - name: Use Node.js 12.x
-        uses: actions/setup-node@v2.1.1
+        uses: actions/setup-node@v2.1.2
         with:
           node-version: 12.x
       - name: Get npm cache directory
