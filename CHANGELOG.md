@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.13](https://github.com/libinvarghese/recursive-copy-cli/compare/v1.0.12...v1.0.13) (2020-10-17)
+
+
+### Bug Fixes
+
+* **deps:** bump yargs from 16.0.3 to 16.1.0 ([120fa81](https://github.com/libinvarghese/recursive-copy-cli/commit/120fa8188e81151e8608af304bf67431aa72d785))
+
 ## [1.0.12](https://github.com/libinvarghese/recursive-copy-cli/compare/v1.0.11...v1.0.12) (2020-09-12)
 
 
