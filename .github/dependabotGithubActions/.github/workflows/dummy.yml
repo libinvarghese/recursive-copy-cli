@@ -31,4 +31,4 @@ jobs:
       - if: env.SHOULD_RUN == 'true'
         uses: codecov/codecov-action@v1.0.14
       - if: env.SHOULD_RUN == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v4.7.1
