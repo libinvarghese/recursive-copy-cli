@@ -53,7 +53,7 @@ jobs:
         if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
         run: npm ci
       - name: Set up Python 3.8
-        uses: actions/setup-python@v2.1.4
+        uses: actions/setup-python@v2.2.0
         with:
           python-version: 3.x
       - name: Get pip cache directory
