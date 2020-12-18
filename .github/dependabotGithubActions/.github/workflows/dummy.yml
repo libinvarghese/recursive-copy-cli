@@ -25,7 +25,7 @@ jobs:
       - if: env.SHOULD_RUN == 'true'
         uses: actions/cache@v2
       - if: env.SHOULD_RUN == 'true'
-        uses: actions/setup-python@v2.2.0
+        uses: actions/setup-python@v2.2.1
       - if: env.SHOULD_RUN == 'true'
         uses: a-b-r-o-w-n/check-base-branch-action@v1
       - if: env.SHOULD_RUN == 'true'
