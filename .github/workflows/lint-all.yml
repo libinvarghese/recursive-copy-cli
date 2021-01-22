@@ -41,8 +41,8 @@ jobs:
         env:
           cache-name: cache-pip
         with:
-          path: '${{ steps.get-pip-cache.outputs.dir }}'
-          key: '${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles(''requirements.txt'') }}'
+          path: ${{ steps.get-pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ env.cache-name }}-
             ${{ runner.os }}-
@@ -63,8 +63,8 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: '${{ steps.get-npm-cache.outputs.dir }}'
-          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles(''**/package-lock.json'') }}'
+          path: ${{ steps.get-npm-cache.outputs.dir }}
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-${{ env.cache-name }}-
             ${{ runner.OS }}-
@@ -75,7 +75,7 @@ jobs:
           cache-name: cache-project-node-modules
         with:
           path: node_modules
-          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles(''**/package-lock.json'') }}'
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
         run: npm ci

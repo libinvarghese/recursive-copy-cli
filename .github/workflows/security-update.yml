@@ -17,9 +17,9 @@ name: security-update
 jobs:
   cancel-not-dependabot:
     runs-on: ubuntu-latest
-    if: 'github.event.pull_request.user.login == ''dependabot[bot]'''
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
-      - run: 'echo Pull request created by ${{ github.event.pull_request.user.login }} is dependabot[bot]'
+      - run: echo Pull request created by ${{ github.event.pull_request.user.login }} is dependabot[bot]
   pr-update-base:
     needs:
       - cancel-not-dependabot
@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: a-b-r-o-w-n/check-base-branch-action@v1
         with:
-          repo-token: '${{ secrets.REPO_ACCESS }}'
+          repo-token: ${{ secrets.REPO_ACCESS }}
           protected-branches: master
           default-branch: develop
           update-branch: true

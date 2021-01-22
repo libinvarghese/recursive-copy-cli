@@ -1,3 +1,4 @@
+// eslint-disable-next-line node/no-extraneous-require
 const { maxLineLength } = require('@commitlint/ensure');
 
 module.exports = {

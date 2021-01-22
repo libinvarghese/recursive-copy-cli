@@ -83,5 +83,6 @@
   ],
   "yaml.format.singleQuote": true,
   "yaml.format.proseWrap": "always",
-  "yaml.format.printWidth": 120
+  "yaml.format.printWidth": 120,
+  "eslint.onIgnoredFiles": "warn"
 }

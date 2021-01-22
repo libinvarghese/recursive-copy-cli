@@ -22,7 +22,7 @@ jobs:
           ref: develop
           fetch-depth: 0
       - name: Git fetch master
-        run: 'git fetch --no-tags --prune --progress --no-recurse-submodules origin +master:master'
+        run: git fetch --no-tags --prune --progress --no-recurse-submodules origin +master:master
       - name: Use Node.js 12.x
         uses: actions/setup-node@v2.1.4
         with:
@@ -36,8 +36,8 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: '${{ steps.get-npm-cache.outputs.dir }}'
-          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles(''**/package-lock.json'') }}'
+          path: ${{ steps.get-npm-cache.outputs.dir }}
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-${{ env.cache-name }}-
             ${{ runner.OS }}-
@@ -48,7 +48,7 @@ jobs:
           cache-name: cache-project-node-modules
         with:
           path: node_modules
-          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles(''**/package-lock.json'') }}'
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
         run: npm ci
@@ -66,8 +66,8 @@ jobs:
         env:
           cache-name: cache-pip
         with:
-          path: '${{ steps.get-pip-cache.outputs.dir }}'
-          key: '${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles(''requirements.txt'') }}'
+          path: ${{ steps.get-pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ env.cache-name }}-
             ${{ runner.os }}-
@@ -85,5 +85,5 @@ jobs:
       - name: Do semantic release
         run: GITHUB_REF=refs/heads/develop GITHUB_ACTION=run8 npm run release
         env:
-          GITHUB_TOKEN: '${{ secrets.REPO_ACCESS }}'
-          NPM_TOKEN: '${{ secrets.NPM_PUBLISH_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

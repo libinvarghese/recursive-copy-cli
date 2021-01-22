@@ -5,7 +5,7 @@ import { resolve, relative } from 'path';
 // eslint-disable-next-line node/no-unpublished-import
 import glob from 'glob';
 // eslint-disable-next-line node/no-unpublished-import
-import { safeDump } from 'js-yaml';
+import { dump } from 'js-yaml';
 // eslint-disable-next-line node/no-unpublished-import
 import { Promise as Bluebird } from 'bluebird';
 
@@ -59,7 +59,7 @@ void (async (): Promise<void> => {
         end: false,
       });
 
-      const yaml = safeDump(config, {
+      const yaml = dump(config, {
         noRefs: true,
         lineWidth: 120,
       });

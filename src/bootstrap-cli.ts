@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/default
 import copy, { CopyOperation, CopyErrorInfo } from 'recursive-copy';
 import yargs from './yargs/setup';
 import { RecursiveCopyCliModel } from './cli.model';

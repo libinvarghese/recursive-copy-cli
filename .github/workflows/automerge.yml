@@ -21,13 +21,13 @@ jobs:
     steps:
       - name: Dump github context
         env:
-          GITHUB_CONTEXT: '${{ toJson(github) }}'
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
   cancel-not-dependabot:
     runs-on: ubuntu-latest
-    if: 'github.event.pull_request.user.login == ''dependabot[bot]'''
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
-      - run: 'echo Pull request created by ${{ github.event.pull_request.user.login }} is dependabot[bot]'
+      - run: echo Pull request created by ${{ github.event.pull_request.user.login }} is dependabot[bot]
   cancel-released-label:
     needs:
       - cancel-not-dependabot
@@ -48,20 +48,20 @@ jobs:
     needs:
       - cancel-dependencies-label
     outputs:
-      shouldMerge: '${{ steps.label-length.outputs.result >= 2 }}'
-      didCommit: '${{ steps.commit-dependencies.conclusion }}'
-      hasCommit: '${{ steps.update-dependencies.outputs.has-commit }}'
+      shouldMerge: ${{ steps.label-length.outputs.result >= 2 }}
+      didCommit: ${{ steps.commit-dependencies.conclusion }}
+      hasCommit: ${{ steps.update-dependencies.outputs.has-commit }}
     if: github.event.action != 'labelled' || github.event.label.name != 'dependencies'
     runs-on: ubuntu-latest
     steps:
       - name: Dump github.event.pull_request.labels.*.name context
         env:
-          PULL_REQUEST_LABELS_CONTEXT: '${{ toJson(github.event.pull_request.labels.*.name) }}'
+          PULL_REQUEST_LABELS_CONTEXT: ${{ toJson(github.event.pull_request.labels.*.name) }}
         run: echo "$PULL_REQUEST_LABELS_CONTEXT"
       - uses: actions/checkout@v2
         with:
-          ref: '${{ github.event.pull_request.head.ref }}'
-          token: '${{ secrets.PUSH_WORKFLOW_ACCESS }}'
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.PUSH_WORKFLOW_ACCESS }}
       - name: Use Node.js 12.x
         uses: actions/setup-node@v2.1.4
         with:
@@ -75,8 +75,8 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: '${{ steps.get-npm-cache.outputs.dir }}'
-          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles(''**/package-lock.json'') }}'
+          path: ${{ steps.get-npm-cache.outputs.dir }}
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-${{ env.cache-name }}-
             ${{ runner.OS }}-
@@ -87,14 +87,14 @@ jobs:
           cache-name: cache-project-node-modules
         with:
           path: node_modules
-          key: '${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles(''**/package-lock.json'') }}'
+          key: ${{ runner.OS }}-${{ env.cache-name }}-${{ github.repository }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         if: steps.cache-project-node-modules.outputs.cache-hit != 'true'
         run: npm ci
       - name: Get Array length of github.event.pull_request.labels.*.name
         id: label-length
         env:
-          ARRAY: '${{ toJson(github.event.pull_request.labels.*.name) }}'
+          ARRAY: ${{ toJson(github.event.pull_request.labels.*.name) }}
         run: |-
           echo $ARRAY
           ARRAY_LENGTH=$( echo $ARRAY | jq '. | length' )
@@ -140,15 +140,15 @@ jobs:
     steps:
       - name: Dump needs context
         env:
-          NEEDS_CONTEXT: '${{ toJson(needs) }}'
+          NEEDS_CONTEXT: ${{ toJson(needs) }}
         run: echo "$NEEDS_CONTEXT"
       - name: Wait for commitlint
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Commitlint
         with:
-          token: '${{ secrets.REPO_ACCESS }}'
+          token: ${{ secrets.REPO_ACCESS }}
           checkName: commitlint
-          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           timeoutSeconds: 180
       - name: Exit when commitlint workflow has failed
         if: >-
@@ -160,9 +160,9 @@ jobs:
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Lint
         with:
-          token: '${{ secrets.REPO_ACCESS }}'
+          token: ${{ secrets.REPO_ACCESS }}
           checkName: lint
-          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           timeoutSeconds: 180
       - name: Exit when lint workflow has failed
         if: steps.wait-for-Lint.outputs.conclusion != 'success' && steps.wait-for-Lint.outputs.conclusion != 'timed_out'
@@ -172,9 +172,9 @@ jobs:
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Build12X
         with:
-          token: '${{ secrets.REPO_ACCESS }}'
+          token: ${{ secrets.REPO_ACCESS }}
           checkName: build (12.x)
-          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           timeoutSeconds: 180
       - name: Exit when build (12.x) workflow has failed
         if: >-
@@ -186,9 +186,9 @@ jobs:
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Test12X
         with:
-          token: '${{ secrets.REPO_ACCESS }}'
+          token: ${{ secrets.REPO_ACCESS }}
           checkName: test (12.x)
-          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           timeoutSeconds: 180
       - name: Exit when test (12.x) workflow has failed
         if: >-
@@ -199,6 +199,6 @@ jobs:
       - name: Merge me!
         uses: libinvarghese/merge-me-action@v1
         with:
-          GITHUB_LOGIN: 'dependabot[bot]'
-          GITHUB_TOKEN: '${{ secrets.REPO_ACCESS }}'
+          GITHUB_LOGIN: dependabot[bot]
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS }}
           MERGE_METHOD: MERGE
