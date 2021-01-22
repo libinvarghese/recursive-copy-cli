@@ -2,14 +2,14 @@ import { resolve, relative } from 'path';
 import { createWriteStream, readFileSync } from 'fs';
 import { Readable } from 'stream';
 // eslint-disable-next-line node/no-unpublished-import
-import { safeLoad } from 'js-yaml';
+import { load } from 'js-yaml';
 
 const ymlDepFile = resolve('.github/dependabotGithubActions/.github/workflows/dummy.yml');
 const ymlDepContent = readFileSync(ymlDepFile, 'utf8');
-const ymlDep = safeLoad(ymlDepContent);
+const ymlDep = load(ymlDepContent) as Record<string, unknown>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-const dependencies = ((ymlDep as any).jobs.dummy.steps as { uses: string }[])
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+const dependencies = ((ymlDep.jobs as any).dummy.steps as { uses: string }[])
   .map(step => step.uses)
   .reduce((list, dep) => {
     const match = /.*\/(.*)@.*/.exec(dep);
