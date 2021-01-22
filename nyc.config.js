@@ -15,6 +15,7 @@ module.exports = {
     '*.js',
     'scripts/*',
     '.github/jsTemplates/*',
+    'eslintrc/*',
   ],
   statements: 100,
   branches: 95,
