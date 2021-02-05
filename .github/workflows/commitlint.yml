@@ -33,7 +33,7 @@ jobs:
         run: |
           echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache Node.js modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         env:
           cache-name: cache-node-modules
         with:
@@ -43,7 +43,7 @@ jobs:
             ${{ runner.OS }}-${{ env.cache-name }}-
             ${{ runner.OS }}-
       - name: Cache Project node_modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         id: cache-project-node-modules
         env:
           cache-name: cache-project-node-modules
