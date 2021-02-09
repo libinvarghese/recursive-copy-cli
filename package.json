@@ -111,7 +111,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.10.0",
     "glob": "^7.1.6",
-    "husky": "^4.2.5",
+    "husky": "^5.0.9",
     "js-yaml": "^4.0.0",
     "mocha": "^8.0.1",
     "mock-fs": "^4.12.0",
