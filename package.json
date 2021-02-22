@@ -101,7 +101,7 @@
     "chai-semver": "^1.0.2",
     "eol": "^0.9.1",
     "eslint": "^7.5.0",
-    "eslint-config-prettier": "^7.0.0",
+    "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-mocha": "^8.0.0",
