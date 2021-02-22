@@ -15,5 +15,5 @@ export const DEPENDENCIES: {[key: string]: string} = {
   "setup-python": "actions/setup-python@v2.2.1",
   "check-base-branch-action": "a-b-r-o-w-n/check-base-branch-action@v1",
   "codecov-action": "codecov/codecov-action@v1.2.1",
-  "git-auto-commit-action": "stefanzweifel/git-auto-commit-action@v4.8.0"
+  "git-auto-commit-action": "stefanzweifel/git-auto-commit-action@v4.9.0"
 };
