@@ -21,7 +21,7 @@ jobs:
       - if: env.SHOULD_RUN == 'true'
         uses: actions/checkout@v2
       - if: env.SHOULD_RUN == 'true'
-        uses: actions/setup-node@v2.1.4
+        uses: actions/setup-node@v2.1.5
       - if: env.SHOULD_RUN == 'true'
         uses: actions/cache@v2.1.4
       - if: env.SHOULD_RUN == 'true'

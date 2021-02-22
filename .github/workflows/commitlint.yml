@@ -25,7 +25,7 @@ jobs:
         env:
           BASE: ${{ github.base_ref }}
       - name: Use Node.js 12.x
-        uses: actions/setup-node@v2.1.4
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: 12.x
       - name: Get npm cache directory
