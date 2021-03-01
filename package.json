@@ -105,7 +105,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-mocha": "^8.0.0",
-    "eslint-plugin-no-secrets": "^0.7.9",
+    "eslint-plugin-no-secrets": "^0.8.9",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-optimize-regex": "^1.2.0",
     "eslint-plugin-promise": "^4.2.1",
