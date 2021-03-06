@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.16](https://github.com/libinvarghese/recursive-copy-cli/compare/v1.0.15...v1.0.16) (2021-03-06)
+
+
+### Bug Fixes
+
+* **deps:** bump lodash from 4.17.20 to 4.17.21 ([892f42d](https://github.com/libinvarghese/recursive-copy-cli/commit/892f42d8a3b58c6f816ff4cbe2654acc745519c2))
+
 ## [1.0.15](https://github.com/libinvarghese/recursive-copy-cli/compare/v1.0.14...v1.0.15) (2020-12-12)
 
 
