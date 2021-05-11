@@ -19,7 +19,7 @@ jobs:
       - if: env.SHOULD_RUN == 'true'
         uses: libinvarghese/merge-me-action@v1
       - if: env.SHOULD_RUN == 'true'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - if: env.SHOULD_RUN == 'true'
         uses: actions/setup-node@v2.1.5
       - if: env.SHOULD_RUN == 'true'
