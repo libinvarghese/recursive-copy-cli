@@ -11,7 +11,7 @@ export const DEPENDENCIES: {[key: string]: string} = {
   "merge-me-action": "libinvarghese/merge-me-action@v1",
   "checkout": "actions/checkout@v2",
   "setup-node": "actions/setup-node@v2.1.5",
-  "cache": "actions/cache@v2.1.4",
+  "cache": "actions/cache@v2.1.5",
   "setup-python": "actions/setup-python@v2.2.1",
   "check-base-branch-action": "a-b-r-o-w-n/check-base-branch-action@v1",
   "codecov-action": "codecov/codecov-action@v1.2.1",
