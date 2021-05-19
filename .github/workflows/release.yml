@@ -85,5 +85,5 @@ jobs:
       - name: Do semantic release
         run: GITHUB_REF=refs/heads/develop GITHUB_ACTION=run8 npm run release
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

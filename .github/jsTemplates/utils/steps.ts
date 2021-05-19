@@ -148,7 +148,7 @@ export const mergeDependabotPR: UsesStep = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     GITHUB_LOGIN: bot,
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    GITHUB_TOKEN: '${{ secrets.REPO_ACCESS }}',
+    GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
     // eslint-disable-next-line @typescript-eslint/naming-convention
     MERGE_METHOD: 'MERGE',
   },
@@ -157,7 +157,7 @@ export const mergeDependabotPR: UsesStep = {
 export const changePRBaseFromMasterToDevelop: UsesStep = {
   uses: DEPENDENCIES['check-base-branch-action'],
   with: {
-    'repo-token': '${{ secrets.REPO_ACCESS }}',
+    'repo-token': '${{ secrets.GITHUB_TOKEN }}',
     'protected-branches': productionBranch,
     'default-branch': developBranch,
     'update-branch': true,
@@ -183,7 +183,7 @@ export function cancelWorkflow(workflow: number): UsesStep {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       workflow_id: workflow,
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      access_token: '${{ secrets.REPO_ACCESS }}',
+      access_token: '${{ secrets.GITHUB_TOKEN }}',
     },
   };
 }
@@ -225,7 +225,7 @@ export function waitForCheckName(checkName: string): (RunStep | UsesStep)[] {
       uses: DEPENDENCIES['action-wait-for-check'],
       id: stepId,
       with: {
-        token: '${{ secrets.REPO_ACCESS }}',
+        token: '${{ secrets.GITHUB_TOKEN }}',
         checkName: `${checkName}`,
         ref: '${{ github.event.pull_request.head.sha || github.sha }}',
         timeoutSeconds: 180,

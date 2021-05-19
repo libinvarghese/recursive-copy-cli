@@ -52,7 +52,7 @@ export = {
           with: {
             ref: '${{ github.event.pull_request.head.ref }}',
             // eslint-disable-next-line no-secrets/no-secrets
-            token: '${{ secrets.PUSH_WORKFLOW_ACCESS }}',
+            token: '${{ secrets.GITHUB_TOKEN }}',
           },
         },
         STEP.setupNode12x,

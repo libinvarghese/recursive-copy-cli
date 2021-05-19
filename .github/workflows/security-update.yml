@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: a-b-r-o-w-n/check-base-branch-action@v1
         with:
-          repo-token: ${{ secrets.REPO_ACCESS }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           protected-branches: master
           default-branch: develop
           update-branch: true

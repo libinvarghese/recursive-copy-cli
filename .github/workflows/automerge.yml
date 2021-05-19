@@ -61,7 +61,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.PUSH_WORKFLOW_ACCESS }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Use Node.js 12.x
         uses: actions/setup-node@v2.1.5
         with:
@@ -146,7 +146,7 @@ jobs:
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Commitlint
         with:
-          token: ${{ secrets.REPO_ACCESS }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           checkName: commitlint
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           timeoutSeconds: 180
@@ -160,7 +160,7 @@ jobs:
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Lint
         with:
-          token: ${{ secrets.REPO_ACCESS }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           checkName: lint
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           timeoutSeconds: 180
@@ -172,7 +172,7 @@ jobs:
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Build12X
         with:
-          token: ${{ secrets.REPO_ACCESS }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           checkName: build (12.x)
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           timeoutSeconds: 180
@@ -186,7 +186,7 @@ jobs:
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Test12X
         with:
-          token: ${{ secrets.REPO_ACCESS }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           checkName: test (12.x)
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           timeoutSeconds: 180
@@ -200,5 +200,5 @@ jobs:
         uses: libinvarghese/merge-me-action@v1
         with:
           GITHUB_LOGIN: dependabot[bot]
-          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_METHOD: MERGE

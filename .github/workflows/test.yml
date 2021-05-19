@@ -42,7 +42,7 @@ jobs:
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-Build12X
         with:
-          token: ${{ secrets.REPO_ACCESS }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           checkName: build (12.x)
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           timeoutSeconds: 180

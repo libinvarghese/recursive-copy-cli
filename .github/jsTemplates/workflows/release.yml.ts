@@ -40,7 +40,7 @@ export = {
           run: `GITHUB_REF=refs/heads/${developBranch} GITHUB_ACTION=run8 npm run release`,
           env: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            GITHUB_TOKEN: '${{ secrets.REPO_ACCESS }}',
+            GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
             // eslint-disable-next-line @typescript-eslint/naming-convention, no-secrets/no-secrets
             NPM_TOKEN: '${{ secrets.NPM_PUBLISH_TOKEN }}',
           },
