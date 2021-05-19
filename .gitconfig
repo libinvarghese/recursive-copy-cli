@@ -1,0 +1,2 @@
+[gitflow "path"]
+	hooks = .husky

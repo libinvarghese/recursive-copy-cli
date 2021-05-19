@@ -1,0 +1,24 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# The hook is given three parameters:
+# * the ref of the previous HEAD
+# * the ref of the new HEAD (which may or may not have changed)
+# * a flag indicating whether the checkout was a branch checkout (changing branches, flag=1)
+#   or a file checkout (retrieving a file from the index, flag=0)
+
+source scripts/hooks/utils/exit-on-ci.sh
+source scripts/hooks/utils/common.sh
+
+prevHEAD=$1
+newHEAD=$2
+checkoutType=$3
+
+[[ $checkoutType == 1 ]] && checkoutType='branch' ||
+  checkoutType='file'
+
+if [[ $checkoutType = 'branch' ]]; then
+  changed_files="$(get_changed_files $prevHEAD $newHEAD)"
+
+  check_deps
+fi

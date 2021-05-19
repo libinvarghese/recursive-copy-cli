@@ -1,0 +1,12 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# The hook takes a single parameter
+# * a status flag specifying whether or not the merge being done was a squash merge.
+
+source scripts/hooks/utils/exit-on-ci.sh
+source scripts/hooks/utils/common.sh
+
+changed_files="$(get_changed_files HEAD@{1} HEAD)"
+
+check_deps

@@ -3,6 +3,6 @@
 set -e
 
 # If is CI envirnoment ignore executing this post-checkout hook
-if [[ -v $CI ]]; then
+if [[ -n "${CI}" ]]; then
   exit 0
 fi
