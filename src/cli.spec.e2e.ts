@@ -82,6 +82,7 @@ describe('cli', () => {
     before(() => {
       sandbox = sinon.createSandbox();
 
+      /* eslint-disable id-length */
       fsMock = {
         file: 'Hello, world!\n',
         symlink: mock.symlink({
@@ -185,6 +186,7 @@ describe('cli', () => {
           b: 'b\n',
         },
       };
+      /* eslint-enable id-length */
 
       mock({
         source: fsMock,

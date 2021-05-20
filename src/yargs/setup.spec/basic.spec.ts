@@ -6,7 +6,7 @@ import { usageRegexp } from '../../lib.spec/constants';
 describe('cli basics', () => {
   it('should have options to show help', done => {
     // > recursive-copy --help
-    yargs.parse('--help', (error: unknown, _: unknown, output: unknown) => {
+    yargs.parse('--help', (error: unknown, _argv: unknown, output: unknown) => {
       expect(error).not.to.exist;
       expect(output).to.match(usageRegexp);
 
@@ -16,7 +16,7 @@ describe('cli basics', () => {
 
   it('should have options to show version', done => {
     // > recursive-copy --version
-    yargs.parse('--version', (error: unknown, _: unknown, output: unknown) => {
+    yargs.parse('--version', (error: unknown, _argv: unknown, output: unknown) => {
       expect(error).not.to.exist;
       expect(output).to.be.semver();
       done();

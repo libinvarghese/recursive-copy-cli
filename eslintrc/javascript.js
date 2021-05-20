@@ -18,5 +18,7 @@ module.exports = {
     'prefer-object-spread': 'error',
     'no-console': 'warn',
     'no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
+    'no-loss-of-precision': 'error',
+    'id-length': 'error',
   },
 };
