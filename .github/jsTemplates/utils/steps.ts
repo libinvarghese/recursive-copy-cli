@@ -154,6 +154,27 @@ export const mergeDependabotPR: UsesStep = {
   },
 };
 
+export const mergeDependabotPRViaScript: UsesStep = {
+  name: 'Merge pull request',
+  uses: DEPENDENCIES['github-script'],
+  with: {
+    'github-token': '${{ secrets.GITHUB_TOKEN }}',
+    script: `
+const pullRequest = context.payload.pull_request;
+const repository = context.repo;
+
+core.info(JSON.stringify(context));
+
+await github.pulls.merge({
+  merge_method: "merge",
+  owner: repository.owner,
+  pull_number: pullRequest.number,
+  repo: repository.repo
+});
+`,
+  },
+};
+
 export const changePRBaseFromMasterToDevelop: UsesStep = {
   uses: DEPENDENCIES['check-base-branch-action'],
   with: {

@@ -10,7 +10,7 @@ export = {
   name: 'automerge-dependabot',
   on: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    pull_request: {
+    pull_request_target: {
       types: ['reopened', 'synchronize', 'labeled'],
       branches: [developBranch],
     },
@@ -18,9 +18,16 @@ export = {
   jobs: {
     'dump-github-context': JOB.dumpGithubContext,
     'cancel-not-dependabot': JOB.proceedIfBot,
+    // Ignore if marked as draft
+    'cancel-draft-pr': {
+      needs: ['cancel-not-dependabot'],
+      ...defaultJobMachine,
+      if: `github.event.pull_request.draft == false`,
+      steps: [STEP.echo(`This is not a draft PR!`)],
+    },
     // Ignore labels does not contain 'dependencies' || contains 'released'
     'cancel-released-label': {
-      needs: ['cancel-not-dependabot'],
+      needs: ['cancel-draft-pr'],
       ...defaultJobMachine,
       if: `contains( github.event.pull_request.labels.*.name, '${dependabotLabel}')
 && !contains( github.event.pull_request.labels.*.name, '${avoidMergeLabel}')`,
@@ -99,7 +106,7 @@ git diff --staged --quiet && echo "::set-output name=has-commit::false" || echo 
         ...STEP.waitForCheckName('build (12.x)'),
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         ...STEP.waitForCheckName('test (12.x)'),
-        STEP.mergeDependabotPR,
+        STEP.mergeDependabotPRViaScript,
       ],
     },
   },
