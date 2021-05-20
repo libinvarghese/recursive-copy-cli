@@ -1,4 +1,5 @@
 import { promises } from 'fs';
+// eslint-disable-next-line you-dont-need-lodash-underscore/get
 import { get, set } from 'lodash';
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment
 const packageJSON = require('../package.json');
