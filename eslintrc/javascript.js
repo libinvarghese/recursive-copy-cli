@@ -24,5 +24,7 @@ module.exports = {
     'no-script-url': 'error',
     'no-unsafe-optional-chaining': 'error',
     complexity: ['error', 4],
+    'no-extend-native': 'error',
+    'no-sequences': 'error',
   },
 };

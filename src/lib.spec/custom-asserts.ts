@@ -38,7 +38,9 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
       };
     } = this._obj;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     new _Assertion(error).not.to.exist;
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     new _Assertion(output).to.empty;
     new _Assertion(argv).to.include(args);
   });
@@ -53,6 +55,7 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
       output: unknown;
     } = this._obj;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     new _Assertion(error).to.exist;
     new _Assertion(output).to.match(usageRegexp);
   });

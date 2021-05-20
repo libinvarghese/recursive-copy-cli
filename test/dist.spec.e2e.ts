@@ -26,6 +26,7 @@ describe('dist', () => {
       const cliResult = await chaiExecAsync(`${cmd} ${sourcePath}/${testItem} ${destPath}/${testItem}`);
 
       expect(cliResult).to.exit.with.code(0);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(cliResult).stderr.to.be.empty;
       expect(cliResult).stdout.to.contains('1 item(s) copied');
 

@@ -31,6 +31,7 @@ module.exports = {
     ],
   },
   rules: {
+    '@typescript-eslint/no-unused-expressions': ['error', { enforceForJSX: true }],
     '@typescript-eslint/no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/naming-convention': [

@@ -29,6 +29,7 @@ describe('cli', () => {
       const cliResult = await chaiExecAsync(`${cmd} ${sourcePath}/${testItem} ${destPath}/${testItem}`);
 
       expect(cliResult).to.exit.with.code(0);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(cliResult).stderr.to.be.empty;
       expect(cliResult).stdout.to.contains('1 item(s) copied');
 
@@ -44,6 +45,7 @@ describe('cli', () => {
         );
 
         expect(cliResult).to.exit.with.code(0);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(cliResult).stderr.to.be.empty;
 
         const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
@@ -58,6 +60,7 @@ describe('cli', () => {
         );
 
         expect(cliResult).to.exit.with.code(0);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(cliResult).stderr.to.be.empty;
 
         const isDirectory = expect(`${destPath}/${testItem}`).to.be.directory();
@@ -443,6 +446,7 @@ describe('cli', () => {
         const testItem = 'nonexistent';
         await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(console.error).to.have.been.called;
         expect(`${destPath}/${testItem}`).not.to.be.path();
       });
@@ -454,6 +458,7 @@ describe('cli', () => {
 
         await bootstrapCli([`${sourcePath}/${testItem}`, `${destPath}/${testItem}`]);
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(console.error).to.have.been.called;
         expect(`${destPath}/${testItem}`).to.be.file().and.not.equal(`${sourcePath}/${testItem}`);
       });
