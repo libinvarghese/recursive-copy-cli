@@ -20,5 +20,9 @@ module.exports = {
     'no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
     'no-loss-of-precision': 'error',
     'id-length': 'error',
+    'no-nonoctal-decimal-escape': 'error',
+    'no-script-url': 'error',
+    'no-unsafe-optional-chaining': 'error',
+    complexity: ['error', 4],
   },
 };

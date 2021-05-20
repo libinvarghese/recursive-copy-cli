@@ -2,6 +2,7 @@ import flow from 'lodash/fp/flow';
 import { RecursiveCopyCliModel, RenameFn } from '../cli.model';
 import { requireTryAll } from './requireTryAll';
 
+// eslint-disable-next-line complexity
 export function renameParamsToFunction(argv: RecursiveCopyCliModel): void {
   let rename: RenameFn | undefined = undefined;
 
