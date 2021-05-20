@@ -17,8 +17,6 @@ jobs:
       - if: env.SHOULD_RUN == 'true'
         uses: fountainhead/action-wait-for-check@v1.0.0
       - if: env.SHOULD_RUN == 'true'
-        uses: libinvarghese/merge-me-action@v1
-      - if: env.SHOULD_RUN == 'true'
         uses: actions/checkout@v2
       - if: env.SHOULD_RUN == 'true'
         uses: actions/setup-node@v2.1.5

@@ -1,4 +1,4 @@
-import { bot, developBranch, productionBranch } from './constants';
+import { developBranch, productionBranch } from './constants';
 import { DEPENDENCIES } from './dependencies';
 // eslint-disable-next-line @typescript-eslint/no-var-requires, node/no-unpublished-require, @typescript-eslint/no-unsafe-assignment
 const pascalCase = require('pascalcase');
@@ -138,19 +138,6 @@ export const uploadCoverage: UsesStep = {
   env: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     CODECOV_TOKEN: '${{ secrets.CODECOV_TOKEN }}',
-  },
-};
-
-export const mergeDependabotPR: UsesStep = {
-  name: 'Merge me!',
-  uses: DEPENDENCIES['merge-me-action'],
-  with: {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    GITHUB_LOGIN: bot,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    MERGE_METHOD: 'MERGE',
   },
 };
 

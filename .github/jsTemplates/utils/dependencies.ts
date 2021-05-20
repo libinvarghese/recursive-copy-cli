@@ -8,7 +8,6 @@
 
 export const DEPENDENCIES: {[key: string]: string} = {
   "action-wait-for-check": "fountainhead/action-wait-for-check@v1.0.0",
-  "merge-me-action": "libinvarghese/merge-me-action@v1",
   "checkout": "actions/checkout@v2",
   "setup-node": "actions/setup-node@v2.1.5",
   "cache": "actions/cache@v2.1.5",
