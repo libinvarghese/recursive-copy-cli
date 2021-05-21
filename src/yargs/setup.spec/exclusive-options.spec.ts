@@ -1,12 +1,10 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-import { RecursiveCopyCliModel } from '../../cli.model';
+import type { RecursiveCopyCliModel } from '../../cli.model';
 
 describe('exclusive options', () => {
-  const cliExclusiveOptions: {
-    [key: string]: string[];
-  }[] = [
+  const cliExclusiveOptions: readonly Readonly<Record<string, string[]>>[] = [
     {
       'rename-pattern': ['a', 'b'],
       'rename-module': ['a', 'b'],
@@ -19,10 +17,8 @@ describe('exclusive options', () => {
     context(Object.keys(option).toString(), () => {
       // eslint-disable-next-line mocha/no-setup-in-describe
       let optStr = '';
-      let args: {
-        [key: string]: string;
-      };
-      let cmdArgs: string;
+      let args = {} as Record<string, string>;
+      let cmdArgs = '';
 
       before(() => {
         args = {
@@ -37,11 +33,14 @@ describe('exclusive options', () => {
       });
 
       it('should fail when exclusive options are used', done => {
-        yargs.parse(`${cmdArgs} ${optStr}`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, output }).to.be.errorOnArgsParsing();
+        yargs.parse(
+          `${cmdArgs} ${optStr}`,
+          (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+            expect({ error, output }).to.be.errorOnArgsParsing();
 
-          done();
-        });
+            done();
+          }
+        );
       });
     });
   });

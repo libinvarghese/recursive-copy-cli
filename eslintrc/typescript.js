@@ -16,6 +16,7 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:@typescript-eslint/all',
     'prettier/@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
@@ -34,6 +35,8 @@ module.exports = {
     '@typescript-eslint/no-unused-expressions': ['error', { enforceForJSX: true }],
     '@typescript-eslint/no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
     '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-magic-numbers': ['error', { ignore: [0], ignoreArrayIndexes: true }],
+    '@typescript-eslint/no-type-alias': ['error', { allowCallbacks: 'always' }],
     '@typescript-eslint/naming-convention': [
       'error',
       { selector: 'default', format: ['camelCase'] },

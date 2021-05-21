@@ -1,8 +1,8 @@
 import flow from 'lodash/fp/flow';
-import { RecursiveCopyCliModel, RenameFn } from '../cli.model';
 import { requireTryAll } from './requireTryAll';
+import type { RecursiveCopyCliModel, RenameFn } from '../cli.model';
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line complexity, @typescript-eslint/prefer-readonly-parameter-types
 export function renameParamsToFunction(argv: RecursiveCopyCliModel): void {
   let rename: RenameFn | undefined = undefined;
 
@@ -13,6 +13,7 @@ export function renameParamsToFunction(argv: RecursiveCopyCliModel): void {
   } else if (argv.renamePattern) {
     const [regexpStr, substitute] = argv.renamePattern;
     const regParts = /^\/(.*?)\/([gim]*)$/.exec(regexpStr);
+    // eslint-disable-next-line @typescript-eslint/init-declarations
     let regexp: RegExp;
     if (regParts) {
       // the parsed pattern had delimiters and modifiers. handle them.

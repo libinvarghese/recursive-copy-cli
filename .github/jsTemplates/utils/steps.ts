@@ -1,16 +1,12 @@
 import { developBranch, productionBranch } from './constants';
 import { DEPENDENCIES } from './dependencies';
-// eslint-disable-next-line @typescript-eslint/no-var-requires, node/no-unpublished-require, @typescript-eslint/no-unsafe-assignment
+// eslint-disable-next-line @typescript-eslint/no-var-requires, node/no-unpublished-require, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
 const pascalCase = require('pascalcase');
-
-interface Env {
-  [key: string]: unknown;
-}
 
 interface Step {
   name?: string;
   id?: string;
-  env?: Env;
+  env?: Record<string, unknown>;
   if?: string;
 }
 
@@ -172,7 +168,7 @@ export const changePRBaseFromMasterToDevelop: UsesStep = {
   },
 };
 
-export function echo(message: string, env?: { [key: string]: string }): RunStep {
+export function echo(message: string, env?: Record<string, string>): RunStep {
   const runStep: RunStep = {
     run: `echo ${message}`,
   };
@@ -196,7 +192,7 @@ export function cancelWorkflow(workflow: number): UsesStep {
   };
 }
 
-export function commit(msg: string, options: { commitArgs: string }): UsesStep {
+export function commit(msg: string, options: Readonly<{ commitArgs: string }>): UsesStep {
   const { commitArgs } = options;
   return {
     uses: DEPENDENCIES['git-auto-commit-action'],
@@ -247,9 +243,9 @@ export function waitForCheckName(checkName: string): (RunStep | UsesStep)[] {
   ];
 }
 
-export function dumpContext(name: string, simpleName: string | undefined = undefined): RunStep {
-  const env: Env = {};
-  const contextName = simpleName ? simpleName.toUpperCase() : name.toUpperCase();
+export function dumpContext(name: string, simpleName?: string): RunStep {
+  const env: Record<string, unknown> = {};
+  const contextName = simpleName !== undefined ? simpleName.toUpperCase() : name.toUpperCase();
   const envVar = `${contextName}_CONTEXT`;
 
   env[envVar] = `\${{ toJson(${name}) }}`;

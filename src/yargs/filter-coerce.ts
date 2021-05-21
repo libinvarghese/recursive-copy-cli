@@ -1,5 +1,5 @@
-export function filterCoerce(filter: string[]): (string | RegExp)[] | undefined {
-  let filterList: (string | RegExp)[] | undefined = undefined;
+export function filterCoerce(filter: readonly string[]): (RegExp | string)[] | undefined {
+  let filterList: (RegExp | string)[] | undefined = undefined;
   const globList = filter.map(glob => {
     const regParts = /^\/(.*?)\/([gim]*)$/.exec(glob);
 

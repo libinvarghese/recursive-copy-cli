@@ -1,11 +1,13 @@
-import yargs, { MiddlewareFunctionEx, Arguments, Argv } from 'yargs';
-import { RecursiveCopyCliModel } from '../cli.model';
+import yargs from 'yargs';
 import { renameParamsToFunction } from './rename-params-to-fn';
 import { transformParamsToFunction } from './transform-to-fn';
 import { filterCoerce } from './filter-coerce';
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment
+import type { MiddlewareFunctionEx, Arguments, Argv } from 'yargs';
+import type { RecursiveCopyCliModel } from '../cli.model';
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
 const packageJSON = require('../../package.json');
 
+/* eslint-disable @typescript-eslint/method-signature-style */
 declare module 'yargs' {
   // eslint-disable-next-line @typescript-eslint/ban-types
   interface Argv<T = {}> {
@@ -14,18 +16,18 @@ declare module 'yargs' {
      *
      * Unrecognized commands will also be reported as errors.
      */
-    strictCommands(): Argv<T>;
-    strictCommands(enabled: boolean): Argv<T>;
+    strictCommands(enabled?: boolean): Argv<T>;
 
     middleware(
-      callbacks: MiddlewareFunctionEx<T> | ReadonlyArray<MiddlewareFunctionEx<T>>,
+      callbacks: MiddlewareFunctionEx<T> | MiddlewareFunctionEx<T>[],
       applyBeforeValidation?: boolean
     ): Argv<T>;
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/ban-types, @typescript-eslint/prefer-readonly-parameter-types
   type MiddlewareFunctionEx<T = {}> = (args: Arguments<T>, yargs: Argv<T>) => void;
 }
+/* eslint-enable @typescript-eslint/method-signature-style */
 
 yargs.parserConfiguration({
   'parse-numbers': false,
@@ -37,8 +39,9 @@ yargs
   .usage(
     '$0 <src> <dest>',
     '',
-    yargs =>
-      yargs
+    // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+    yargsObj =>
+      yargsObj
         .positional('src', {
           description: 'Source file/folder path',
           type: 'string',
@@ -130,26 +133,33 @@ yargs
 
 // Handle exceptions thrown by middleware
 function gracefulMiddleware(middleware: MiddlewareFunctionEx): MiddlewareFunctionEx {
-  return (argv: Arguments, yargs: Argv): void => {
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+  return (argv: Arguments, yargsObj: Argv): void => {
     try {
-      middleware(argv, yargs);
-    } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      (yargs as any).getUsageInstance().fail(error.message);
+      middleware(argv, yargsObj);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        // TODO: definition for getUsageInstance
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+        (yargsObj as any).getUsageInstance().fail(error.message);
+      }
     }
   };
 }
 
 yargs.middleware([
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   gracefulMiddleware((argv): void => {
     // Concurrency can be NaN if the user did not enter a number
     if (argv.concurrency !== undefined && isNaN(argv.concurrency as number)) {
       throw new Error('Error: Invalid concurrency option');
     }
   }),
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   gracefulMiddleware((argv): void => {
     renameParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
   }),
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   gracefulMiddleware((argv): void => {
     transformParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
   }),

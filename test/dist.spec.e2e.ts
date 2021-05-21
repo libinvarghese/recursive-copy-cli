@@ -5,6 +5,7 @@ import { chaiExecAsync } from '@jsdevtools/chai-exec';
 import rimraf from 'rimraf';
 
 describe('dist', () => {
+  // eslint-disable-next-line @typescript-eslint/init-declarations
   let rimrafP: (path: string) => Promise<void>;
 
   before(() => {
