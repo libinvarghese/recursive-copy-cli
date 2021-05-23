@@ -1,12 +1,6 @@
 {
-  "typescript.updateImportsOnFileMove.enabled": "always",
-
-  "types-autoinstaller.saveAsDevDependency": true,
-
-  "editor.rulers": [120],
-
-  "files.associations": {
-    "*.json": "jsonc"
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -14,22 +8,9 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-
-  "mochaExplorer.cwd": "./",
-  "mochaExplorer.logpanel": true,
-  "mochaExplorer.files": "**/*.spec{.e2e}*.ts",
-
-  "docthis.includeMemberOfOnClassMembers": false,
-  "docthis.includeMemberOfOnInterfaceMembers": false,
-  "docthis.includeTypes": false,
-  "docthis.inferTypesFromNames": true,
-
   "cSpell.language": "en-GB",
   "cSpell.words": [
     "Atomics",
@@ -81,8 +62,24 @@
     "yamllint",
     "yargs"
   ],
-  "yaml.format.singleQuote": true,
-  "yaml.format.proseWrap": "always",
+  "docthis.includeMemberOfOnClassMembers": false,
+  "docthis.includeMemberOfOnInterfaceMembers": false,
+  "docthis.includeTypes": false,
+  "docthis.inferTypesFromNames": true,
+  "editor.rulers": [
+    120
+  ],
+  "editor.linkedEditing": true,
+  "eslint.onIgnoredFiles": "warn",
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+  "mochaExplorer.cwd": "./",
+  "mochaExplorer.files": "**/*.spec{.e2e}*.ts",
+  "mochaExplorer.logpanel": true,
+  "types-autoinstaller.saveAsDevDependency": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "yaml.format.printWidth": 120,
-  "eslint.onIgnoredFiles": "warn"
+  "yaml.format.proseWrap": "always",
+  "yaml.format.singleQuote": true
 }

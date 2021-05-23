@@ -1,14 +1,15 @@
 {
   "recommendations": [
-    "jvitor83.types-autoinstaller",
-    "streetsidesoftware.code-spell-checker",
-    "joelday.docthis",
-    "quicktype.quicktype",
-    "eg2.vscode-npm-script",
-    "editorconfig.editorconfig",
-    "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "eg2.vscode-npm-script",
+    "emeryao.async-switch",
+    "esbenp.prettier-vscode",
     "hbenl.vscode-mocha-test-adapter",
-    "redhat.vscode-yaml"
+    "jvitor83.types-autoinstaller",
+    "oouo-diogo-perdigao.docthis",
+    "quicktype.quicktype",
+    "redhat.vscode-yaml",
+    "streetsidesoftware.code-spell-checker"
   ]
 }
