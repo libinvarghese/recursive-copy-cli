@@ -1,13 +1,11 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-import { RecursiveCopyCliModel } from '../../cli.model';
+import type { RecursiveCopyCliModel } from '../../cli.model';
 
 describe('transform option', () => {
-  let args: {
-    [key: string]: string;
-  };
-  let cmdArgs: string;
+  let args = {} as Record<string, string>;
+  let cmdArgs = '';
 
   before(() => {
     args = {
@@ -18,7 +16,7 @@ describe('transform option', () => {
   });
 
   it('should be undefined when not specified', done => {
-    yargs.parse(`${cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+    yargs.parse(cmdArgs, (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
       expect({
         error,
         argv,
@@ -35,7 +33,7 @@ describe('transform option', () => {
     // > recursive-copy srcPath destPath --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts
     yargs.parse(
       `${cmdArgs} --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts`,
-      (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+      (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
         expect({
           error,
           argv,
@@ -54,7 +52,7 @@ describe('transform option', () => {
     //     ./src/mocks.spec/eol.transform.module.mock.ts
     yargs.parse(
       `${cmdArgs} --transform-module ./src/mocks.spec/toupper.transform.module.mock.ts ./src/mocks.spec/eol.transform.module.mock.ts`,
-      (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+      (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
         expect({
           error,
           argv,
@@ -71,7 +69,7 @@ describe('transform option', () => {
   it('should fail when transform module is invalid', done => {
     yargs.parse(
       `${cmdArgs} --transform-module nonExistantModule`,
-      (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
+      (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
         expect({ error, output }).to.be.errorOnArgsParsing();
 
         done();

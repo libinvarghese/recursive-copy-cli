@@ -1,13 +1,11 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import yargs from '../setup';
-import { RecursiveCopyCliModel, RenameFn } from '../../cli.model';
+import type { RecursiveCopyCliModel } from '../../cli.model';
 
 describe('rename option', () => {
-  let args: {
-    [key: string]: string;
-  };
-  let cmdArgs: string;
+  let args = {} as Record<string, string>;
+  let cmdArgs = '';
 
   before(() => {
     args = {
@@ -18,7 +16,7 @@ describe('rename option', () => {
   });
 
   it('should be undefined when not specified', done => {
-    yargs.parse(`${cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+    yargs.parse(cmdArgs, (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
       expect({
         error,
         argv,
@@ -36,7 +34,7 @@ describe('rename option', () => {
       // > recursive-copy srcPath destPath --rename-module pascalcase
       yargs.parse(
         `${cmdArgs} --rename-module pascalcase`,
-        (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+        (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
             error,
             argv,
@@ -45,7 +43,8 @@ describe('rename option', () => {
           }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
-          const renameFn = argv.rename as RenameFn;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const renameFn = argv.rename!;
           expect(renameFn('foo bar baz')).to.be.equal('FooBarBaz');
 
           done();
@@ -57,7 +56,7 @@ describe('rename option', () => {
       // > recursive-copy srcPath destPath --rename-module pascalcase ./src/mocks.spec/toupper.rename.module.mock.ts
       yargs.parse(
         `${cmdArgs} --rename-module pascalcase ./src/mocks.spec/toupper.rename.module.mock.ts`,
-        (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+        (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
             error,
             argv,
@@ -66,7 +65,8 @@ describe('rename option', () => {
           }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
-          const renameFn = argv.rename as RenameFn;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const renameFn = argv.rename!;
           expect(renameFn('foo bar baz')).to.be.equal('FOOBARBAZ');
 
           done();
@@ -77,7 +77,7 @@ describe('rename option', () => {
     it('should fail when rename module is invalid', done => {
       yargs.parse(
         `${cmdArgs} --rename-module nonExistantModule`,
-        (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
+        (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({ error, output }).to.be.errorOnArgsParsing();
 
           done();
@@ -89,27 +89,9 @@ describe('rename option', () => {
   context('with pattern', () => {
     it('should create a function when rename pattern string is provided', done => {
       // > recursive-copy srcPath destPath --rename-pattern a A
-      yargs.parse(`${cmdArgs} --rename-pattern a A`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
-        expect({
-          error,
-          argv,
-          output,
-          args: args,
-        }).to.be.argsSuccessfullyParsed();
-        expect(argv.rename).to.be.a('function');
-
-        const renameFn = argv.rename as RenameFn;
-        expect(renameFn('abca')).to.be.equal('Abca');
-
-        done();
-      });
-    });
-
-    it('should create a function when rename pattern regex is provided', done => {
-      // > recursive-copy srcPath destPath /a/g A
       yargs.parse(
-        `${cmdArgs} --rename-pattern /a/g A`,
-        (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+        `${cmdArgs} --rename-pattern a A`,
+        (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
             error,
             argv,
@@ -118,7 +100,30 @@ describe('rename option', () => {
           }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
-          const renameFn = argv.rename as RenameFn;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const renameFn = argv.rename!;
+          expect(renameFn('abca')).to.be.equal('Abca');
+
+          done();
+        }
+      );
+    });
+
+    it('should create a function when rename pattern regex is provided', done => {
+      // > recursive-copy srcPath destPath /a/g A
+      yargs.parse(
+        `${cmdArgs} --rename-pattern /a/g A`,
+        (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+          expect({
+            error,
+            argv,
+            output,
+            args: args,
+          }).to.be.argsSuccessfullyParsed();
+          expect(argv.rename).to.be.a('function');
+
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const renameFn = argv.rename!;
           expect(renameFn('abca')).to.be.equal('AbcA');
 
           done();
@@ -130,7 +135,7 @@ describe('rename option', () => {
       // > recursive-copy srcPath destPath --rename-pattern /(.*)-(.*)\\.(.*)/g $2-$1.$3  # author-title.mp3 to title-author.mp3
       yargs.parse(
         `${cmdArgs} --rename-pattern /(.*)-(.*)\\.(.*)/g $2-$1.$3`,
-        (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+        (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
             error,
             argv,
@@ -139,7 +144,8 @@ describe('rename option', () => {
           }).to.be.argsSuccessfullyParsed();
           expect(argv.rename).to.be.a('function');
 
-          const renameFn = argv.rename as RenameFn;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const renameFn = argv.rename!;
           expect(renameFn('author-title.mp3')).to.be.equal('title-author.mp3');
 
           done();

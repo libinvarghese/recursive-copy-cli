@@ -1,5 +1,5 @@
-import { Stats } from 'fs';
-import { Transform } from 'stream';
+import type { Stats } from 'fs';
+import type { Transform } from 'stream';
 
 export interface RecursiveCopyCliModel {
   src: string;
@@ -8,7 +8,7 @@ export interface RecursiveCopyCliModel {
   expand?: boolean;
   dot?: boolean;
   junk?: boolean;
-  filter?: (string | RegExp)[];
+  filter?: (RegExp | string)[];
   renameModule?: string[];
   renamePattern?: string[];
   rename?: RenameFn;
@@ -19,4 +19,5 @@ export interface RecursiveCopyCliModel {
 }
 
 export type RenameFn = (filePath: string) => string;
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export type TransformFn = (src: string, dest: string, stats: Stats) => Transform;

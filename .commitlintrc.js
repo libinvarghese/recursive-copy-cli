@@ -1,13 +1,20 @@
 // Refer [Rules](https://commitlint.js.org/#/reference-rules)
 
+const RuleLevel = {
+  Disable: 0,
+  Warn: 1,
+  Error: 2,
+};
+
 module.exports = {
   extends: [
     '@commitlint/config-conventional', // scoped packages are not prefixed
   ],
   rules: {
-    'header-max-length': [2, 'always', 72],
+    // eslint-disable-next-line no-magic-numbers
+    'header-max-length': [RuleLevel.Error, 'always', 72],
     'scope-enum': [
-      2,
+      RuleLevel.Error,
       'always',
       [
         'yargs',

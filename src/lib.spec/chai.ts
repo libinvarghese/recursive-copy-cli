@@ -4,9 +4,10 @@ import chaiExec from '@jsdevtools/chai-exec';
 import chaiFs from 'chai-fs';
 import sinonChai from 'sinon-chai';
 import { customAssert } from './custom-asserts';
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
 const chaiSemver = require('chai-semver');
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 chai.use(chaiSemver);
 chai.use(chaiExec);
 chai.use(chaiArrays);
@@ -20,8 +21,8 @@ declare global {
   namespace Chai {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Assertion {
-      semver(): Assertion;
-      satisfySemver(expected: string): Assertion;
+      semver: () => Assertion;
+      satisfySemver: (expected: string) => Assertion;
     }
 
     // interface Assert {

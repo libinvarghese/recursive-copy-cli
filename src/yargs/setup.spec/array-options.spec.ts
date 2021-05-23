@@ -1,19 +1,20 @@
 import { expect } from 'chai';
 import { camelCase } from 'lodash';
-import { RecursiveCopyCliModel } from '../../cli.model';
-// eslint-disable-next-line import/default
 import yargs from '../setup';
+import type { RecursiveCopyCliModel } from '../../cli.model';
 
 // eslint-disable-next-line mocha/no-setup-in-describe
 describe('array options', () => {
-  const cliArrayOptions: {
-    [key: string]: {
+  const cliArrayOptions: Record<
+    string,
+    {
       alias: string;
       value: string[];
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       args?: 2;
       mapKey?: string;
-    };
-  } = {
+    }
+  > = {
     'rename-pattern': {
       alias: 'p',
       args: 2,
@@ -39,10 +40,8 @@ describe('array options', () => {
   // eslint-disable-next-line mocha/no-setup-in-describe
   Object.keys(cliArrayOptions).forEach(key => {
     context(`option ${key}`, () => {
-      let args: {
-        [key: string]: string;
-      };
-      let cmdArgs: string;
+      let args = {} as Record<string, string>;
+      let cmdArgs = '';
 
       before(() => {
         args = {
@@ -53,7 +52,7 @@ describe('array options', () => {
       });
 
       it('should be undefined when not specified', done => {
-        yargs.parse(`${cmdArgs}`, (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+        yargs.parse(cmdArgs, (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
             error,
             argv,
@@ -61,8 +60,9 @@ describe('array options', () => {
             args: args,
           }).to.be.argsSuccessfullyParsed();
           expect(argv).not.to.have.property(key);
-          if (cliArrayOptions[key].mapKey) {
-            expect(argv).not.to.have.property(cliArrayOptions[key].mapKey as string);
+          if (cliArrayOptions[key].mapKey !== undefined) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            expect(argv).not.to.have.property(cliArrayOptions[key].mapKey!);
           }
 
           done();
@@ -72,7 +72,7 @@ describe('array options', () => {
       it('should have value when set', done => {
         yargs.parse(
           `${cmdArgs} --${key} ${cliArrayOptions[key].value.join(' ')}`,
-          (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+          (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
             expect({
               error,
               argv,
@@ -81,8 +81,9 @@ describe('array options', () => {
             }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(cliArrayOptions[key].value);
-            if (cliArrayOptions[key].mapKey) {
-              expect(argv).to.have.property(cliArrayOptions[key].mapKey as string);
+            if (cliArrayOptions[key].mapKey !== undefined) {
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              expect(argv).to.have.property(cliArrayOptions[key].mapKey!);
             }
 
             done();
@@ -93,7 +94,7 @@ describe('array options', () => {
       it('should have value when set via alias', done => {
         yargs.parse(
           `${cmdArgs} --${cliArrayOptions[key].alias} ${cliArrayOptions[key].value.join(' ')}`,
-          (error: Error, argv: RecursiveCopyCliModel, output: unknown) => {
+          (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
             expect({
               error,
               argv,
@@ -102,8 +103,9 @@ describe('array options', () => {
             }).to.be.argsSuccessfullyParsed();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
             expect((argv as any)[camelCase(key)]).to.be.deep.equal(cliArrayOptions[key].value);
-            if (cliArrayOptions[key].mapKey) {
-              expect(argv).to.have.property(cliArrayOptions[key].mapKey as string);
+            if (cliArrayOptions[key].mapKey !== undefined) {
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              expect(argv).to.have.property(cliArrayOptions[key].mapKey!);
             }
 
             done();
@@ -112,11 +114,14 @@ describe('array options', () => {
       });
 
       it(`should fail when no argument is passed with ${key}`, done => {
-        yargs.parse(`${cmdArgs} --${key}`, (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
-          expect({ error, output }).to.be.errorOnArgsParsing();
+        yargs.parse(
+          `${cmdArgs} --${key}`,
+          (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+            expect({ error, output }).to.be.errorOnArgsParsing();
 
-          done();
-        });
+            done();
+          }
+        );
       });
 
       // eslint-disable-next-line mocha/no-setup-in-describe
@@ -126,7 +131,7 @@ describe('array options', () => {
             const moreArgs = [...cliArrayOptions[key].value, cliArrayOptions[key].value[0]];
             yargs.parse(
               `${cmdArgs} --${key} ${moreArgs.join(' ')}`,
-              (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
+              (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
                 expect({ error, output }).to.be.errorOnArgsParsing();
 
                 done();
@@ -139,7 +144,7 @@ describe('array options', () => {
             moreArgs.pop();
             yargs.parse(
               `${cmdArgs} --${key} ${moreArgs.join(' ')}`,
-              (error: Error, _argv: RecursiveCopyCliModel, output: unknown) => {
+              (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
                 expect({ error, output }).to.be.errorOnArgsParsing();
 
                 done();

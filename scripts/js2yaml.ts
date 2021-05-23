@@ -31,15 +31,15 @@ void (async (): Promise<void> => {
 
   await Bluebird.each(jsFiles, async file => {
     const absPath = resolve(file);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires, import/no-dynamic-require
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires, import/no-dynamic-require, @typescript-eslint/no-require-imports
     const config: { disable?: boolean } = require(absPath);
     const destFile = absPath.replace(src, dest).replace('.yml.ts', '.yml');
 
-    if (config.disable) {
+    if (config.disable === true) {
       console.log(`rm ${destFile}`);
-      await promises.unlink(destFile).catch((err: NodeJS.ErrnoException) => {
+      await promises.unlink(destFile).catch((err: Readonly<NodeJS.ErrnoException>) => {
         if (err.code !== 'ENOENT') {
-          throw err;
+          throw err as Error;
         }
       });
     } else {

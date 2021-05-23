@@ -9,7 +9,7 @@ const ymlDepContent = readFileSync(ymlDepFile, 'utf8');
 const ymlDep = load(ymlDepContent) as Record<string, unknown>;
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-const dependencies = ((ymlDep.jobs as any).dummy.steps as { uses: string }[])
+const dependencies = ((ymlDep.jobs as any).dummy.steps as readonly Readonly<{ uses: string }>[])
   .map(step => step.uses)
   .reduce((list, dep) => {
     const match = /.*\/(.*)@.*/.exec(dep);
@@ -42,7 +42,8 @@ Readable.from(fileHeader).pipe(destStream, {
   end: false,
 });
 
-const depContent = `export const DEPENDENCIES: {[key: string]: string} = ${JSON.stringify(dependencies, null, 2)};
+const indent = 2;
+const depContent = `export const DEPENDENCIES: {[key: string]: string} = ${JSON.stringify(dependencies, null, indent)};
 `;
 
 Readable.from(depContent).pipe(destStream);
