@@ -33,5 +33,7 @@ module.exports = {
     'no-invalid-this': 'error',
     'no-throw-literal': 'error',
     'no-implicit-coercion': ['error', { disallowTemplateShorthand: true }],
+    'no-multi-assign': 'error',
+    radix: 'error',
   },
 };
