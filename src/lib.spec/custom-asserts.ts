@@ -81,14 +81,14 @@ export const customAssert: Chai.ChaiPlugin = (chai: Chai.ChaiStatic, utils: Chai
       new chai.Assertion(expected, preMsg + 'expected-value').to.be.a.directory();
 
       const directory = new chai.Assertion(dir).to.be.directory();
-      ((directory.with.files as unknown) as Chai.Assertion).that.satisfy((files: readonly string[]) =>
+      (directory.with.files as unknown as Chai.Assertion).that.satisfy((files: readonly string[]) =>
         files.every(file => {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           return new chai.Assertion(`${dir}/${file}`).to.be.file().and.equal(`${expected}/${file}`);
         })
       );
 
-      ((directory.with.subDirs as unknown) as Chai.Assertion).that.satisfy((subDirs: readonly string[]) =>
+      (directory.with.subDirs as unknown as Chai.Assertion).that.satisfy((subDirs: readonly string[]) =>
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         subDirs.every(subDir => {
           const isSubDir = new chai.Assertion(`${dir}/${subDir}`).to.be.directory();

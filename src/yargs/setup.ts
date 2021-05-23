@@ -157,11 +157,11 @@ yargs.middleware([
   }),
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   gracefulMiddleware((argv): void => {
-    renameParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
+    renameParamsToFunction(argv as unknown as RecursiveCopyCliModel);
   }),
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   gracefulMiddleware((argv): void => {
-    transformParamsToFunction((argv as unknown) as RecursiveCopyCliModel);
+    transformParamsToFunction(argv as unknown as RecursiveCopyCliModel);
   }),
 ]);
 
