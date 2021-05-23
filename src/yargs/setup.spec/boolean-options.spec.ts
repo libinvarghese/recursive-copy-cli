@@ -28,7 +28,7 @@ describe('boolean options', () => {
       });
 
       it('should be undefined when not specified', done => {
-        yargs.parse(`${cmdArgs}`, (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+        yargs.parse(cmdArgs, (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
             error,
             argv,

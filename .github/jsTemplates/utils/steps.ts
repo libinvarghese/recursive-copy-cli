@@ -230,7 +230,7 @@ export function waitForCheckName(checkName: string): (RunStep | UsesStep)[] {
       id: stepId,
       with: {
         token: '${{ secrets.GITHUB_TOKEN }}',
-        checkName: `${checkName}`,
+        checkName,
         ref: '${{ github.event.pull_request.head.sha || github.sha }}',
         timeoutSeconds: 180,
       },

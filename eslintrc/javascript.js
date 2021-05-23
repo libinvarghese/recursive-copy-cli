@@ -32,5 +32,6 @@ module.exports = {
     'no-shadow': ['error', { hoist: 'all' }],
     'no-invalid-this': 'error',
     'no-throw-literal': 'error',
+    'no-implicit-coercion': ['error', { disallowTemplateShorthand: true }],
   },
 };
