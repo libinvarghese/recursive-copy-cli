@@ -5,11 +5,11 @@ import type { RecursiveCopyCliModel } from '../../cli.model';
 
 // TODO: Waiting for https://github.com/yargs/yargs/issues/1952
 // eslint-disable-next-line mocha/no-skipped-tests
-describe.skip('exclusive options', () => {
+describe('exclusive options', () => {
   const cliExclusiveOptions: readonly Readonly<Record<string, string[]>>[] = [
     {
-      'rename-pattern': ['a', 'b'],
-      'rename-module': ['a', 'b'],
+      renamePattern: ['a', 'b'],
+      renameModule: ['a', 'b'],
     },
   ];
 

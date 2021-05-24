@@ -148,14 +148,14 @@ export function getYargsInstance(): Argv {
     });
 
   yargsInstance
-    .option('rename-module', {
+    .option('renameModule', {
       alias: 'r',
       description: 'renames source paths using the module',
       type: 'array',
-      conflicts: 'rename-pattern',
+      conflicts: 'renamePattern',
       requiresArg: true,
     })
-    .option('rename-pattern', {
+    .option('renamePattern', {
       alias: 'p',
       description: 'renames patterns in source paths. eg: :: -',
       type: 'array',

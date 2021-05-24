@@ -30,7 +30,7 @@
         "${relativeFile}",
         "src",
         "dest",
-        "--rename-module",
+        "--renameModule",
         "foobarfoo"
       ],
       "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],

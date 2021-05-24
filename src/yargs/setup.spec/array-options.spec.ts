@@ -15,13 +15,13 @@ describe('array options', () => {
       mapKey?: string;
     }
   > = {
-    'rename-pattern': {
+    renamePattern: {
       alias: 'p',
       args: 2,
       value: ['a', 'b'],
       mapKey: 'rename',
     },
-    'rename-module': {
+    renameModule: {
       alias: 'r',
       value: ['pascalcase', './src/mocks.spec/toupper.rename.module.mock.ts'],
       mapKey: 'rename',

@@ -43,7 +43,7 @@ describe('cli', () => {
       it('should rename files via rename local module', async () => {
         const testItem = 'nested-directory';
         const cliResult = await chaiExecAsync(
-          `${cmd} ${sourcePath}/${testItem} ${destPath}/${testItem} --rename-module src/mocks.spec/toupper.rename.module.mock.ts`
+          `${cmd} ${sourcePath}/${testItem} ${destPath}/${testItem} --renameModule src/mocks.spec/toupper.rename.module.mock.ts`
         );
 
         expect(cliResult).to.exit.with.code(0);
@@ -422,7 +422,7 @@ describe('cli', () => {
 
       it('should rename files via string patterns', async () => {
         const testItem = 'directory';
-        await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`, '--rename-pattern', 'a', 'A']);
+        await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`, '--renamePattern', 'a', 'A']);
 
         const isDirectory = expect(`${dstPath}/${testItem}`).to.be.directory();
         isDirectory.and.deep.equal(`${srcPath}/renamed-${testItem}`);
@@ -431,7 +431,7 @@ describe('cli', () => {
 
       it('should rename files via regexp patterns', async () => {
         const testItem = 'directory';
-        await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`, '--rename-pattern', '/a/', 'A']);
+        await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`, '--renamePattern', '/a/', 'A']);
 
         const isDirectory = expect(`${dstPath}/${testItem}`).to.be.directory();
         isDirectory.and.deep.equal(`${srcPath}/renamed-${testItem}`);
