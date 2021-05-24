@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
-import yargs from '../setup';
+import { getYargsInstance } from '../setup';
 import type { RecursiveCopyCliModel } from '../../cli.model';
 
 describe('rename option', () => {
@@ -16,23 +16,26 @@ describe('rename option', () => {
   });
 
   it('should be undefined when not specified', done => {
-    yargs.parse(cmdArgs, (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
-      expect({
-        error,
-        argv,
-        output,
-        args: args,
-      }).to.be.argsSuccessfullyParsed();
-      expect(argv).not.to.have.property('rename');
+    getYargsInstance().parseSync(
+      cmdArgs,
+      (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+        expect({
+          error,
+          argv,
+          output,
+          args: args,
+        }).to.be.argsSuccessfullyParsed();
+        expect(argv).not.to.have.property('rename');
 
-      done();
-    });
+        done();
+      }
+    );
   });
 
   context('with module', () => {
     it('should create a function when rename module is provided', done => {
       // > recursive-copy srcPath destPath --rename-module pascalcase
-      yargs.parse(
+      getYargsInstance().parseSync(
         `${cmdArgs} --rename-module pascalcase`,
         (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
@@ -54,7 +57,7 @@ describe('rename option', () => {
 
     it('should create a function when multiple rename modules are provided', done => {
       // > recursive-copy srcPath destPath --rename-module pascalcase ./src/mocks.spec/toupper.rename.module.mock.ts
-      yargs.parse(
+      getYargsInstance().parseSync(
         `${cmdArgs} --rename-module pascalcase ./src/mocks.spec/toupper.rename.module.mock.ts`,
         (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
@@ -75,11 +78,10 @@ describe('rename option', () => {
     });
 
     it('should fail when rename module is invalid', done => {
-      yargs.parse(
+      getYargsInstance().parseSync(
         `${cmdArgs} --rename-module nonExistantModule`,
         (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({ error, output }).to.be.errorOnArgsParsing();
-
           done();
         }
       );
@@ -89,7 +91,7 @@ describe('rename option', () => {
   context('with pattern', () => {
     it('should create a function when rename pattern string is provided', done => {
       // > recursive-copy srcPath destPath --rename-pattern a A
-      yargs.parse(
+      getYargsInstance().parseSync(
         `${cmdArgs} --rename-pattern a A`,
         (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
@@ -111,7 +113,7 @@ describe('rename option', () => {
 
     it('should create a function when rename pattern regex is provided', done => {
       // > recursive-copy srcPath destPath /a/g A
-      yargs.parse(
+      getYargsInstance().parseSync(
         `${cmdArgs} --rename-pattern /a/g A`,
         (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({
@@ -133,7 +135,7 @@ describe('rename option', () => {
 
     it('should create a function when rename pattern regex with group capture is provided', done => {
       // > recursive-copy srcPath destPath --rename-pattern /(.*)-(.*)\\.(.*)/g $2-$1.$3  # author-title.mp3 to title-author.mp3
-      yargs.parse(
+      getYargsInstance().parseSync(
         `${cmdArgs} --rename-pattern /(.*)-(.*)\\.(.*)/g $2-$1.$3`,
         (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
           expect({

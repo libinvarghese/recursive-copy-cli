@@ -1,5 +1,5 @@
 import copy from 'recursive-copy';
-import yargs from './yargs/setup';
+import { getYargsInstance } from './yargs/setup';
 import type { CopyOperation, CopyErrorInfo } from 'recursive-copy';
 import type { RecursiveCopyCliModel } from './cli.model';
 
@@ -7,7 +7,7 @@ export async function bootstrapCli(cliArgs?: string[]): Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   cliArgs = cliArgs ?? process.argv.slice(2);
   // const argv: RecursiveCopyCliModel = (yargs.argv as unknown) as RecursiveCopyCliModel;
-  const argv: RecursiveCopyCliModel = yargs.parse(cliArgs) as unknown as RecursiveCopyCliModel;
+  const argv: RecursiveCopyCliModel = getYargsInstance().parseSync(cliArgs) as unknown as RecursiveCopyCliModel;
   const cliOptionsKeysToCopy = ['overwrite', 'expand', 'dot', 'junk', 'filter', 'rename', 'transform', 'debug'];
   // Copy the options from argv to pass to copy
   const options = cliOptionsKeysToCopy.reduce<Record<string, unknown>>(

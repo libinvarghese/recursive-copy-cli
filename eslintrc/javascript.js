@@ -28,7 +28,7 @@ module.exports = {
     'no-extend-native': 'error',
     'no-sequences': 'error',
     'no-unused-expressions': ['error', { enforceForJSX: true }],
-    'no-magic-numbers': ['error', { ignore: [0], ignoreArrayIndexes: true }],
+    'no-magic-numbers': ['error', { ignore: [0, 1], ignoreArrayIndexes: true }],
     'no-shadow': ['error', { hoist: 'all' }],
     'no-invalid-this': 'error',
     'no-throw-literal': 'error',
