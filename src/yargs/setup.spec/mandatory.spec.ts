@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
-import yargs from '../setup';
+import { getYargsInstance } from '../setup';
 import { usageRegexp } from '../../lib.spec/constants';
 import type { RecursiveCopyCliModel } from '../../cli.model';
 
@@ -11,7 +11,7 @@ describe('src and dest is mandatory', () => {
       dest: 'destPath',
     };
     // > recursive-copy srcPath destPath
-    yargs.parse(
+    getYargsInstance().parseSync(
       `${args.src} ${args.dest}`,
       (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
         expect({
@@ -27,29 +27,38 @@ describe('src and dest is mandatory', () => {
   });
 
   it('should fail when no arguments are passed', done => {
-    yargs.parse('', (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
-      expect(error.message).to.contain('got 0');
-      expect(output).to.match(usageRegexp);
+    getYargsInstance().parseSync(
+      '',
+      (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+        expect(error.message).to.contain('got 0');
+        expect(output).to.match(usageRegexp);
 
-      done();
-    });
+        done();
+      }
+    );
   });
 
   it('should fail when only 1 argument is passed', done => {
-    yargs.parse('srcPath', (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
-      expect(error.message).to.contain('got 1');
-      expect(output).to.match(usageRegexp);
+    getYargsInstance().parseSync(
+      'srcPath',
+      (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+        expect(error.message).to.contain('got 1');
+        expect(output).to.match(usageRegexp);
 
-      done();
-    });
+        done();
+      }
+    );
   });
 
   it('should fail when options are passed', done => {
-    yargs.parse('--debug', (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
-      expect(error.message).to.contain('got 0');
-      expect(output).to.match(usageRegexp);
+    getYargsInstance().parseSync(
+      '--debug',
+      (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+        expect(error.message).to.contain('got 0');
+        expect(output).to.match(usageRegexp);
 
-      done();
-    });
+        done();
+      }
+    );
   });
 });

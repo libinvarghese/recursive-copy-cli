@@ -18,7 +18,7 @@ module.exports = {
     'eslintrc/*',
   ],
   statements: 100,
-  branches: 94,
+  branches: 93,
   functions: 100,
   lines: 100,
 };

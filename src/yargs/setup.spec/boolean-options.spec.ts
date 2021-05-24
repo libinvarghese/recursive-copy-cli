@@ -1,7 +1,7 @@
 import { camelCase } from 'lodash';
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
-import yargs from '../setup';
+import { getYargsInstance } from '../setup';
 import type { RecursiveCopyCliModel } from '../../cli.model';
 
 describe('boolean options', () => {
@@ -28,21 +28,24 @@ describe('boolean options', () => {
       });
 
       it('should be undefined when not specified', done => {
-        yargs.parse(cmdArgs, (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
-          expect({
-            error,
-            argv,
-            output,
-            args: args,
-          }).to.be.argsSuccessfullyParsed();
-          expect(argv).not.to.have.property(key);
+        getYargsInstance().parseSync(
+          cmdArgs,
+          (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+            expect({
+              error,
+              argv,
+              output,
+              args: args,
+            }).to.be.argsSuccessfullyParsed();
+            expect(argv).not.to.have.property(key);
 
-          done();
-        });
+            done();
+          }
+        );
       });
 
       it('should be true when set', done => {
-        yargs.parse(
+        getYargsInstance().parseSync(
           `${cmdArgs} --${key}`,
           (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
             expect({
@@ -60,7 +63,7 @@ describe('boolean options', () => {
       });
 
       it('should be true when set via alias', done => {
-        yargs.parse(
+        getYargsInstance().parseSync(
           `${cmdArgs} -${cliBooleanOptions[key]}`,
           (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
             expect({

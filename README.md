@@ -45,8 +45,8 @@ Installation is as simple as running the following command
       --transform-module, -t  Function that returns a transform stream used to modify file contents                   [array]
       --concurrency, -c       Maximum number of simultaneous copy operations [Default: 255]                          [number]
       --debug, -v             Whether to log debug information [Default: false]                                     [boolean]
-      --rename-module, -r     renames source paths using the module                                                   [array]
-      --rename-pattern, -p    renames patterns in source paths. eg: :: -                                              [array]
+      --renameModule, -r     renames source paths using the module                                                   [array]
+      --renamePattern, -p    renames patterns in source paths. eg: :: -                                              [array]
 
     Examples:
       recursive-copy srcPath destPath -r pascalcase                       Renames files using the pascalcase module
@@ -74,7 +74,7 @@ Installation is as simple as running the following command
 ## FAQ
 * **What is a transform module?**
 
-  **rename-module** a function that renames the file name.
+  **renameModule** a function that renames the file name.
 
   Refer [examples/toupper.rename.module.mock.js](https://github.com/libinvarghese/recursive-copy-cli/blob/master/examples/toupper.rename.module.mock.js)
   ```js
@@ -137,5 +137,5 @@ Installation is as simple as running the following command
 
   Yes, you can pipe the result of one module into another.
 
-      recursive-copy srcPath destPath -r pascalcase ./path/to/a/rename-module.js
+      recursive-copy srcPath destPath -r pascalcase ./path/to/a/renameModule.js
       recursive-copy srcPath destPath -t ./path/to/add-header-module.js ./path/to/change-eol-module.js

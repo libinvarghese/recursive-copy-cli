@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
-import yargs from '../setup';
+import { getYargsInstance } from '../setup';
 import type { RecursiveCopyCliModel } from '../../cli.model';
 
 describe('filter option', () => {
@@ -16,22 +16,25 @@ describe('filter option', () => {
   });
 
   it('should be undefined when not specified', done => {
-    yargs.parse(cmdArgs, (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
-      expect({
-        error,
-        argv,
-        output,
-        args: args,
-      }).to.be.argsSuccessfullyParsed();
-      expect(argv).not.to.have.property('filter');
+    getYargsInstance().parseSync(
+      cmdArgs,
+      (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
+        expect({
+          error,
+          argv,
+          output,
+          args: args,
+        }).to.be.argsSuccessfullyParsed();
+        expect(argv).not.to.have.property('filter');
 
-      done();
-    });
+        done();
+      }
+    );
   });
 
   it('should create an array filter globs when strings are provided', done => {
     // > recursive-copy srcPath destPath --filter "*.js" "*.json"
-    yargs.parse(
+    getYargsInstance().parseSync(
       `${cmdArgs} --filter "*.js" "*.json"`,
       (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
         expect({
@@ -50,7 +53,7 @@ describe('filter option', () => {
 
   it('should create an array of filter globs when regexp are provided', done => {
     // > recursive-copy srcPath destPath --filter "/\\.ts$/"
-    yargs.parse(
+    getYargsInstance().parseSync(
       `${cmdArgs} --filter "/\\.ts$/"`,
       (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
         expect({
@@ -68,7 +71,7 @@ describe('filter option', () => {
   });
 
   it('should create an array of filter globs when both regexp & string are provided', done => {
-    yargs.parse(
+    getYargsInstance().parseSync(
       // > recursive-copy srcPath destPath --filter "/\\.ts$/" "*.js"
       `${cmdArgs} --filter "/\\.ts$/" "*.js"`,
       (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -88,7 +91,7 @@ describe('filter option', () => {
 
   it('should fail when invalid regexp are provided', done => {
     // > recursive-copy srcPath destPath --filter "/*.ts/" # ERROR
-    yargs.parse(
+    getYargsInstance().parseSync(
       `${cmdArgs} --filter "/*.ts/"`,
       (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
         expect({ error, output }).to.be.errorOnArgsParsing();
