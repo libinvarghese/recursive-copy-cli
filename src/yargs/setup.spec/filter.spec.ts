@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import { getYargsInstance } from '../setup';
-import type { RecursiveCopyCliModel } from '../../cli.model';
+import type { RecursiveCopyCliModel } from '../../cli-model';
 
 describe('filter option', () => {
   let args = {} as Record<string, string>;
@@ -16,6 +16,7 @@ describe('filter option', () => {
   });
 
   it('should be undefined when not specified', done => {
+    // eslint-disable-next-line node/no-sync
     getYargsInstance().parseSync(
       cmdArgs,
       (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -34,6 +35,7 @@ describe('filter option', () => {
 
   it('should create an array filter globs when strings are provided', done => {
     // > recursive-copy srcPath destPath --filter "*.js" "*.json"
+    // eslint-disable-next-line node/no-sync
     getYargsInstance().parseSync(
       `${cmdArgs} --filter "*.js" "*.json"`,
       (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -53,6 +55,7 @@ describe('filter option', () => {
 
   it('should create an array of filter globs when regexp are provided', done => {
     // > recursive-copy srcPath destPath --filter "/\\.ts$/"
+    // eslint-disable-next-line node/no-sync
     getYargsInstance().parseSync(
       `${cmdArgs} --filter "/\\.ts$/"`,
       (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -71,6 +74,7 @@ describe('filter option', () => {
   });
 
   it('should create an array of filter globs when both regexp & string are provided', done => {
+    // eslint-disable-next-line node/no-sync
     getYargsInstance().parseSync(
       // > recursive-copy srcPath destPath --filter "/\\.ts$/" "*.js"
       `${cmdArgs} --filter "/\\.ts$/" "*.js"`,
@@ -91,6 +95,7 @@ describe('filter option', () => {
 
   it('should fail when invalid regexp are provided', done => {
     // > recursive-copy srcPath destPath --filter "/*.ts/" # ERROR
+    // eslint-disable-next-line node/no-sync
     getYargsInstance().parseSync(
       `${cmdArgs} --filter "/*.ts/"`,
       (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {

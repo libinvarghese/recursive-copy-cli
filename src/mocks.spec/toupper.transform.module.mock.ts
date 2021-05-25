@@ -1,3 +1,4 @@
+import type { Buffer } from 'buffer';
 import type { Stats } from 'fs';
 import type { Transform } from 'stream';
 // eslint-disable-next-line node/no-unpublished-import

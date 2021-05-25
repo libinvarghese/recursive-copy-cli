@@ -1,5 +1,5 @@
 import flow from 'lodash/fp/flow';
-import type { RecursiveCopyCliModel, RenameFn } from '../cli.model';
+import type { RecursiveCopyCliModel, RenameFn } from '../cli-model';
 import { requireTryAll } from './requireTryAll';
 
 // eslint-disable-next-line complexity, @typescript-eslint/prefer-readonly-parameter-types

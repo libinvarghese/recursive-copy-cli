@@ -1,6 +1,7 @@
+import console from 'console';
 import yargs from 'yargs/yargs';
 import type { Arguments, Argv, MiddlewareFunctionEx } from 'yargs';
-import type { RecursiveCopyCliModel } from '../cli.model';
+import type { RecursiveCopyCliModel } from '../cli-model';
 import { renameParamsToFunction } from './rename-params-to-fn';
 import { transformParamsToFunction } from './transform-to-fn';
 import { filterCoerce } from './filter-coerce';

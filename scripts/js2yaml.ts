@@ -1,3 +1,5 @@
+import process from 'process';
+import console from 'console';
 import { promisify } from 'util';
 import { createWriteStream, promises } from 'fs';
 import { Readable } from 'stream';
@@ -31,7 +33,7 @@ void (async (): Promise<void> => {
 
   await Bluebird.each(jsFiles, async file => {
     const absPath = resolve(file);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires, import/no-dynamic-require, @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports, node/global-require
     const config: { disable?: boolean } = require(absPath);
     const destFile = absPath.replace(src, dest).replace('.yml.ts', '.yml');
 

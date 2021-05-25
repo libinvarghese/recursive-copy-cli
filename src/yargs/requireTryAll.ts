@@ -7,7 +7,7 @@ const requireg = require('requireg');
 export function requireTryAll(module: string): unknown | undefined {
   let fn: unknown | undefined = undefined;
   try {
-    // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports, node/global-require
     fn = require(module);
   } catch (reqError: unknown) {
     try {
@@ -19,7 +19,7 @@ export function requireTryAll(module: string): unknown | undefined {
       }
     } catch (error: unknown) {
       // Search by path
-      // eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports, node/global-require
       fn = require(path.resolve(module));
     }
   }
