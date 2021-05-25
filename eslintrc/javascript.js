@@ -1,3 +1,5 @@
+const commonRules = require('./lib/common-rules');
+
 module.exports = {
   extends: [
     './env.js',
@@ -14,10 +16,9 @@ module.exports = {
   ],
   plugins: [],
   rules: {
-    semi: ['error', 'always'],
+    ...commonRules,
     'prefer-object-spread': 'error',
     'no-console': 'warn',
-    'no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
     'no-loss-of-precision': 'error',
     'id-length': 'error',
     'no-nonoctal-decimal-escape': 'error',
@@ -27,8 +28,6 @@ module.exports = {
     complexity: ['error', 4],
     'no-extend-native': 'error',
     'no-sequences': 'error',
-    'no-unused-expressions': ['error', { enforceForJSX: true }],
-    'no-magic-numbers': ['error', { ignore: [0, 1], ignoreArrayIndexes: true }],
     'no-shadow': ['error', { hoist: 'all' }],
     'no-invalid-this': 'error',
     'no-throw-literal': 'error',
