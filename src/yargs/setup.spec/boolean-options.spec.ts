@@ -2,7 +2,7 @@ import { camelCase } from 'lodash';
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import { getYargsInstance } from '../setup';
-import type { RecursiveCopyCliModel } from '../../cli.model';
+import type { RecursiveCopyCliModel } from '../../cli-model';
 
 describe('boolean options', () => {
   const cliBooleanOptions: Record<string, string> = {
@@ -28,6 +28,7 @@ describe('boolean options', () => {
       });
 
       it('should be undefined when not specified', done => {
+        // eslint-disable-next-line node/no-sync
         getYargsInstance().parseSync(
           cmdArgs,
           (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -45,6 +46,7 @@ describe('boolean options', () => {
       });
 
       it('should be true when set', done => {
+        // eslint-disable-next-line node/no-sync
         getYargsInstance().parseSync(
           `${cmdArgs} --${key}`,
           (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -63,6 +65,7 @@ describe('boolean options', () => {
       });
 
       it('should be true when set via alias', done => {
+        // eslint-disable-next-line node/no-sync
         getYargsInstance().parseSync(
           `${cmdArgs} -${cliBooleanOptions[key]}`,
           (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { camelCase } from 'lodash';
 import { getYargsInstance } from '../setup';
-import type { RecursiveCopyCliModel } from '../../cli.model';
+import type { RecursiveCopyCliModel } from '../../cli-model';
 
 // eslint-disable-next-line mocha/no-setup-in-describe
 describe('array options', () => {
@@ -52,6 +52,7 @@ describe('array options', () => {
       });
 
       it('should be undefined when not specified', done => {
+        // eslint-disable-next-line node/no-sync
         getYargsInstance().parseSync(
           cmdArgs,
           (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -73,6 +74,7 @@ describe('array options', () => {
       });
 
       it('should have value when set', done => {
+        // eslint-disable-next-line node/no-sync
         getYargsInstance().parseSync(
           `${cmdArgs} --${key} ${cliArrayOptions[key].value.join(' ')}`,
           (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -95,6 +97,7 @@ describe('array options', () => {
       });
 
       it('should have value when set via alias', done => {
+        // eslint-disable-next-line node/no-sync
         getYargsInstance().parseSync(
           `${cmdArgs} --${cliArrayOptions[key].alias} ${cliArrayOptions[key].value.join(' ')}`,
           (error: Readonly<Error>, argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -117,6 +120,7 @@ describe('array options', () => {
       });
 
       it(`should fail when no argument is passed with ${key}`, done => {
+        // eslint-disable-next-line node/no-sync
         getYargsInstance().parseSync(
           `${cmdArgs} --${key}`,
           (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -132,6 +136,7 @@ describe('array options', () => {
         context('when argument count is defined', () => {
           it(`should fail when more than required argument is passed with ${key}`, done => {
             const moreArgs = [...cliArrayOptions[key].value, cliArrayOptions[key].value[0]];
+            // eslint-disable-next-line node/no-sync
             getYargsInstance().parseSync(
               `${cmdArgs} --${key} ${moreArgs.join(' ')}`,
               (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
@@ -145,6 +150,7 @@ describe('array options', () => {
           it('should fail when less than required argument is passed with concurrency', done => {
             const moreArgs = [...cliArrayOptions[key].value];
             moreArgs.pop();
+            // eslint-disable-next-line node/no-sync
             getYargsInstance().parseSync(
               `${cmdArgs} --${key} ${moreArgs.join(' ')}`,
               (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {

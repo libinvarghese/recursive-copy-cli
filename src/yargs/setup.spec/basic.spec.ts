@@ -6,6 +6,7 @@ import { usageRegexp } from '../../lib.spec/constants';
 describe('cli basics', () => {
   it('should have options to show help', done => {
     // > recursive-copy --help
+    // eslint-disable-next-line node/no-sync
     getYargsInstance().parseSync('--help', (error: unknown, _argv: unknown, output: unknown) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(error).not.to.exist;
@@ -17,6 +18,7 @@ describe('cli basics', () => {
 
   it('should have options to show version', done => {
     // > recursive-copy --version
+    // eslint-disable-next-line node/no-sync
     getYargsInstance().parseSync('--version', (error: unknown, _argv: unknown, output: unknown) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(error).not.to.exist;

@@ -1,4 +1,4 @@
-import type { RecursiveCopyCliModel } from '../cli.model';
+import type { RecursiveCopyCliModel } from '../cli-model';
 import { usageRegexp } from './constants';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

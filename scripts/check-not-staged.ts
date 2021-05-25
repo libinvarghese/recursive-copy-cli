@@ -1,3 +1,5 @@
+import process from 'process';
+import console from 'console';
 // eslint-disable-next-line node/no-unpublished-import, import/default
 import gitP from 'simple-git';
 // eslint-disable-next-line node/no-unpublished-import

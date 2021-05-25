@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   require: ['ts-node/register', 'source-map-support/register', path.resolve('./src/lib.spec/chai')],
   extension: ['ts'],
-  timeout: 15000,
+  timeout: 18000,
   // spec: ['src/**/*.spec.ts'],
   'check-leaks': true,
   'watch-files': ['**/*.ts', '**/*.spec.ts', '**/*.spec.e2e.ts'],

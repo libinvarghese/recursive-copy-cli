@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import console from 'console';
 import { promisify } from 'util';
 import { promises } from 'fs';
 import { expect } from 'chai';
@@ -220,6 +221,7 @@ describe('cli', () => {
         const testItem = 'file';
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`]);
 
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
         expect(`${dstPath}/${testItem}`).to.be.file().and.equal(`${srcPath}/${testItem}`);
@@ -229,6 +231,7 @@ describe('cli', () => {
         const testItem = 'nested-file/file';
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`]);
 
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
         expect(`${dstPath}/${testItem}`).to.be.file().and.equal(`${srcPath}/${testItem}`);
@@ -238,6 +241,7 @@ describe('cli', () => {
         const testItem = 'empty';
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`]);
 
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
         const isDirectory = expect(`${dstPath}/${testItem}`).to.be.directory();
@@ -249,6 +253,7 @@ describe('cli', () => {
         const testItem = 'directory';
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`]);
 
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(console.log).to.have.been.calledWithMatch('4 item(s) copied');
 
         const isDirectory = expect(`${dstPath}/${testItem}`).to.be.directory();
@@ -269,6 +274,7 @@ describe('cli', () => {
         const testItem = 'symlink';
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`]);
 
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
         expect(`${dstPath}/${testItem}`).to.be.symlink();
@@ -290,6 +296,7 @@ describe('cli', () => {
         await promises.writeFile(`${dstPath}/${testItem}`, 'Goodbye, world!\n');
 
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`, '--overwrite']);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
         expect(`${dstPath}/${testItem}`).to.be.file().and.equal(`${srcPath}/${testItem}`);
@@ -301,6 +308,7 @@ describe('cli', () => {
         await promises.symlink('./symlink', `${dstPath}/${testItem}`, 'file');
 
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`, '--overwrite']);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
         expect(`${dstPath}/${testItem}`).to.be.file().and.equal(`${srcPath}/${testItem}`);
@@ -312,6 +320,7 @@ describe('cli', () => {
         await promises.mkdir(`${dstPath}/${testItem}`);
 
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`, '--overwrite']);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
         expect(`${dstPath}/${testItem}`).to.be.file().and.equal(`${srcPath}/${testItem}`);
@@ -365,6 +374,7 @@ describe('cli', () => {
       it('should expand symlinked source files if expand is specified', async () => {
         const testItem = 'symlink';
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/expanded-${testItem}`, '--expand']);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(console.log).to.have.been.calledWithMatch('1 item(s) copied');
 
         expect(`${dstPath}/expanded-${testItem}`).not.to.be.symlink();
@@ -444,7 +454,7 @@ describe('cli', () => {
         const testItem = 'nonexistent';
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`]);
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions, @typescript-eslint/unbound-method
         expect(console.error).to.have.been.called;
         expect(`${dstPath}/${testItem}`).not.to.be.path();
       });
@@ -456,7 +466,7 @@ describe('cli', () => {
 
         await bootstrapCli([`${srcPath}/${testItem}`, `${dstPath}/${testItem}`]);
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions, @typescript-eslint/unbound-method
         expect(console.error).to.have.been.called;
         expect(`${dstPath}/${testItem}`).to.be.file().and.not.equal(`${srcPath}/${testItem}`);
       });

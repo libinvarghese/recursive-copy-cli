@@ -1,7 +1,7 @@
 import type { Stats } from 'fs';
 import type { Transform } from 'stream';
 import highland from 'highland';
-import type { RecursiveCopyCliModel, TransformFn } from '../cli.model';
+import type { RecursiveCopyCliModel, TransformFn } from '../cli-model';
 import { requireTryAll } from './requireTryAll';
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types

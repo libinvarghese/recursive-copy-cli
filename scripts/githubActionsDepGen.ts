@@ -1,3 +1,4 @@
+import console from 'console';
 import { resolve, relative } from 'path';
 import { createWriteStream, readFileSync } from 'fs';
 import { Readable } from 'stream';

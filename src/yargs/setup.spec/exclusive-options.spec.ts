@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 // eslint-disable-next-line import/default
 import { getYargsInstance } from '../setup';
-import type { RecursiveCopyCliModel } from '../../cli.model';
+import type { RecursiveCopyCliModel } from '../../cli-model';
 
 // TODO: Waiting for https://github.com/yargs/yargs/issues/1952
 // eslint-disable-next-line mocha/no-skipped-tests
@@ -35,6 +35,7 @@ describe('exclusive options', () => {
       });
 
       it('should fail when exclusive options are used', done => {
+        // eslint-disable-next-line node/no-sync
         getYargsInstance().parseSync(
           `${cmdArgs} ${optStr}`,
           (error: Readonly<Error>, _argv: Readonly<RecursiveCopyCliModel>, output: unknown) => {
