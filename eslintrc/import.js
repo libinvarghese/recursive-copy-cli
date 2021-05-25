@@ -15,7 +15,6 @@ module.exports = {
     'import/exports-last': 'error',
     'import/order': ['error', { 'newlines-between': 'never' }],
     'import/no-unassigned-import': 'error',
-    'import/no-import-module-exports': 'error',
     'import/export': 'error',
     'import/no-named-as-default': 'error',
     'import/no-named-as-default-member': 'error',
