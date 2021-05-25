@@ -6,8 +6,8 @@ import mock from 'mock-fs';
 import sinon from 'sinon';
 import { chaiExecAsync } from '@jsdevtools/chai-exec';
 import rimraf from 'rimraf';
-import { bootstrapCli } from './bootstrap-cli';
 import type { SinonSpy, SinonSandbox } from 'sinon';
+import { bootstrapCli } from './bootstrap-cli';
 
 describe('cli', () => {
   // eslint-disable-next-line @typescript-eslint/init-declarations
