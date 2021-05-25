@@ -2,6 +2,7 @@
 import gitP from 'simple-git';
 // eslint-disable-next-line node/no-unpublished-import
 import type { FileStatusResult } from 'simple-git';
+
 const git = gitP();
 
 void (async (): Promise<void> => {
