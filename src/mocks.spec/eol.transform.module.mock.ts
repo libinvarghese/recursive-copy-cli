@@ -1,9 +1,9 @@
+import type { Stats } from 'fs';
+import type { Transform } from 'stream';
 // eslint-disable-next-line node/no-unpublished-import
 import through2 from 'through2';
 // eslint-disable-next-line node/no-unpublished-import
 import eol from 'eol';
-import type { Stats } from 'fs';
-import type { Transform } from 'stream';
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export = function eolTransform(src: string, _dest: string, _stats: Stats): Transform {

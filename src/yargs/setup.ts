@@ -1,9 +1,9 @@
 import yargs from 'yargs/yargs';
+import type { Arguments, Argv, MiddlewareFunctionEx } from 'yargs';
+import type { RecursiveCopyCliModel } from '../cli.model';
 import { renameParamsToFunction } from './rename-params-to-fn';
 import { transformParamsToFunction } from './transform-to-fn';
 import { filterCoerce } from './filter-coerce';
-import type { Arguments, Argv, MiddlewareFunctionEx } from 'yargs';
-import type { RecursiveCopyCliModel } from '../cli.model';
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
 const packageJSON = require('../../package.json');
 

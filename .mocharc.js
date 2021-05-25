@@ -1,4 +1,5 @@
 const path = require('path');
+
 module.exports = {
   require: ['ts-node/register', 'source-map-support/register', path.resolve('./src/lib.spec/chai')],
   extension: ['ts'],

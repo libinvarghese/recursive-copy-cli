@@ -1,6 +1,6 @@
 import flow from 'lodash/fp/flow';
-import { requireTryAll } from './requireTryAll';
 import type { RecursiveCopyCliModel, RenameFn } from '../cli.model';
+import { requireTryAll } from './requireTryAll';
 
 // eslint-disable-next-line complexity, @typescript-eslint/prefer-readonly-parameter-types
 export function renameParamsToFunction(argv: RecursiveCopyCliModel): void {

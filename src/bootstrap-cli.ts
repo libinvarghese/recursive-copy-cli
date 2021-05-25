@@ -1,6 +1,6 @@
 import copy from 'recursive-copy';
-import { getYargsInstance } from './yargs/setup';
 import type { CopyOperation, CopyErrorInfo } from 'recursive-copy';
+import { getYargsInstance } from './yargs/setup';
 import type { RecursiveCopyCliModel } from './cli.model';
 
 export async function bootstrapCli(cliArgs?: string[]): Promise<void> {
