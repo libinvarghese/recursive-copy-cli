@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.17](https://github.com/libinvarghese/recursive-copy-cli/compare/v1.0.16...v1.0.17) (2021-05-29)
+
+
+### Bug Fixes
+
+* add & fix eslint:node lint checks ([5f8d7e3](https://github.com/libinvarghese/recursive-copy-cli/commit/5f8d7e3fb0085e9b76c8a5a172c4ec9a4a9fe1db))
+* build failure due to nullish-coalescing-operator ([96401af](https://github.com/libinvarghese/recursive-copy-cli/commit/96401af88025d464f427eb1ce00a8c9bc30f6ba5))
+* eslint-config-prettier@8 errors ([ab74318](https://github.com/libinvarghese/recursive-copy-cli/commit/ab74318eae0545fd9d48f5d9bb0640bd5d07b9b1))
+* eslint:import/order issues ([e57aba1](https://github.com/libinvarghese/recursive-copy-cli/commit/e57aba190cff9d8834f64fc8834f882fab65fd47))
+* eslint:plugin:@typescript-eslint/all warnings ([f993f5f](https://github.com/libinvarghese/recursive-copy-cli/commit/f993f5fb1e549dd87b2f803383087289467f5fe7))
+* eslint:plugin:@typescript-eslint/all warnings ([8777342](https://github.com/libinvarghese/recursive-copy-cli/commit/8777342ca8c4ca24072a2bb29126af5dd302c827))
+* issues with yargs@17.0.1 ([7b31306](https://github.com/libinvarghese/recursive-copy-cli/commit/7b313064ebfb0b6f7d0780435c920bb95f8ce364))
+* npm audit fix ([0fa3060](https://github.com/libinvarghese/recursive-copy-cli/commit/0fa306018054ce6b8d98e6f1c7d87a3ae9f08a48))
+* rename-module & rename-pattern is not exclusive ([98f135a](https://github.com/libinvarghese/recursive-copy-cli/commit/98f135ac280762692f7c0ca242a283363bde79ed))
+* **deps:** bump yargs from 16.2.0 to 17.0.1 ([d9bd1e7](https://github.com/libinvarghese/recursive-copy-cli/commit/d9bd1e7c163b876bf74f19afc4738156d574e75d))
+
 ## [1.0.16](https://github.com/libinvarghese/recursive-copy-cli/compare/v1.0.15...v1.0.16) (2021-03-06)
 
 
