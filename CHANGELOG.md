@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.18](https://github.com/libinvarghese/recursive-copy-cli/compare/v1.0.17...v1.0.18) (2021-07-03)
+
+
+### Bug Fixes
+
+* **deps:** bump recursive-copy from 2.0.11 to 2.0.13 ([63e23eb](https://github.com/libinvarghese/recursive-copy-cli/commit/63e23ebeb4f8b91cc16d10196690ae2944883301))
+
 ## [1.0.17](https://github.com/libinvarghese/recursive-copy-cli/compare/v1.0.16...v1.0.17) (2021-05-29)
 
 
