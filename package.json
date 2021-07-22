@@ -73,7 +73,7 @@
     "@types/is-ci": "^3.0.0",
     "@types/js-yaml": "^4.0.0",
     "@types/lodash": "^4.14.158",
-    "@types/mocha": "^8.0.0",
+    "@types/mocha": "^9.0.0",
     "@types/mock-fs": "^4.10.0",
     "@types/node": "^16.0.0",
     "@types/nodemon": "^1.19.0",
