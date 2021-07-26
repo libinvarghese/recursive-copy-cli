@@ -55,7 +55,7 @@
     "release:dryrun": "npm run release -- --dry-run"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.0.0",
+    "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@commitlint/prompt-cli": "^13.1.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
