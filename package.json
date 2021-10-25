@@ -94,7 +94,7 @@
     "chai-fs": "^2.0.0",
     "chai-semver": "^1.0.2",
     "eol": "^0.9.1",
-    "eslint": "^7.5.0",
+    "eslint": "^8.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-json": "^3.0.0",
