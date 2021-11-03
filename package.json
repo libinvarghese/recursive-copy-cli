@@ -119,7 +119,7 @@
     "semantic-release": "^18.0.0",
     "semantic-release-git-branches": "^1.2.1",
     "simple-git": "^2.15.0",
-    "sinon": "^11.1.0",
+    "sinon": "^12.0.0",
     "sinon-chai": "^3.5.0",
     "source-map-support": "^0.5.19",
     "through2": "^4.0.2",
