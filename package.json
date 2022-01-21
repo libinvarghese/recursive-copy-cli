@@ -102,7 +102,7 @@
     "eslint-plugin-no-secrets": "^0.8.9",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-optimize-regex": "^1.2.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.10.0",
     "glob": "^7.1.6",
     "husky": "^7.0.0",
