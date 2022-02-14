@@ -57,7 +57,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^16.0.0",
-    "@commitlint/prompt-cli": "^15.0.0",
+    "@commitlint/prompt-cli": "^16.2.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@jsdevtools/chai-exec": "^2.1.1",
     "@semantic-release/changelog": "^6.0.0",
