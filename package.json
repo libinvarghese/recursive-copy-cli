@@ -118,7 +118,7 @@
     "rimraf": "^3.0.2",
     "semantic-release": "^17.1.1",
     "semantic-release-git-branches": "^1.2.1",
-    "simple-git": "^2.15.0",
+    "simple-git": "^3.3.0",
     "sinon": "^11.1.0",
     "sinon-chai": "^3.5.0",
     "source-map-support": "^0.5.19",
