@@ -55,9 +55,9 @@
     "release:dryrun": "npm run release -- --dry-run"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
+    "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^13.1.0",
-    "@commitlint/prompt-cli": "^13.1.0",
+    "@commitlint/prompt-cli": "^17.6.1",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@jsdevtools/chai-exec": "^2.1.1",
     "@semantic-release/changelog": "^5.0.1",
@@ -116,7 +116,7 @@
     "pascalcase": "^1.0.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
-    "semantic-release": "^17.1.1",
+    "semantic-release": "^21.0.1",
     "semantic-release-git-branches": "^1.2.1",
     "simple-git": "^2.15.0",
     "sinon": "^11.1.0",
